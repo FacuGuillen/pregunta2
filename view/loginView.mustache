@@ -1,0 +1,40 @@
+{{!
+<h1 class="text-center">Nunca te voy a dejar tirado</h1>
+
+<div class="d-flex justify-content-center">
+
+    <form method="post" action="/Pregunta2/login/add">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
+            <input type="text" name="nameUser" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+
+</div>
+}}
+<h1 class="text-center">Registrarse</h1>
+
+<div class="d-flex justify-content-center">
+    <form method="post" action="/Pregunta2/login/add">
+        <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            <input type="text" name="nameUser" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contraseña</label>
+            <input type="password" name="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+</div>
+
+{{#mensaje}}
+    <script>
+        alert("{{mensaje}}");
+    </script>
+{{/mensaje}}
