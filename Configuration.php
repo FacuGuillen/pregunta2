@@ -8,12 +8,14 @@ require_once("controller/HomeController.php");
 require_once("controller/GroupController.php");
 require_once("controller/SongController.php");
 require_once("controller/TourController.php");
+require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
 
 
 require_once("model/GroupModel.php");
 require_once("model/SongModel.php");
 require_once("model/TourModel.php");
+require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
@@ -50,6 +52,11 @@ class Configuration
     public function getHomeController()
     {
         return new HomeController($this->getViewer());
+    }
+
+    public function getRegisterController()
+    {
+        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
     }
 
     public function getLoginController()
