@@ -1,4 +1,4 @@
-CREATE DATABASE labanda;
+/*intentoCREATE DATABASE labanda;
 USE labanda;
 
 DROP TABLE IF EXISTS `canciones`;
@@ -30,7 +30,46 @@ create table integrantes
         primary key
 );
 
-INSERT INTO integrantes(nombre, instrumento) VALUE ('facu', 'ukelele')
+INSERT INTO integrantes(nombre, instrumento) VALUE ('facu', 'ukelele')*/
 
-/*intento
-CREATE DATABASE PREGUNTA*/
+CREATE DATABASE IF NOT EXISTS pregunta2;
+USE pregunta2;
+
+create table tipo_usuario(
+ id_tipo_usuario int auto_increment primary key,
+ tipo_usuario varchar (50)
+);
+
+create table residencia(
+id_residencia int auto_increment primary key,
+pais varchar (50),
+ciudad varchar (50)
+);
+
+DROP TABLE IF EXISTS `ranking`;
+create table ranking(
+id_ranking int auto_increment primary key,
+puntaje_acumulado int,
+cantidad_partidas int
+);
+
+create table usuarios(
+id_usuario int auto_increment primary key,
+nombre varchar(100),
+apellido varchar(100),
+sexo varchar(20),
+email varchar(100),
+contrasena varchar(250),
+nombre_usuario varchar(50),
+fecha_nacimiento date,
+foto_perfil text,
+tipo_usuario int,
+tipo_residencia int,
+tipo_ranking int,
+
+FOREIGN KEY (tipo_usuario) REFERENCES tipo_usuario(id_tipo_usuario),
+FOREIGN KEY (tipo_residencia) REFERENCES residencia(id_residencia),
+FOREIGN KEY (tipo_ranking) REFERENCES ranking(id_ranking)
+);
+
+select * from usuarios;
