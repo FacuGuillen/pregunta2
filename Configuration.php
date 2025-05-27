@@ -59,9 +59,21 @@ class Configuration
         return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
     }
 
+<<<<<<< HEAD
     public function getLoginController()
     {
         return new LoginController(new LoginModel($this->getDatabase()),$this->getViewer());
+=======
+    public function getLoginController() {
+        return new LoginController(
+            new LoginModel($this->getDatabase()),
+            $this->getViewer()
+        );
+    }
+
+    public function getLobbyController() {
+        return new LobbyController($this->getViewer());
+>>>>>>> lau
     }
 
 
