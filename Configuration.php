@@ -19,6 +19,7 @@ require_once("model/SongModel.php");
 require_once("model/TourModel.php");
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
+require_once("model/UserModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
@@ -84,7 +85,9 @@ class Configuration
     }
 
     public function getProfileController(){
-        return new ProfileController($this->getViewer());
+        return new ProfileController(new UserModel($this->getDatabase()),
+            $this->getViewer()
+        );
     }
 
     public function getRouter()

@@ -37,7 +37,7 @@ class RegisterModel
         $sql = "SELECT * FROM usuarios WHERE nombre_usuario = '$usuario'";
         $resultado = $this->database->query($sql);
 
-        // $resultado es un array o false, dependiendo cómo esté implementado tu método query
+        // $resultado es un array o false, dependiendo cómo esté implementado tu métodoquery
         // Si es array, verificamos si tiene elementos (usuario encontrado)
         return !empty($resultado);
     }

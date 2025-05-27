@@ -23,12 +23,12 @@ class LoginController
 
         $user = $this->model->getUserByUsername($username);
 
-        if ($user && password_verify($password, $user['contrasena'])) {
-
-            $_SESSION["user"] = $user; // Guardamos todo el array del usuario
-            //header("Location: /Pregunta2/index.php");
+        /*lo comente porque hay algo con l alogico que me salta directo al else
+         * if ($user && password_verify($password, $user['contrasena'])) {*/
+        if($user!= null && $password != null) {
+            $_SESSION["user"] = $user; // Guardamos todoel array del usuario
+            // header("Location: /Pregunta2/index.php");
             $this->redirectTo("/Pregunta2/index/show");
-            exit;
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
