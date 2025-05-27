@@ -10,7 +10,7 @@ require_once("controller/SongController.php");
 require_once("controller/TourController.php");
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
-require_once("controller/ProfileController.php");
+require_once("controller/IndexController.php");
 
 
 require_once("model/GroupModel.php");
@@ -40,10 +40,6 @@ class Configuration
         return parse_ini_file("configuration/config.ini", true);
     }
 
-    public function getProfileController(){
-        return new ProfileController($this->getViewer());
-    }
-
     public function getSongController()
     {
         return new SongController(new SongModel($this->getDatabase()), $this->getViewer());
@@ -59,16 +55,25 @@ class Configuration
         return new HomeController($this->getViewer());
     }
 
+    public function getIndexController()
+    {
+        return new IndexController($this->getViewer());
+    }
+
     public function getRegisterController()
     {
         return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
     }
 
-    public function getLoginController()
-    {
-        /*saque la base de datos po ahora para que anden las redirecciones
-        sino daba error xq a la base de datos todavia no la creamos*/
-        return new LoginController($this->getViewer());
+    public function getLoginController() {
+        return new LoginController(
+            new LoginModel($this->getDatabase()),
+            $this->getViewer()
+        );
+    }
+
+    public function getLobbyController() {
+        return new LobbyController($this->getViewer());
     }
 
 
@@ -79,12 +84,12 @@ class Configuration
 
     public function getRouter()
     {
-        // return new Router("getHomeController", "show", $this);
-        return new Router("getLoginController", "show", $this);
+        return new Router("getHomeController", "show", $this);
     }
 
     public function getViewer()
     {
+        //return new FileView();
         return new MustachePresenter("view");
     }
 }

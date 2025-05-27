@@ -1,50 +1,60 @@
-<h1 class="pp text-center">Registrarse</h1>
+<h1 class="text-center my-4" style="font-size: 1.8rem;">Registrarse</h1>
 
-<div class="d-flex justify-content-center">
-    <form id="registerForm" class="d-flex" method="post" action="/Pregunta2/login/addUser">
-        <div>
-            <div class="mb-3">
-                <label class="form-label">Nombre</label>
-                <input type="text" name="name" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Apellido</label>
-                <input type="text" name="lastname" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Sexo</label>
-                <input type="text" name="sex" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Fecha nacimiento</label>
-                <input type="date" name="date" class="form-control" />
-            </div>
+<div class="container d-flex justify-content-center">
+    <form id="registerForm" class="row g-3 w-75" method="post" action="/Pregunta2/register/addUser" enctype="multipart/form-data">
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre</label>
+            <input type="text" name="name" class="form-control form-control-sm" />
         </div>
-        <div>
-            <div class="mb-3">
-                <label class="form-label">Mail</label>
-                <input type="email" name="email" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                <input type="password" name="password" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Confirmar Contraseña</label>
-                <input type="password" name="confirm_password" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Nombre Usuario</label>
-                <input type="text" name="nameuser" class="form-control" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Foto de perfil</label>
-                <input type="text" name="photo" class="form-control" />
-            </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Apellido</label>
+            <input type="text" name="lastname" class="form-control form-control-sm" />
         </div>
-        <button type="submit" class="btn btn-primary">Registrarse</button>
+
+        <div class="col-md-6">
+            <label class="form-label">Sexo</label>
+            <input type="text" name="sex" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Fecha nacimiento</label>
+            <input type="date" name="date" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Mail</label>
+            <input type="email" name="email" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Contraseña</label>
+            <input type="password" name="password" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Confirmar Contraseña</label>
+            <input type="password" name="confirm_password" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Nombre Usuario</label>
+            <input type="text" name="nameuser" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Foto de perfil</label>
+            <input type="text" name="photo" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-12 text-end mt-3">
+            <button type="submit" class="btn btn-sm btn-primary px-4">Registrarseeeeeeeeeeeee</button>
+        </div>
+
     </form>
 </div>
+
 
 {{#mensaje}}
     <script>
