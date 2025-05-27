@@ -66,7 +66,9 @@ class Configuration
 
     public function getLoginController()
     {
-        return new LoginController(new LoginModel($this->getDatabase()),$this->getViewer());
+        /*saque la base de datos po ahora para que anden las redirecciones
+        sino daba error xq a la base de datos todavia no la creamos*/
+        return new LoginController($this->getViewer());
     }
 
 
@@ -77,13 +79,12 @@ class Configuration
 
     public function getRouter()
     {
-        return new Router("getHomeController", "show", $this);
-        // return new Router("getLoginController", "show", $this);
+        // return new Router("getHomeController", "show", $this);
+        return new Router("getLoginController", "show", $this);
     }
 
     public function getViewer()
     {
-        //return new FileView();
         return new MustachePresenter("view");
     }
 }

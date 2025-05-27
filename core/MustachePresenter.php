@@ -13,6 +13,19 @@ class MustachePresenter{
         $this->partialsPathLoader = $partialsPathLoader;
     }
 
+    /*vistas SIN header y footer -> WARNING CONTROLER Y MEDO ME DAN NULL INTENTAR MAS ADELANTE
+    public function renderSinHeaderNiFooter($contentFile,$data =array()){
+        echo  $this->generateHtmlSinHeaderNiFooter(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
+    }
+
+    private function generateHtmlSinHeaderNiFooter($contentFile, $data){
+        $contentAsString = file_get_contents( $contentFile );
+        return $this->mustache->render($contentAsString,$data);
+    }*/
+
+
+
+    /*vistas CON header y footer*/
     public function render($contentFile , $data = array() ){
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
@@ -23,4 +36,6 @@ class MustachePresenter{
         $contentAsString .= file_get_contents($this->partialsPathLoader . '/footer.mustache');
         return $this->mustache->render($contentAsString, $data);
     }
+
+
 }

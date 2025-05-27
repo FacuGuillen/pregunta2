@@ -4,9 +4,8 @@ class LoginController
 {
     private $view;
 
-    public function __construct($model, $view)
+    public function __construct($view)
     {
-        $this->model = $model;
         $this->view = $view;
     }
 
