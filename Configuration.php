@@ -10,6 +10,7 @@ require_once("controller/SongController.php");
 require_once("controller/TourController.php");
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
+require_once("controller/ProfileController.php");
 
 
 require_once("model/GroupModel.php");
@@ -37,6 +38,10 @@ class Configuration
     public function getIniConfig()
     {
         return parse_ini_file("configuration/config.ini", true);
+    }
+
+    public function getProfileController(){
+        return new ProfileController($this->getViewer());
     }
 
     public function getSongController()
@@ -73,6 +78,7 @@ class Configuration
     public function getRouter()
     {
         return new Router("getHomeController", "show", $this);
+        // return new Router("getLoginController", "show", $this);
     }
 
     public function getViewer()

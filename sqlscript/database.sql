@@ -31,3 +31,6 @@ create table integrantes
 );
 
 INSERT INTO integrantes(nombre, instrumento) VALUE ('facu', 'ukelele')
+
+/*intento
+CREATE DATABASE PREGUNTA*/

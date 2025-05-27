@@ -4,6 +4,6 @@ $configuration = new Configuration();
 $router = $configuration->getRouter();
 
 $router->go(
-    $_GET["controller"],
+    $_GET["controller"] ,
     $_GET["method"]
 );
