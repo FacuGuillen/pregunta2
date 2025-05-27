@@ -10,8 +10,6 @@ class LoginModel
     }
 
 
-<<<<<<< HEAD
-=======
     public function getUserByUsername($username) {
         // Escapamos para prevenir inyección
         $conn = $this->database->getConnection();
@@ -22,5 +20,4 @@ class LoginModel
 
         return $result[0] ?? null; // retornamos la primera fila o null
     }
->>>>>>> lau
 }

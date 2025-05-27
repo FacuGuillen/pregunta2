@@ -10,6 +10,7 @@ require_once("controller/SongController.php");
 require_once("controller/TourController.php");
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
+require_once("controller/IndexController.php");
 
 
 require_once("model/GroupModel.php");
@@ -54,16 +55,16 @@ class Configuration
         return new HomeController($this->getViewer());
     }
 
+    public function getIndexController()
+    {
+        return new IndexController($this->getViewer());
+    }
+
     public function getRegisterController()
     {
         return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
     }
 
-<<<<<<< HEAD
-    public function getLoginController()
-    {
-        return new LoginController(new LoginModel($this->getDatabase()),$this->getViewer());
-=======
     public function getLoginController() {
         return new LoginController(
             new LoginModel($this->getDatabase()),
@@ -73,7 +74,6 @@ class Configuration
 
     public function getLobbyController() {
         return new LobbyController($this->getViewer());
->>>>>>> lau
     }
 
 
