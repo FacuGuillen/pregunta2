@@ -11,6 +11,7 @@ require_once("controller/TourController.php");
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
 require_once("controller/IndexController.php");
+require_once("controller/ProfileController.php");
 
 
 require_once("model/GroupModel.php");
@@ -80,6 +81,10 @@ class Configuration
     public function getGroupController()
     {
         return new GroupController(new GroupModel($this->getDatabase()), $this->getViewer());
+    }
+
+    public function getProfileController(){
+        return new ProfileController($this->getViewer());
     }
 
     public function getRouter()

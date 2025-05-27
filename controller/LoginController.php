@@ -3,14 +3,17 @@
 class LoginController
 {
     private $view;
+    private $model;
 
-    public function __construct($view)
+    public function __construct($model,$view)
     {
+        $this->model = $model;
         $this->view = $view;
     }
 
+
     public function show(){
-        $this->view->render("login");
+        $this->view->render("login",[]);
     }
 
     public function validateUser() {
