@@ -13,13 +13,13 @@ require_once("controller/LoginController.php");
 require_once("controller/IndexController.php");
 require_once("controller/ProfileController.php");
 
-
 require_once("model/GroupModel.php");
 require_once("model/SongModel.php");
 require_once("model/TourModel.php");
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
+require_once("model/ProfileModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
@@ -85,7 +85,7 @@ class Configuration
     }
 
     public function getProfileController(){
-        return new ProfileController(new UserModel($this->getDatabase()),
+        return new ProfileController(new ProfileModel($this->getDatabase()),
             $this->getViewer()
         );
     }
@@ -100,4 +100,5 @@ class Configuration
         //return new FileView();
         return new MustachePresenter("view");
     }
+
 }

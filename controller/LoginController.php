@@ -13,7 +13,8 @@ class LoginController
 
 
     public function show(){
-        $this->view->render("login",[]);
+        $this->view->render("login",[
+        ]);
     }
 
     public function validateUser() {

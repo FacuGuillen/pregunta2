@@ -13,7 +13,8 @@ class ProfileController{
     public function show(){
         session_start();
 
-        $username = $_SESSION['user'] ;
-        $this->view->render("profile", $username);
+        $userdata= $_SESSION['user'];
+
+        $this->view->render("profile", $userdata);
     }
 }
