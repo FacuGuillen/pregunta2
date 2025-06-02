@@ -9,4 +9,5 @@ $this->view = $view;
 public function show() {
 $this->view->render("lobby");
 }
+
 }

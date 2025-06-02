@@ -26,7 +26,7 @@ class MustachePresenter{
 
 
     /*vistas CON header y footer*/
-    public function render($contentFile , $data = array() ){
+    public function render($contentFile , $data = array()){
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
 

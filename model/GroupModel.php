@@ -19,4 +19,5 @@ class GroupModel
         $sql = "INSERT INTO integrantes (nombre,instrumento) values ('$nombre', '$intrumento')";
         $this->database->execute($sql);
     }
+
 }
