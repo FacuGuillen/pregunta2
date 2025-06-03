@@ -13,4 +13,5 @@ $this->view = $view;
 
     $this->view->render("lobby",$userdata);
 }
+
 }

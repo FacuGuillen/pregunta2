@@ -1,0 +1,41 @@
+<div class="partida" data-partida-id="{{id_partida}}">
+    <h2>Entramos a la partida</h2>
+    
+    {{#preguntas}}
+    <div class="pregunta" data-pregunta-id="{{id_pregunta}}">
+        <h3>{{pregunta}}</h3>
+        {{#respuestas}}
+        <button class="respuesta" data-respuesta-id="{{id_respuesta}}">
+            {{texto_respuesta}}
+        </button>
+        {{/respuestas}}
+    </div>
+    {{/preguntas}}
+</div>
+
+<script>
+document.querySelectorAll('.respuesta').forEach(button => {
+    button.addEventListener('click', async function() {
+        const preguntaId = this.closest('.pregunta').dataset.preguntaId;
+        const respuestaId = this.dataset.respuestaId;
+        
+        const response = await fetch('/verificar-respuesta', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id_pregunta: preguntaId,
+                id_respuesta: respuestaId
+            })
+        });
+        
+        const result = await response.json();
+        if (result.correcta) {
+            alert('¡Respuesta correcta!');
+        } else {
+            alert('Respuesta incorrecta');
+        }
+    });
+});
+</script>
