@@ -6,7 +6,11 @@ public function __construct($view) {
 $this->view = $view;
 }
 
-public function show() {
-$this->view->render("lobby");
+    public function show(){
+
+    session_start();
+    $userdata= $_SESSION['user'];
+
+    $this->view->render("lobby",$userdata);
 }
 }

@@ -29,7 +29,7 @@ class LoginController
         if($user!= null && $password != null) {
             $_SESSION["user"] = $user; // Guardamos todoel array del usuario
             // header("Location: /Pregunta2/index.php");
-            $this->redirectTo("/Pregunta2/index/show");
+            $this->redirectTo("/Pregunta2/lobby/show");
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",

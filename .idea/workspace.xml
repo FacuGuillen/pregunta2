@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/model/ProfileModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/BaseController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LobbyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LobbyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/Database.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/Database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/lobbyView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/lobbyView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +48,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;anahi&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/pregunta2/public/imgs&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -58,6 +56,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\pregunta2\public\imgs" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -77,7 +80,8 @@
       <workItem from="1748314520876" duration="225000" />
       <workItem from="1748314764830" duration="60000" />
       <workItem from="1748819455048" duration="9761000" />
-      <workItem from="1748875178732" duration="1258000" />
+      <workItem from="1748875178732" duration="14925000" />
+      <workItem from="1748956737091" duration="2080000" />
     </task>
     <servers />
   </component>
