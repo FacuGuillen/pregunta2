@@ -16,6 +16,7 @@ require_once("controller/LobbyController.php");
 require_once("controller/PartidaController.php");
 require_once("controller/RankingController.php");
 require_once("controller/CuestionController.php");
+require_once("controller/ProfileGamerController.php");
 
 
 
@@ -108,6 +109,11 @@ class Configuration
     public function getCuestionController(){
         return new CuestionController($this->getViewer());
     }
+
+    public function getProfileGamerController(){
+        return new ProfileGamerController( new UserModel($this->getDatabase()),$this->getViewer());
+    }
+
 
     /*-------------------------------------------------------------*/
     public function getRouter()

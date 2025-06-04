@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controller/CuestionController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller/RankingController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/RankingModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/cuestionNewView.mustache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/view/rankingView.mustache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/LobbyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LobbyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sqlscript/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/lobbyView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/lobbyView.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/loginView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/loginView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/rankingView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/rankingView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +80,7 @@
       <workItem from="1748819455048" duration="9761000" />
       <workItem from="1748875178732" duration="14925000" />
       <workItem from="1748956737091" duration="2080000" />
-      <workItem from="1749070003537" duration="391000" />
+      <workItem from="1749070003537" duration="4543000" />
     </task>
     <servers />
   </component>
