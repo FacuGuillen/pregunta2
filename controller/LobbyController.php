@@ -11,7 +11,12 @@ $this->view = $view;
     session_start();
     $userdata= $_SESSION['user'];
 
-    $this->view->render("lobby",$userdata);
+    $context = [
+        'userdata' => $userdata
+    ];
+
+
+    $this->view->render("lobby",$context);
 }
 
 }

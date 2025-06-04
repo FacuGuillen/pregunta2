@@ -18,7 +18,8 @@ class RegisterModel
         $sexo = $db->real_escape_string($data['sex']);
         $fecha_nacimiento = $db->real_escape_string($data['date']);
         $email = $db->real_escape_string($data['email']);
-        $contrasena = $db->real_escape_string($data['password']);
+        /*contraseña mas segura*/
+        $contrasena = password_hash($data['password'], PASSWORD_DEFAULT);
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
 
         /*guardar imagen*/

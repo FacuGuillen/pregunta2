@@ -13,29 +13,35 @@ class LoginController
 
 
     public function show(){
-        $this->view->render("login",[
-        ]);
+        session_start();
+        $userdata= $_SESSION['user'] ?? null;
+
+        $context = [
+            'userdata' => is_array($userdata) ? $userdata : false
+        ];
+
+
+        $this->view->render("login",$context);
     }
 
     public function validateUser() {
         session_start();
-        $username = $_POST["nameuser"] ?? '';
-        $password = $_POST["password"] ?? '';
+        $username = $_POST['nameuser'] ?? '';
+        $password = $_POST['password'] ?? '';
 
         $user = $this->model->getUserByUsername($username);
 
-        /*lo comente porque hay algo con l alogico que me salta directo al else
-         * if ($user && password_verify($password, $user['contrasena'])) {*/
-        if($user!= null && $password != null) {
+        //lo comente porque hay algo con l alogico que me salta directo al else
+        //  if ($user !=null && password_verify($password, $user['contrasena'])) {
+        if($user['nombre'] == $username && $user['contrasena'] == $password) {
             $_SESSION["user"] = $user; // Guardamos todoel array del usuario
-            // header("Location: /Pregunta2/index.php");
             $this->redirectTo("/Pregunta2/lobby/show");
-        } else {
+           } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
                 "username" => $username
             ]);
-        }
+            }
     }
 
     public function logout() {

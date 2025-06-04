@@ -72,4 +72,3 @@ FOREIGN KEY (tipo_residencia) REFERENCES residencia(id_residencia),
 FOREIGN KEY (tipo_ranking) REFERENCES ranking(id_ranking)
 );
 
-select * from usuarios;

@@ -20,18 +20,18 @@
             <i class="fa fa-bars"></i>
         </a>
 
-        {{#username}}
+        {{#userdata}}
             <div class="w3-bar-item w3-padding-large text-white">
-                Hola, {{username}}!
+                Hola, {{nombre_usuario}}!
             </div>
             <a href="/Pregunta2/profile/show" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">perfil</a>
             <a href="/Pregunta2/login/logout" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">Salir</a>
-        {{/username}}
+        {{/userdata}}
 
-        {{^username}}
-            <a href="index.php?controller=register&action=show" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">Registrarse</a>
-            <a href="index.php?controller=login&action=show" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">Login</a>
-        {{/username}}
+        {{^userdata}}
+            <a href="/Pregunta2/register/show" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">Registrarse</a>
+            <a href="/Pregunta2/login/show" class="w3-bar-item w3-button w3-padding-large w3-hide-small w3-right">Login</a>
+        {{/userdata}}
     </div>
 </div>
 
