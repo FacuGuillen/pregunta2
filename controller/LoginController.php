@@ -1,5 +1,7 @@
 <?php
 
+require_once("configuration/constants.php");
+
 class LoginController
 {
     private $view;
@@ -24,8 +26,8 @@ class LoginController
         if ($user && password_verify($password, $user['contrasena'])) {
 
             $_SESSION["user"] = $user; // Guardamos todo el array del usuario
-            //header("Location: /Pregunta2/index.php");
-            $this->redirectTo("/Pregunta2/index/show");
+
+            $this->redirectTo("index/show");
             exit;
         } else {
             $this->view->render("login", [
@@ -38,12 +40,12 @@ class LoginController
     public function logout() {
         session_start();   // Iniciar la sesión para poder manipularla
         session_destroy(); // Destruir todos los datos de la sesión
-        $this->redirectTo("/Pregunta2/index/show"); // Redirigir a donde quieras
+        $this->redirectTo("index/show"); // Redirigir a donde quieras
     }
 
     private function redirectTo($str)
     {
-        header("Location: " . $str);
+        header("Location: " . BASE_URL . $str);
         exit();
     }
 }
