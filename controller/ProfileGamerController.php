@@ -14,10 +14,6 @@ class ProfileGamerController{
 
         $username = $_GET['usuario'];
         $user =  $this->model->getUser($username);
-        /**echo "<pre>";
-        print_r($user);
-        echo "</pre>";
-        exit();*/
 
 
         $this->view->render("profileGamer", ["userdata" => $user]);

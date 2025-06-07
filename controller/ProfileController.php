@@ -22,6 +22,8 @@ class ProfileController{
             'nombre' => $userdata['nombre'] ?? '',
             'fecha_nacimiento' => $userdata['fecha_nacimiento'] ?? '',
             'sexo' => $userdata['sexo'] ?? '',
+            'pais' => $userdata['pais'] ?? '',
+            'ciudad' => $userdata['ciudad'] ?? '',
         ];
 
         $this->view->render("profile", $context);

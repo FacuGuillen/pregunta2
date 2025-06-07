@@ -35,7 +35,7 @@ INSERT INTO integrantes(nombre, instrumento) VALUE ('facu', 'ukelele')*/
 CREATE DATABASE IF NOT EXISTS pregunta2;
 USE pregunta2;
 
-create table tipo_usuario(
+create table rol(
  id_tipo_usuario int auto_increment primary key,
  tipo_usuario varchar (50)
 );

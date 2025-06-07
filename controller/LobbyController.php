@@ -9,7 +9,7 @@ $this->view = $view;
     public function show(){
 
     session_start();
-    $userdata= $_SESSION['user'];
+    $userdata= $_SESSION['user'] ?? null;
 
     $context = [
         'userdata' => $userdata

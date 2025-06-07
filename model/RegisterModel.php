@@ -22,8 +22,8 @@ class RegisterModel
         $contrasena = password_hash($data['password'], PASSWORD_DEFAULT);
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
 
+
         /*guardar imagen*/
-        //$foto_perfil = $db->real_escape_string($data['photo']);
         $foto_perfil = null;
         if (isset($files['photo']) && $files['photo']['error'] === UPLOAD_ERR_OK){
             $nombreArchivo = basename($files['photo']['name']);
