@@ -13,6 +13,7 @@ require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
 require_once("controller/IndexController.php");
 require_once("controller/ProfileController.php");
+require_once("controller/JuegoController.php");
 
 
 require_once("model/GroupModel.php");
@@ -21,6 +22,8 @@ require_once("model/TourModel.php");
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
+require_once("model/PreguntaModel.php");
+
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
@@ -98,5 +101,12 @@ class Configuration
     {
         //return new FileView();
         return new MustachePresenter("view");
+    }
+
+    public function getJuegoController() {
+        return new JuegoController(
+            new PreguntaModel($this->getDatabase()),
+            $this->getViewer()
+        );
     }
 }
