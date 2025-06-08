@@ -43,12 +43,12 @@ class RegisterController{
         if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
             empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
 
-            $this->redirectTo("/Pregunta2/register/show?error=campos_vacios");
+            $this->redirectTo("register/show?error=campos_vacios");
             return;
         }
 
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("/Pregunta2/register/show?error=contrasena_no_coinciden");
+            $this->redirectTo("register/show?error=contrasena_no_coinciden");
             return;
         }
 
@@ -59,28 +59,29 @@ class RegisterController{
             'date' => $_POST['date'],
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            'nameuser' => $_POST['nameuser']
+            'nameuser' => $_POST['nameuser'],
+            'photo' => $_POST['photo']
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("/Pregunta2/register/show?error=usuario_existente");
+            $this->redirectTo("register/show?error=usuario_existente");
             return;
         }
 
-        $resultado = $this->model->createUser($data,$_FILES);
+        $resultado = $this->model->createUser($data);
 
         if ($resultado !== true) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("/Pregunta2/register/show?error=error_bd");
+            $this->redirectTo("register/show?error=error_bd");
             return;
         }
 
-        $this->redirectTo("/Pregunta2/login/show?success=ok");
+        $this->redirectTo("register/show?success=1");
     }
 
     private function redirectTo($str)
     {
-        header("Location: " . $str);
+        header("Location: " . BASE_URL . $str);
         exit();
     }
 }

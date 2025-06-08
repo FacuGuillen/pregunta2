@@ -1,0 +1,90 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8a628fbe-ef44-4898-9b21-052f7e7c700e\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/sqlscript/database2.sql\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/controller/LobbyController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/controller/LobbyController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/controller/ProfileController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/controller/ProfileController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/controller/ProfileGamerController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/controller/ProfileGamerController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/model/RegisterModel.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/model/RegisterModel.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/sqlscript/database.sql\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/sqlscript/database.sql\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/view/cuestionNewView.mustache\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/view/cuestionNewView.mustache\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/view/lobbyView.mustache\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/view/lobbyView.mustache\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/view/profileGamerView.mustache\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/view/profileGamerView.mustache\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PhpDebugGeneral\" listening_started=\"true\" />\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"C:\\xampp\\php\\php.exe\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2xf1sDOuQTuAQfk7bz1XvenogEH\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;anahi&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/pregunta2/public/imgs&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\xampp\\htdocs\\pregunta2\\public\\imgs\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.26053.13\" />\r\n        <option value=\"bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.26053.13\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"8a628fbe-ef44-4898-9b21-052f7e7c700e\" name=\"Changes\" comment=\"\" />\r\n      <created>1748314519259</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1748314519259</updated>\r\n      <workItem from=\"1748314520876\" duration=\"225000\" />\r\n      <workItem from=\"1748314764830\" duration=\"60000\" />\r\n      <workItem from=\"1748819455048\" duration=\"9761000\" />\r\n      <workItem from=\"1748875178732\" duration=\"14925000\" />\r\n      <workItem from=\"1748956737091\" duration=\"2080000\" />\r\n      <workItem from=\"1749070003537\" duration=\"11370000\" />\r\n      <workItem from=\"1749163270143\" duration=\"3391000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision cb90b5f74543cfa332829dc01fb3cb708fc389a7)
++++ b/.idea/workspace.xml	(date 1749341182639)
+@@ -5,16 +5,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/sqlscript/database2.sql" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/controller/LobbyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LobbyController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/sqlscript/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/database.sql" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/view/cuestionNewView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/cuestionNewView.mustache" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/view/lobbyView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/lobbyView.mustache" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -27,13 +18,12 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="main" />
++        <entry key="$PROJECT_DIR$" value="pilar_anahi" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="PhpDebugGeneral" listening_started="true" />
+-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
++  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\laragon\bin\php\php-8.2.19-nts-Win32-vs16-x64\php.exe" />
+   <component name="ProjectColorInfo">{
+   &quot;customColor&quot;: &quot;&quot;,
+   &quot;associatedIndex&quot;: 3
+@@ -46,24 +36,16 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;anahi&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/pregunta2/public/imgs&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+-  }
+-}</component>
+-  <component name="RecentsManager">
+-    <key name="CopyFile.RECENT_KEYS">
+-      <recent name="C:\xampp\htdocs\pregunta2\public\imgs" />
+-    </key>
+-  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.git.unshallow": "true",
++    "git-widget-placeholder": "anahi",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "vue.rearranger.settings.migration": "true"
++  }
++}]]></component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -82,11 +64,6 @@
+       <updated>1748314519259</updated>
+       <workItem from="1748314520876" duration="225000" />
+       <workItem from="1748314764830" duration="60000" />
+-      <workItem from="1748819455048" duration="9761000" />
+-      <workItem from="1748875178732" duration="14925000" />
+-      <workItem from="1748956737091" duration="2080000" />
+-      <workItem from="1749070003537" duration="11370000" />
+-      <workItem from="1749163270143" duration="3391000" />
+     </task>
+     <servers />
+   </component>
