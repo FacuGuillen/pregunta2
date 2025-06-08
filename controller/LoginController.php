@@ -14,15 +14,18 @@ class LoginController
     }
 
     public function show(){
+
         $this->view->render("login");
+
     }
 
     public function validateUser() {
         session_start();
-        $username = $_POST["nameuser"] ?? '';
-        $password = $_POST["password"] ?? '';
+        $username = $_POST['nameuser'] ?? '';
+        $password = $_POST['password'] ?? '';
 
         $user = $this->model->getUserByUsername($username);
+
 
         if ($user && password_verify($password, $user['contrasena'])) {
 
@@ -31,11 +34,12 @@ class LoginController
             $this->redirectTo("index/show");
             exit;
         } else {
+
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
                 "username" => $username
             ]);
-        }
+            }
     }
 
     public function logout() {

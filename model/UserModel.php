@@ -9,4 +9,6 @@ class UserModel{
     public function getUser($username){
         return $this->database->query("SELECT * FROM usuarios WHERE nombre = '$username'");
     }
+
+
 }

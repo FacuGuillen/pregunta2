@@ -9,7 +9,7 @@ class RegisterModel
         $this->database = $database;
     }
 
-    public function createUser($data)
+    public function createUser($data,$files)
     {
         $db = $this->database->getConnection();
 
@@ -18,10 +18,25 @@ class RegisterModel
         $sexo = $db->real_escape_string($data['sex']);
         $fecha_nacimiento = $db->real_escape_string($data['date']);
         $email = $db->real_escape_string($data['email']);
-        $contrasena = $db->real_escape_string($data['password']);
+        /*contraseña mas segura*/
+        $contrasena = password_hash($data['password'], PASSWORD_DEFAULT);
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
-        $foto_perfil = $db->real_escape_string($data['photo']);
 
+
+        /*guardar imagen*/
+        $foto_perfil = null;
+        if (isset($files['photo']) && $files['photo']['error'] === UPLOAD_ERR_OK){
+            $nombreArchivo = basename($files['photo']['name']);
+            $rutaDestino = __DIR__ . '/../public/imgs/' . $nombreArchivo;
+
+            if (move_uploaded_file($files['photo']['tmp_name'], $rutaDestino)) {
+                $foto_perfil = $db->real_escape_string($nombreArchivo);
+            }else{
+                return "error";
+            }
+    }
+
+        /*insertar nuevo usuario*/
         $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil)
             VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil')";
 

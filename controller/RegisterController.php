@@ -59,8 +59,7 @@ class RegisterController{
             'date' => $_POST['date'],
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            'nameuser' => $_POST['nameuser'],
-            'photo' => $_POST['photo']
+            'nameuser' => $_POST['nameuser']
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
@@ -68,7 +67,7 @@ class RegisterController{
             return;
         }
 
-        $resultado = $this->model->createUser($data);
+        $resultado = $this->model->createUser($data,$_FILES);
 
         if ($resultado !== true) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
@@ -77,6 +76,7 @@ class RegisterController{
         }
 
         $this->redirectTo("register/show?success=1");
+
     }
 
     private function redirectTo($str)

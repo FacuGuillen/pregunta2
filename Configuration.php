@@ -13,6 +13,12 @@ require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
 require_once("controller/IndexController.php");
 require_once("controller/ProfileController.php");
+require_once("controller/LobbyController.php");
+require_once("controller/PartidaController.php");
+require_once("controller/RankingController.php");
+require_once("controller/CuestionController.php");
+require_once("controller/ProfileGamerController.php");
+
 
 
 require_once("model/GroupModel.php");
@@ -21,6 +27,8 @@ require_once("model/TourModel.php");
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
+require_once("model/PartidaModel.php");
+require_once("model/RankingModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
@@ -89,9 +97,27 @@ class Configuration
         );
     }
 
+    public function getPartidaController(){
+        return new PartidaController(new PartidaModel($this->getDatabase()),$this->getViewer());
+    }
+
+    public function getRankingController(){
+        return new RankingController(new RankingModel($this->getDatabase()),$this->getViewer());
+    }
+
+    public function getCuestionController(){
+        return new CuestionController($this->getViewer());
+    }
+
+    public function getProfileGamerController(){
+        return new ProfileGamerController( new UserModel($this->getDatabase()),$this->getViewer());
+    }
+
+
+    /*-------------------------------------------------------------*/
     public function getRouter()
     {
-        return new Router("getHomeController", "show", $this);
+        return new Router("getLoginController", "show", $this);
     }
 
     public function getViewer()
