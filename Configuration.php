@@ -3,6 +3,7 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
+require_once ("configuration/constants.php");
 
 require_once("controller/HomeController.php");
 require_once("controller/GroupController.php");
@@ -76,9 +77,7 @@ class Configuration
     }
 
     public function getLoginController() {
-        return new LoginController(
-            new LoginModel($this->getDatabase()),
-            $this->getViewer()
+        return new LoginController(new LoginModel($this->getDatabase()), $this->getViewer()
         );
     }
 

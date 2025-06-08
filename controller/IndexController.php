@@ -1,5 +1,7 @@
 <?php
 
+require_once ("configuration/constants.php");
+
 class indexController{
     private $view;
 
@@ -21,7 +23,7 @@ class indexController{
 
     private function redirectTo($str)
     {
-        header("Location: " . $str);
+        header("Location: " . BASE_URL . $str);
         exit();
     }
 }
