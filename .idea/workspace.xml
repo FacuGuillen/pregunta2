@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
-    </list>
+    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +69,7 @@
       <workItem from="1748314764830" duration="60000" />
       <workItem from="1749246133211" duration="5167000" />
       <workItem from="1749316625730" duration="6541000" />
-      <workItem from="1749428222424" duration="4746000" />
+      <workItem from="1749428222424" duration="5187000" />
     </task>
     <servers />
   </component>
