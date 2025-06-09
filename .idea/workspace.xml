@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/styles/preguntas.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/preguntaView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/preguntaView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\laragon\bin\php\php-8.2.19-nts-Win32-vs16-x64\php.exe" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -42,19 +43,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "lautaro-preguntas",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;anahi&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,6 +76,7 @@
       <workItem from="1748314764830" duration="60000" />
       <workItem from="1749246133211" duration="5167000" />
       <workItem from="1749316625730" duration="6541000" />
+      <workItem from="1749428222424" duration="4746000" />
     </task>
     <servers />
   </component>

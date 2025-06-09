@@ -100,9 +100,9 @@ class Configuration
         );
     }
 
-    public function getPartidaController(){
+    /*public function getPartidaController(){
         return new PartidaController(new PartidaModel($this->getDatabase()),$this->getViewer());
-    }
+    }*/
 
     public function getRankingController(){
         return new RankingController(new RankingModel($this->getDatabase()),$this->getViewer());

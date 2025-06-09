@@ -6,12 +6,25 @@ class PreguntaModel {
         $this->db = $db;
     }
 
+    public function getUserId($username){
+     $id = $this->db->query("SELECT id_usuario FROM usuarios WHERE nombre_usuario = '$username'");
+     return $id;
+    }
+
+
+
     // Trae una pregunta aleatoria con sus respuestas
-    public function getPreguntaAleatoria() {
+    public function getPreguntaAleatoria($userid) {
+        $userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/
         $pregunta = $this->db->getConnection()->query("
         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
+        WHERE NOT EXISTS (
+            SELECT *
+            FROM pregunta_usuarios pu 
+            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = $userid
+        )
         ORDER BY RAND()
         LIMIT 1
         ")->fetch_assoc();

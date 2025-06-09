@@ -13,7 +13,12 @@ class JuegoController
 
     public function jugar(){
         session_start();
-        $pregunta = $this->model->getPreguntaAleatoria();
+        $userdata= $_SESSION["user"]; /*llama al usuairo de la session*/
+        $username =  $userdata['nombre_usuario'];
+
+        $userid =$this->model->getUserId($username);
+
+        $pregunta = $this->model->getPreguntaAleatoria($userid);
 
         if (!$pregunta) {
             $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
