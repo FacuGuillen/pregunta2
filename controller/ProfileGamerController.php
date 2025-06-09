@@ -13,7 +13,7 @@ class ProfileGamerController{
     public function show(){
 
         $username = $_GET['usuario'];
-        $user =  $this->model->getUser($username);
+        $user =  $this->model->traerLosdatosDelUsuarioYSuRanking($username);
 
 
         $this->view->render("profileGamer", ["userdata" => $user]);

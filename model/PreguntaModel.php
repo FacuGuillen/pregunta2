@@ -11,8 +11,6 @@ class PreguntaModel {
      return $id;
     }
 
-
-
     // Trae una pregunta aleatoria con sus respuestas
     public function getPreguntaAleatoria($userid) {
         $userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/

@@ -28,7 +28,7 @@ class LoginController
         if ($user !=null) {
             $_SESSION["user"] = $user; // Guardamos todoel array del usuario
 
-            $this->redirectTo("index/show");
+            $this->redirectTo("lobby/show");
 
         } else {
             $this->view->render("login", [
