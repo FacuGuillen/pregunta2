@@ -11,21 +11,14 @@ class RankingController{
     }
 
     public function show(){
-
         session_start();
         $userdata= $_SESSION['user'] ?? null;
 
-        /*cambiar desues a ramking
-        $data["usuarios"] = $this->model->getRanking();*/
+        $data = ["usuarios" => $this->model->getRanking()];/*guardo en un array toda la lista que me traiga de ranking*/
 
-        $data = ["usuarios" => $this->model->getRanking($userdata)];
+        $context = array_merge($data, ['userdata' => $userdata]);/*combina dos array : la lista ranking y los datos del saueiro session*/
 
-        $context = array_merge($data,[
-            'userdata' => $userdata,
-        ]);
-
-
-        $this->view->render('ranking',$context);
+        $this->view->render('ranking', $context);
     }
 
 }

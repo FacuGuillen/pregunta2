@@ -1,18 +1,16 @@
-<h1>esta en el ranking</h1>
-
 <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
     <h2 class="w3-wide">lista de Ranking</h2>
     <table class="w3-table">
         <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>email</th>
+            <th>Nombre Usuario</th>
+            <th>Ranking</th>
+            <th>Puntaje</th>
         </tr>
         {{#usuarios}}
             <tr>
-                <td><a href="/Pregunta2/profileGamer/show?usuario={{nombre}}">{{nombre}}</a></td>
-                <td>{{apellido}}</td>
-                <td> {{email}} </td>
+                <td><a href="/Pregunta2/profileGamer/show?usuario={{nombre_usuario}}">{{nombre_usuario}}</a></td>
+                <td>{{tipo_ranking}}</td>
+                <td> {{puntaje_acumulado}} </td>
             </tr>
         {{/usuarios}}
     </table>
