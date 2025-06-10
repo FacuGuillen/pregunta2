@@ -11,7 +11,6 @@ class indexController{
     }
 
     public function show() {
-        session_start(); //<- Obligatorio antes de usar $_SESSION
 
         $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
@@ -23,7 +22,7 @@ class indexController{
 
     private function redirectTo($str)
     {
-        header("Location: " . BASE_URL . $str);
+        header("Location: " . $str);
         exit();
     }
 }

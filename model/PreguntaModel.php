@@ -51,4 +51,9 @@ class PreguntaModel {
 
         return $result['es_correcta'];
     }
+
+    /*borrar el contenido de una tabla se se vio todas las preguntas
+    SELECT *
+            FROM pregunta_usuarios pu
+            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = $userid*/
 }
