@@ -8,10 +8,10 @@ class ProfileController{
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
+        $this->user = Security::checkLogin();
     }
 
     public function show(){
-        $username = checkLogin();
         $username['username'] = $username['nombre_usuario'] ?? null;
         $this->view->render("profile", $username);
     }

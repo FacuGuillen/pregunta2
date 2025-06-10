@@ -1,6 +1,6 @@
 <?php
 require_once("Configuration.php");
-require_once("core/AuthHelper.php");
+session_start();
 
 $configuration = new Configuration();
 $router = $configuration->getRouter();

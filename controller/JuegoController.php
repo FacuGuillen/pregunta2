@@ -8,12 +8,20 @@ class JuegoController
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
+        $this->user = Security::checkLogin();
 
     }
 
-    public function jugar(){
-        $username = checkLogin();
+    public function jugar($categoria = null){
         $pregunta = $this->model->getPreguntaAleatoria();
+
+        if (!$categoria) {
+            // Si no se recibió categoría, redirigimos o mostramos un error
+            header("Location: /ruleta/show");
+            exit;
+        }
+
+        $pregunta = $this->model->getPreguntaPorCategoria($categoria);
 
         if (!$pregunta) {
             $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
@@ -32,7 +40,6 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
-        $username = checkLogin();
         $id_respuesta = $_POST['respuesta'];
         $id_pregunta = $_POST['id_pregunta'];
 
@@ -50,7 +57,7 @@ class JuegoController
 
     // Muestra el resultado final
     public function resultado() {
-        $username = checkLogin();
+        $username = $this->user['username'];
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $this->view->render("resultado", ['puntaje' => $puntaje,

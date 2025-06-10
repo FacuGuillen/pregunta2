@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
         canvasId: 'canvas',
         numSegments: 6,
         segments: [
-            { fillStyle: '#eae56f', text: 'Historia' },
-            { fillStyle: '#89f26e', text: 'Ciencia' },
-            { fillStyle: '#7de6ef', text: 'Arte' },
-            { fillStyle: '#e7706f', text: 'Geografía' },
-            { fillStyle: '#ff9a76', text: 'Cultura' },
-            { fillStyle: '#b56cee', text: 'Deportes' }
+            { fillStyle: '#A0522D', text: 'Historia' },
+            { fillStyle: '#7ED957', text: 'Ciencia' },
+            { fillStyle: '#FF6B6B', text: 'Arte' },
+            { fillStyle: '#A0A0A0', text: 'Geografía' },
+            { fillStyle: '#FFA94D', text: 'Cultura' },
+            { fillStyle: '#4A90E2', text: 'Deportes' }
         ],
         pointerGuide: {
             display: false
