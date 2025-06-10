@@ -6,10 +6,13 @@ class PreguntaModel {
         $this->db = $db;
     }
 
-    // Trae una pregunta aleatoria con sus respuestas
+    public function getDbConnection() {
+        return $this->db->getConnection();
+    }
+
     public function getPreguntaAleatoria() {
         $pregunta = $this->db->getConnection()->query("
-        SELECT p.id_pregunta, p.pregunta, c.categoria
+        SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
         ORDER BY RAND()
@@ -24,7 +27,8 @@ class PreguntaModel {
         SELECT id_respuesta, respuesta 
         FROM respuesta 
         WHERE id_pregunta = $id_pregunta
-        ")->fetch_all(MYSQLI_ASSOC);
+        ORDER BY RAND()
+"       )->fetch_all(MYSQLI_ASSOC);
 
         $pregunta['respuestas'] = $respuestas;
 

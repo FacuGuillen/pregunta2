@@ -1,4 +1,7 @@
 <?php
+
+require_once ("configuration/constants.php");
+
 class indexController{
     private $view;
 
@@ -8,14 +11,12 @@ class indexController{
     }
 
     public function show() {
-        $username = '';
+        $username = checkLogin(); // <- Obligatorio antes de usar $_SESSION
 
-        if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
-            $username = $_SESSION["user"]["nombre_usuario"] ?? '';
-        }
+        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
         $this->view->render("index", [
-            "username" => $username
+            "username" => $username["nombre_usuario"]
         ]);
     }
 

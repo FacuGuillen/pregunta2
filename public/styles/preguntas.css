@@ -1,0 +1,29 @@
+.bg-marron {
+    background-color: #8B4513 !important; /* marrón */
+    color: white;
+}
+
+.bg-azul {
+    background-color: #007BFF !important; /* azul Bootstrap */
+    color: white;
+}
+
+.bg-verde {
+    background-color: #28a745 !important; /* verde */
+    color: white;
+}
+
+.bg-naranja {
+    background-color: #fd7e14 !important; /* naranja */
+    color: white;
+}
+
+.bg-gris {
+    background-color: #6c757d !important; /* gris */
+    color: white;
+}
+
+.bg-rojo {
+    background-color: #dc3545 !important; /* rojo */
+    color: white;
+}

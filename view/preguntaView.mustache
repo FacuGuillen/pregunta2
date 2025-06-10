@@ -2,14 +2,16 @@
     <form method="POST" action="/juego/responder" class="">
         <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
 
-        <h4 class="mb-4 text-center text-primary">{{pregunta}}</h4>
+                <h4 class="mb-4 text-center text-dark">{{pregunta}}</h4>
 
-        <div class="d-flex flex-column align-items-center">
-            {{#respuestas}}
-                <button type="submit" name="respuesta" value="{{id_respuesta}}" class="btn btn-outline-primary btn-sm mb-2 w-50">
-                    {{respuesta}}
-                </button>
-            {{/respuestas}}
+                <div class="d-flex flex-column align-items-center">
+                    {{#respuestas}}
+                        <button type="submit" name="respuesta" value="{{id_respuesta}}" class="btn btn-outline-dark btn-sm mb-2 px-4 py-2 w-50" style="max-width: 300px;">
+                            {{respuesta}}
+                        </button>
+                    {{/respuestas}}
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
