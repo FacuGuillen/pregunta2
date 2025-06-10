@@ -12,7 +12,6 @@ class JuegoController
     }
 
     public function jugar(){
-        session_start();
         $pregunta = $this->model->getPreguntaAleatoria();
 
         if (!$pregunta) {
@@ -29,7 +28,6 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
-        session_start();
         $id_respuesta = $_POST['respuesta'];
         $id_pregunta = $_POST['id_pregunta'];
 
@@ -37,17 +35,16 @@ class JuegoController
 
         if ($es_correcta) {
             $_SESSION['puntaje']++;
-            header("Location: /Pregunta2/juego/jugar");
+            header("Location: /juego/jugar");
             exit;
         } else {
-            header("Location: /Pregunta2/juego/resultado");
+            header("Location: /juego/resultado");
             exit;
         }
     }
 
     // Muestra el resultado final
     public function resultado() {
-        session_start();
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         // Podés reiniciar sesión acá si querés que empiece de 0

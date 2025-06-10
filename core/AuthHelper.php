@@ -3,7 +3,7 @@ function checkLogin() {
     session_start();
 
     if (!isset($_SESSION["user"])) {
-        header("Location: " . BASE_URL . "login/show");
+        header("Location: " . "login/show");
         exit();
     }
 

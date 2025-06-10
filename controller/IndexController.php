@@ -1,7 +1,4 @@
 <?php
-
-require_once ("configuration/constants.php");
-
 class indexController{
     private $view;
 
@@ -11,18 +8,21 @@ class indexController{
     }
 
     public function show() {
-        session_start(); // <- Obligatorio antes de usar $_SESSION
+        $username = '';
 
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
+        if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
+            $username = $_SESSION["user"]["nombre_usuario"] ?? '';
+        }
 
         $this->view->render("index", [
             "username" => $username
         ]);
     }
 
+
     private function redirectTo($str)
     {
-        header("Location: " . BASE_URL . $str);
+        header("Location: " . $str);
         exit();
     }
 }
