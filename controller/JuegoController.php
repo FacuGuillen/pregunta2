@@ -12,7 +12,7 @@ class JuegoController
     }
 
     public function jugar(){
-        session_start();
+        $username = checkLogin();
         $pregunta = $this->model->getPreguntaAleatoria();
 
         if (!$pregunta) {
@@ -22,6 +22,9 @@ class JuegoController
 
         $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
 
+        $pregunta['username'] = $username['nombre_usuario'] ?? null;
+
+
         $this->view->render("pregunta", $pregunta);
     }
 
@@ -29,7 +32,7 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
-        session_start();
+        $username = checkLogin();
         $id_respuesta = $_POST['respuesta'];
         $id_pregunta = $_POST['id_pregunta'];
 
@@ -47,12 +50,10 @@ class JuegoController
 
     // Muestra el resultado final
     public function resultado() {
-        session_start();
+        $username = checkLogin();
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
-        // Podés reiniciar sesión acá si querés que empiece de 0
-        session_destroy();
-
-        $this->view->render("resultado", ['puntaje' => $puntaje]);
+        $this->view->render("resultado", ['puntaje' => $puntaje,
+        'username' => $username['nombre_usuario']]);
     }
 }

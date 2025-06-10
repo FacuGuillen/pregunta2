@@ -7,6 +7,10 @@ $this->view = $view;
 }
 
 public function show() {
-$this->view->render("lobby");
+    session_start(); // <- Obligatorio antes de usar $_SESSION
+    $username = $_SESSION["user"]["nombre_usuario"] ?? null;
+$this->view->render("lobby",[
+    $_SESSION['name']
+]);
 }
 }

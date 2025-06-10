@@ -6,7 +6,10 @@ class PreguntaModel {
         $this->db = $db;
     }
 
-    // Trae una pregunta aleatoria con sus respuestas
+    public function getDbConnection() {
+        return $this->db->getConnection();
+    }
+
     public function getPreguntaAleatoria() {
         $pregunta = $this->db->getConnection()->query("
         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color

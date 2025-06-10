@@ -11,12 +11,11 @@ class indexController{
     }
 
     public function show() {
-        session_start(); // <- Obligatorio antes de usar $_SESSION
+        $username = checkLogin(); // <- Obligatorio antes de usar $_SESSION
 
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
         $this->view->render("index", [
-            "username" => $username
+            "username" => $username["nombre_usuario"]
         ]);
     }
 

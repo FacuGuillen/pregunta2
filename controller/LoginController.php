@@ -33,7 +33,6 @@ class LoginController
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
-                "username" => $username
             ]);
         }
     }

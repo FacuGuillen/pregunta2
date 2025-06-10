@@ -11,9 +11,8 @@ class ProfileController{
     }
 
     public function show(){
-        session_start();
-
-        $username = $_SESSION['user'] ;
+        $username = checkLogin();
+        $username['username'] = $username['nombre_usuario'] ?? null;
         $this->view->render("profile", $username);
     }
 }
