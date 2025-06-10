@@ -11,14 +11,15 @@ class indexController{
     }
 
     public function show() {
+        $username = checkLogin(); // <- Obligatorio antes de usar $_SESSION
 
         $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
         $this->view->render("index", [
-            "username" => $username
+            "username" => $username["nombre_usuario"]
         ]);
-
     }
+
 
     private function redirectTo($str)
     {

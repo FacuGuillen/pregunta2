@@ -3,14 +3,11 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
+require_once("core/AuthHelper.php");
 require_once ("configuration/constants.php");
 
-require_once("controller/HomeController.php");
-require_once("controller/GroupController.php");
-require_once("controller/SongController.php");
-require_once("controller/TourController.php");
+
 require_once("controller/RegisterController.php");
-require_once("controller/LoginController.php");
 require_once("controller/IndexController.php");
 require_once("controller/ProfileController.php");
 require_once("controller/LobbyController.php");
@@ -18,11 +15,11 @@ require_once("controller/RankingController.php");
 require_once("controller/CuestionController.php");
 require_once("controller/ProfileGamerController.php");
 require_once("controller/JuegoController.php");
+require_once("controller/LobbyController.php");
+require_once("controller/RuletaController.php");
 
 
-require_once("model/GroupModel.php");
-require_once("model/SongModel.php");
-require_once("model/TourModel.php");
+
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
@@ -52,26 +49,28 @@ class Configuration
         return parse_ini_file("configuration/config.ini", true);
     }
 
-    public function getSongController()
+    public function getLobbyController()
     {
-        return new SongController(new SongModel($this->getDatabase()), $this->getViewer());
+        return new LobbyController($this->getViewer());
     }
 
-    public function getTourController()
-    {
-        return new TourController(new TourModel($this->getDatabase()), $this->getViewer());
+    public function getProfileController(){
+        return new ProfileController(new UserModel($this->getDatabase()), $this->getViewer()
+        );
     }
 
-    public function getHomeController()
-    {
-        return new HomeController($this->getViewer());
+    // Juego
+    public function getRuletaController() {
+        return new RuletaController($this->getViewer());
     }
 
-    public function getIndexController()
-    {
-        return new IndexController($this->getViewer());
+    public function getJuegoController() {
+        return new JuegoController(new PreguntaModel($this->getDatabase()), $this->getViewer()
+        );
     }
 
+
+    // Sesiones
     public function getRegisterController()
     {
         return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
@@ -82,20 +81,8 @@ class Configuration
         );
     }
 
-    public function getLobbyController() {
-        return new LobbyController($this->getViewer());
-    }
-
-
-    public function getGroupController()
-    {
-        return new GroupController(new GroupModel($this->getDatabase()), $this->getViewer());
-    }
-
-    public function getProfileController(){
-        return new ProfileController(new UserModel($this->getDatabase()),
-            $this->getViewer()
-        );
+    public function getIndexController() {
+        return new IndexController($this->getViewer());
     }
 
     public function getRankingController(){
@@ -104,29 +91,21 @@ class Configuration
 
     public function getCuestionController(){
         return new CuestionController($this->getViewer());
-    }
 
     public function getProfileGamerController(){
         return new ProfileGamerController( new UserModel($this->getDatabase()),$this->getViewer());
     }
 
-    public function getJuegoController() {
-        return new JuegoController(
-            new PreguntaModel($this->getDatabase()),
-            $this->getViewer()
-        );
-    }
     /*-------------------------------------------------------------*/
-    public function getRouter()
-    {
-        return new Router("getLoginController", "show", $this);
-    }
 
+    public function getRouter(){
+        return new Router("getIndexController", "show", $this);
+    }
     public function getViewer()
     {
         //return new FileView();
         return new MustachePresenter("view");
     }
 
-
+}
 }

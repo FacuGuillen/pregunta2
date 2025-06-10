@@ -6,12 +6,15 @@ class PreguntaModel {
         $this->db = $db;
     }
 
-    public function getUserId($username){
-     $id = $this->db->query("SELECT id_usuario FROM usuarios WHERE nombre_usuario = '$username'");
-     return $id;
+    public function getDbConnection() {
+        return $this->db->getConnection();
     }
-
+    public function getUserId($username){
+        $id = $this->db->query("SELECT id_usuario FROM usuarios WHERE nombre_usuario = '$username'");
+        return $id;
+    }
     // Trae una pregunta aleatoria con sus respuestas
+
     public function getPreguntaAleatoria($userid) {
         $userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/
         $pregunta = $this->db->getConnection()->query("

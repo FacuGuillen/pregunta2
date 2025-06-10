@@ -6,17 +6,22 @@ public function __construct($view) {
 $this->view = $view;
 }
 
-    public function show(){
+    public function show() {
+        $username = '';
 
-    session_start();
-    $userdata= $_SESSION['user'] ?? null;
+        if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
+            $username = $_SESSION["user"]["nombre_usuario"] ?? '';
+        }
 
-    $context = [
-        'userdata' => $userdata
-    ];
+        $this->view->render("lobby", [
+            "username" => $username
+        ]);
+    }
 
 
-    $this->view->render("lobby",$context);
-}
-
+    private function redirectTo($str)
+    {
+        header("Location: " . $str);
+        exit();
+    }
 }

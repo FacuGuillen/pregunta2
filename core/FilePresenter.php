@@ -6,7 +6,7 @@ class FilePresenter
     {
     }
 
-    public function render($viewName, $data = [])
+    public function render($viewName, $data = [], $user = "")
     {
         require_once("view/header.php");
         require_once("view/" . $viewName . "View.php");

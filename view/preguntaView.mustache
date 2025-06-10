@@ -1,12 +1,6 @@
 <div class="container mt-5">
-    <div class="card shadow-lg rounded-4" style="background-color: rgba(255, 255, 255, 0.85); border: none;">
-        <div class="card-header bg-{{color}} text-white text-center rounded-top-4">
-            <h5 class="m-0">Categoría: {{categoria}}</h5>
-        </div>
-
-        <div class="card-body">
-            <form method="POST" action="/Pregunta2/juego/responder">
-                <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
+    <form method="POST" action="/juego/responder" class="">
+        <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
 
                 <h4 class="mb-4 text-center text-dark">{{pregunta}}</h4>
 

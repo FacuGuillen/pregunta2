@@ -1,6 +1,5 @@
 <?php
 
-require_once("configuration/constants.php");
 
 class LoginController
 {
@@ -13,40 +12,42 @@ class LoginController
         $this->view = $view;
     }
 
-    public function show(){
-        $this->view->render("login");
+    public function show() {
+        $username = $_SESSION["user"]["nameuser"] ?? null;
+
+        $this->view->render("login", [
+            "username" => $username,
+        ]);
     }
 
     public function validateUser() {
-        session_start();
         $username = $_POST["nameuser"] ?? '';
         $password = $_POST["password"] ?? '';
 
         $user = $this->model->getUserByUsername($username);
-        // lo comente porque no me deja pasar
-       // if ($user && password_verify($password, $user['contrasena'])) {
-        if ($user !=null) {
-            $_SESSION["user"] = $user; // Guardamos todoel array del usuario
 
-            $this->redirectTo("lobby/show");
+        if ($user && password_verify($password, $user['contrasena'])) {
 
+            $_SESSION["user"] = $user;
+
+            $this->view->render("lobby", [
+                "username" => $username
+            ]);
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
-                "username" => $username
             ]);
         }
     }
 
     public function logout() {
-        session_start();   // Iniciar la sesión para poder manipularla
         session_destroy(); // Destruir todos los datos de la sesión
         $this->redirectTo("index/show"); // Redirigir a donde quieras
     }
 
     private function redirectTo($str)
     {
-        header("Location: " . BASE_URL . $str);
+        header("Location: " . $str);
         exit();
     }
 }
