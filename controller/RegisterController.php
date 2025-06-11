@@ -52,6 +52,23 @@ class RegisterController{
             return;
         }
 
+
+        // Manejo de la imagen
+        $nombreArchivo = null;
+
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid() . "_" . basename($_FILES['photo']['name']);
+            $destino = "public/uploads/" . $nombreArchivo;
+
+            if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
+                $this->redirectTo("register/show?error=error_foto");
+                return;
+            }
+        } else {
+            $this->redirectTo("register/show?error=error_foto");
+            return;
+        }
+
         $data = [
             'name' => $_POST['name'],
             'lastname' => $_POST['lastname'],
@@ -60,7 +77,7 @@ class RegisterController{
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
-            'photo' => $_POST['photo']
+            'photo' => $nombreArchivo  // Guardás solo el nombre o la ruta relativa
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {

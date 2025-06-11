@@ -12,4 +12,9 @@ class Security{
         return $_SESSION["user"];
     }
 
+    public static function getUser() {
+        $user = self::checkLogin();
+        $user["username"] = $user["nombre_usuario"] ?? null;
+        return $user;
+    }
 }

@@ -4,20 +4,17 @@ require_once ("configuration/constants.php");
 
 class indexController{
     private $view;
+    private $user;
 
     public function __construct($view)
     {
         $this->view = $view;
+        $this->user = Security::getUser();
     }
 
     public function show() {
-        $username = checkLogin(); // <- Obligatorio antes de usar $_SESSION
 
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
-
-        $this->view->render("index", [
-            "username" => $username["nombre_usuario"]
-        ]);
+        $this->view->render("index",$this->user );
     }
 
 
