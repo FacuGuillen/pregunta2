@@ -1,22 +1,15 @@
 <?php
 class LobbyController{
     private $view;
-
+    private $user;
     public function __construct($view)
     {
         $this->view = $view;
+        $this->user = Security::getUser();
     }
 
     public function show() {
-        $username = '';
-
-        if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
-            $username = $_SESSION["user"]["nombre_usuario"] ?? '';
-        }
-
-        $this->view->render("lobby", [
-            "username" => $username
-        ]);
+        $this->view->render("lobby", $this->user);
     }
 
 

@@ -5,10 +5,12 @@ class JuegoController
     private $view;
     private $model;
 
+    private $user;
+
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::checkLogin();
+        $this->user = Security::getUser();
 
     }
 

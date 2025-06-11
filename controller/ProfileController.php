@@ -4,15 +4,18 @@ class ProfileController{
 
     private $model;
     private $view;
+    /**
+     * @var mixed|null
+     */
+    private $user;
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::checkLogin();
+        $this->user = Security::getUser();
     }
 
     public function show(){
-        $username['username'] = $username['nombre_usuario'] ?? null;
-        $this->view->render("profile", $username);
+        $this->view->render("profile", $this->user);
     }
 }
