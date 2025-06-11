@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Categoría elegida: ${segment.text}`);  // muestra el alert y espera que el usuario cierre
 
                 // Cuando el usuario cierre el alert, redirigimos:
-                window.location.href = `juego/jugar/${encodeURIComponent(segment.text)}`;
+                window.location.href = `/juego/jugar/${encodeURIComponent(segment.text)}`;
             }
         }
     });
