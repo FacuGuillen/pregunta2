@@ -63,6 +63,7 @@ class JuegoController
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $this->view->render("resultado", ['puntaje' => $puntaje,
-        'username' => $username['nombre_usuario']]);
+            'username' => $username  // ✅ ya es un string
+        ]);
     }
 }
