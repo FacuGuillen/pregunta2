@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 5,
             spins: 8,
             callbackFinished: (segment) => {
-                alert(`Categoría elegida: ${segment.text}`);  // muestra el alert y espera que el usuario cierre
-
-                // Cuando el usuario cierre el alert, redirigimos:
-                window.location.href = `/juego/jugar/${encodeURIComponent(segment.text)}`;
+                Swal.fire(`Categoría elegida: ${segment.text}`).then(() => {
+                    // Esto se ejecuta **después** de que el usuario cierre el Swal
+                    window.location.href = `/juego/jugar/${encodeURIComponent(segment.text)}`;
+                });
             }
         }
     });

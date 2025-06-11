@@ -5,7 +5,6 @@ class LobbyController{
     public function __construct($view)
     {
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show() {

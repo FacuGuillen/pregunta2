@@ -20,30 +20,75 @@ class PreguntaModel {
     }
 
     public function getPreguntaPorCategoria($categoria) {
-        $categoria = $this->db->getConnection()->real_escape_string($categoria);
+        $conn = $this->db->getConnection();
 
-        $pregunta = $this->db->getConnection()->query("
+        $stmt = $conn->prepare("
         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
-        WHERE c.categoria = '$categoria'
+        WHERE c.categoria = ?
         ORDER BY RAND()
         LIMIT 1
-    ")->fetch_assoc();
+    ");
+        $stmt->bind_param("s", $categoria);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $pregunta = $resultado->fetch_assoc();
+        $stmt->close();
 
         if (!$pregunta) return null;
 
         $id_pregunta = $pregunta['id_pregunta'];
 
-        $respuestas = $this->db->getConnection()->query("
+        // Consulta de respuestas (acá también podrías usar prepared si querés)
+        $resStmt = $conn->prepare("
         SELECT id_respuesta, respuesta 
         FROM respuesta 
-        WHERE id_pregunta = $id_pregunta
+        WHERE id_pregunta = ?
         ORDER BY RAND()
-    ")->fetch_all(MYSQLI_ASSOC);
+    ");
+        $resStmt->bind_param("i", $id_pregunta);
+        $resStmt->execute();
+        $respuestas = $resStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $resStmt->close();
 
         $pregunta['respuestas'] = $respuestas;
 
         return $pregunta;
     }
+
+    public function guardarPartida($puntaje){
+        $db = $this->db->getConnection();
+
+        $sql = "INSERT INTO partidas (puntaje) VALUES ('$puntaje')";
+
+        if (!$db->query($sql)) {
+            return $db->error;
+        }
+
+        $idPartida = $db->insert_id;
+
+        return $idPartida;
+    }
+
+    public function guardarPartidaUsuario($idUsuario, $idPartida){
+        $db = $this->db->getConnection();
+
+        $stmt = $db->prepare("INSERT INTO partidas_usuarios (id_usuario, id_partidas) VALUES (?, ?)");
+
+        if (!$stmt) {
+            return $db->error;
+        }
+
+        $stmt->bind_param("ii", $idUsuario, $idPartida);
+
+        if (!$stmt->execute()) {
+            return $stmt->error;
+        }
+
+        $stmt->close();
+
+        return true;
+    }
+
 }
