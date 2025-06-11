@@ -15,15 +15,14 @@ class JuegoController
     }
 
     public function jugar($categoria = null){
-        $pregunta = $this->model->getPreguntaAleatoria();
+        //$pregunta = $this->model->getPreguntaAleatoria();
 
         if (!$categoria) {
-            // Si no se recibió categoría, redirigimos o mostramos un error
             header("Location: /ruleta/show");
             exit;
         }
 
-        $pregunta = $this->model->getPreguntaPorCategoria($categoria);
+        $pregunta = $this->model->getPreguntaAleatoria($categoria);
 
         if (!$pregunta) {
             $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);

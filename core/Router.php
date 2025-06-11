@@ -16,7 +16,15 @@ class Router
     public function go($controllerName, $methodName)
     {
         $controller = $this->getControllerFrom($controllerName);
-        $this->executeMethodFromController($controller, $methodName);
+
+        // Extraer parámetros desde la URL
+        $url = $_SERVER["REQUEST_URI"];
+        $parts = explode("/", trim($url, "/"));
+
+        // Ejemplo: /juego/jugar/Ciencia => [juego, jugar, Ciencia]
+        $param = $parts[2] ?? null; // Cambiá índice si cambia estructura
+
+        $this->executeMethodFromController($controller, $methodName, $param);
     }
 
     private function getControllerFrom($controllerName)
