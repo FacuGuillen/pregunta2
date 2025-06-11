@@ -45,6 +45,5 @@ class Router
         } else {
             $controller->{$validMethod}();
         }
-        //call_user_func(array($controller, $validMethod));
     }
 }

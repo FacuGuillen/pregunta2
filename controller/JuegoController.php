@@ -11,7 +11,6 @@ class JuegoController
         $this->model = $model;
         $this->view = $view;
         $this->user = Security::getUser();
-
     }
 
     public function jugar($categoria = null){
