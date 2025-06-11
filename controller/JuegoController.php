@@ -15,7 +15,7 @@ class JuegoController
     }
 
     public function jugar($categoria = null){
-        $pregunta = $this->model->getPreguntaAleatoria();
+        //$pregunta = $this->model->getPreguntaAleatoria();
 
         if (!$categoria) {
             // Si no se recibió categoría, redirigimos o mostramos un error

@@ -42,7 +42,7 @@ class LoginController
 
     public function logout() {
         session_destroy(); // Destruir todos los datos de la sesión
-        $this->redirectTo("index/show"); // Redirigir a donde quieras
+        $this->view->render("lobby",[]); // Redirigir a donde quieras
     }
 
     private function redirectTo($str)

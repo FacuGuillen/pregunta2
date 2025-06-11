@@ -43,4 +43,32 @@ class PreguntaModel {
 
         return $result['es_correcta'];
     }
+
+    public function getPreguntaPorCategoria($categoria) {
+        $categoria = $this->db->getConnection()->real_escape_string($categoria);
+
+        $pregunta = $this->db->getConnection()->query("
+        SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
+        FROM pregunta p
+        JOIN categoria c ON p.id_categoria = c.id_categoria
+        WHERE c.categoria = '$categoria'
+        ORDER BY RAND()
+        LIMIT 1
+    ")->fetch_assoc();
+
+        if (!$pregunta) return null;
+
+        $id_pregunta = $pregunta['id_pregunta'];
+
+        $respuestas = $this->db->getConnection()->query("
+        SELECT id_respuesta, respuesta 
+        FROM respuesta 
+        WHERE id_pregunta = $id_pregunta
+        ORDER BY RAND()
+    ")->fetch_all(MYSQLI_ASSOC);
+
+        $pregunta['respuestas'] = $respuestas;
+
+        return $pregunta;
+    }
 }
