@@ -19,7 +19,7 @@ class PreguntaModel {
         return $result['es_correcta'];
     }
 
-    public function getPreguntaPorCategoria($categoria) {
+    public function getPreguntaPorCategoria($categoria,$idUsuario) {
         $conn = $this->db->getConnection();
 
         $stmt = $conn->prepare("
@@ -27,10 +27,16 @@ class PreguntaModel {
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
         WHERE c.categoria = ?
+        /*para que no se repitan las preguntas*/
+        AND NOT EXISTS(
+            SELECT 1
+            FROM pregunta_usuarios pu
+            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = ?
+        )
         ORDER BY RAND()
         LIMIT 1
     ");
-        $stmt->bind_param("s", $categoria);
+        $stmt->bind_param("si", $categoria,$idUsuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $pregunta = $resultado->fetch_assoc();
@@ -89,6 +95,23 @@ class PreguntaModel {
         $stmt->close();
 
         return true;
+    }
+
+    public function borrarTodasPreguntasqueYaVioElUsuario($idUsuario)
+    {   $db = $this->db->getConnection();
+        $sql = "DELETE FROM pregunta_usuarios WHERE id_usuario = ? ";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+
+    }
+
+    public function guardarPreguntasQueYaVioElUsuario($idUsuario,$idPregunta )
+    {   $db = $this->db->getConnection();
+        $sql = "INSERT INTO pregunta_usuarios (id_usuario, id_pregunta) VALUES (?, ?)";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ii", $idUsuario, $idPregunta);
+        $stmt->execute();
     }
 
 }

@@ -15,6 +15,8 @@ class JuegoController
 
     public function jugar($categoria = null){
 
+        $idUsuario = $this->user['id_usuario'];
+
         if (!$categoria) {
             header("Location: /ruleta/show");
             exit;
@@ -22,10 +24,11 @@ class JuegoController
 
         $categoria = urldecode($categoria);
 
-        $pregunta = $this->model->getPreguntaPorCategoria($categoria);
+        $pregunta = $this->model->getPreguntaPorCategoria($categoria,$idUsuario);
 
         if (!$pregunta) {
             $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+            $this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
             return;
         }
 
@@ -33,6 +36,7 @@ class JuegoController
 
         $pregunta['username'] = $this->user['nombre_usuario'] ?? null;
 
+        $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario,$pregunta['id_pregunta']);
 
         $this->view->render("pregunta", $pregunta);
     }
