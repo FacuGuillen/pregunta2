@@ -3,7 +3,6 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
-require_once("core/AuthHelper.php");
 require_once ("configuration/constants.php");
 
 require_once("controller/RegisterController.php");

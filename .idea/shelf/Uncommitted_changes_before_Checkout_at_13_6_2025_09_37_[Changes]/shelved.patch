@@ -1,0 +1,631 @@
+Index: view/lobbyView.mustache
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!-- The Band Section -->\r\n<div class=\"w3-container w3-content w3-center w3-padding-64\" style=\"max-width:800px\" id=\"band\">\r\n    <!-- Contenido central -->\r\n    <div class=\"central-card \">\r\n        <img src=\"{{BASE_URL}}/public/imgs/signos.png\" alt=\"Trivia\" class=\"quiz-image \">\r\n        <h2 class=\"w3-xxlarge w3-margin-top\">¿Cuántas preguntas<br>podés responder?</h2>\r\n        <a href=\"/ruleta/show\" class=\"w3-button w3-black w3-large w3-margin-top\">Comenzar</a>\r\n    </div>\r\n</div>\r\n<main>\r\n    <div class=\"contenedor-partida\">\r\n            <div class=\"smiley-face\">\uD83D\uDE0A</div>\r\n            <h1>¡Hola! {{nombre_usuario}} </h1>\r\n            <p>Tu puntaje en el ranking es :</p>\r\n            <p>¿Listo para jugar?</p>\r\n            <a href=\"/Pregunta2/juego/jugar\" class=\"w3-button w3-black w3-large w3-margin-top\">Comenzar partida</a>\r\n            <a href=\"/Pregunta2/ranking/show\" class=\"w3-button w3-black w3-large w3-margin-top\">Ranking total</a>\r\n        <a href=\"/Pregunta2/cuestion/show\" class=\"w3-button w3-black w3-large w3-margin-top\">Crear preguntas nuevas</a>\r\n        <p>(suponiendo) desea aceptar la partida? </p>\r\n    </div>\r\n</main>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/view/lobbyView.mustache b/view/lobbyView.mustache
+--- a/view/lobbyView.mustache	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/view/lobbyView.mustache	(date 1749598473210)
+@@ -10,12 +10,14 @@
+ <main>
+     <div class="contenedor-partida">
+             <div class="smiley-face">😊</div>
+-            <h1>¡Hola! {{nombre_usuario}} </h1>
+-            <p>Tu puntaje en el ranking es :</p>
++            <h1>¡Hola! {{username}} </h1>
++          {{#ranking}}
++            <p>Tu puntaje en el ranking es :{{tipo_ranking}}</p>
+             <p>¿Listo para jugar?</p>
+-            <a href="/Pregunta2/juego/jugar" class="w3-button w3-black w3-large w3-margin-top">Comenzar partida</a>
+-            <a href="/Pregunta2/ranking/show" class="w3-button w3-black w3-large w3-margin-top">Ranking total</a>
+-        <a href="/Pregunta2/cuestion/show" class="w3-button w3-black w3-large w3-margin-top">Crear preguntas nuevas</a>
++          {{/ranking}}
++            <a href="/juego/jugar" class="w3-button w3-black w3-large w3-margin-top">Comenzar partida</a>
++            <a href="/ranking/show" class="w3-button w3-black w3-large w3-margin-top">Ranking total</a>
++        <a href="/cuestion/show" class="w3-button w3-black w3-large w3-margin-top">Crear preguntas nuevas</a>
+         <p>(suponiendo) desea aceptar la partida? </p>
+     </div>
+ </main>
+\ No newline at end of file
+Index: controller/LoginController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\n\r\nclass LoginController\r\n{\r\n    private $view;\r\n    private $model;\r\n\r\n    public function __construct($model, $view)\r\n    {\r\n        $this->model = $model;\r\n        $this->view = $view;\r\n    }\r\n\r\n    public function show() {\r\n        $username = $_SESSION[\"user\"][\"nameuser\"] ?? null;\r\n\r\n        $this->view->render(\"login\", [\r\n            \"username\" => $username,\r\n        ]);\r\n    }\r\n\r\n    public function validateUser() {\r\n        $username = $_POST[\"nameuser\"] ?? '';\r\n        $password = $_POST[\"password\"] ?? '';\r\n\r\n        $user = $this->model->getUserByUsername($username);\r\n\r\n        if ($user && password_verify($password, $user['contrasena'])) {\r\n\r\n            $_SESSION[\"user\"] = $user;\r\n\r\n            $this->view->render(\"lobby\", [\r\n                \"username\" => $username\r\n            ]);\r\n        } else {\r\n            $this->view->render(\"login\", [\r\n                \"error\" => \"Credenciales incorrectas\",\r\n            ]);\r\n        }\r\n    }\r\n\r\n    public function logout() {\r\n        session_destroy(); // Destruir todos los datos de la sesión\r\n        $this->redirectTo(\"index/show\"); // Redirigir a donde quieras\r\n    }\r\n\r\n    private function redirectTo($str)\r\n    {\r\n        header(\"Location: \" . $str);\r\n        exit();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/LoginController.php b/controller/LoginController.php
+--- a/controller/LoginController.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/controller/LoginController.php	(date 1749595078124)
+@@ -26,13 +26,16 @@
+ 
+         $user = $this->model->getUserByUsername($username);
+ 
+-        if ($user && password_verify($password, $user['contrasena'])) {
+-
++      //  if ($user && password_verify($password, $user['contrasena'])) {
++         if ($user['nombre_usuario'] === $username && $user['contrasena'] === $password) {
+             $_SESSION["user"] = $user;
+ 
+-            $this->view->render("lobby", [
++          /*  $this->view->render("lobby", [
+                 "username" => $username
+-            ]);
++            ]);*/
++        header("Location: /lobby/show");
++        exit();
++
+         } else {
+             $this->view->render("login", [
+                 "error" => "Credenciales incorrectas",
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8a628fbe-ef44-4898-9b21-052f7e7c700e\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.htaccess\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.htaccess\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/controller/IndexController.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/controller/IndexController.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/index.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/index.php\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/model/PreguntaModel.php\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/model/PreguntaModel.php\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"CSS File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"C:\\xampp\\php\\php.exe\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2xf1sDOuQTuAQfk7bz1XvenogEH\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;anahi&quot;,\r\n    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.26053.13\" />\r\n        <option value=\"bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.26053.13\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"8a628fbe-ef44-4898-9b21-052f7e7c700e\" name=\"Changes\" comment=\"\" />\r\n      <created>1748314519259</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1748314519259</updated>\r\n      <workItem from=\"1748314520876\" duration=\"225000\" />\r\n      <workItem from=\"1748314764830\" duration=\"60000\" />\r\n      <workItem from=\"1749246133211\" duration=\"5167000\" />\r\n      <workItem from=\"1749316625730\" duration=\"6541000\" />\r\n      <workItem from=\"1749428222424\" duration=\"5187000\" />\r\n      <workItem from=\"1749495655541\" duration=\"2054000\" />\r\n      <workItem from=\"1749583002214\" duration=\"721000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/.idea/workspace.xml	(date 1749606644654)
+@@ -5,11 +5,23 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/controller/PartidasController.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/model/PartidasModel.php" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/view/partidasView.mustache" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/controller/IndexController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/IndexController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/controller/LobbyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LobbyController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/controller/RankingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RankingController.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/core/AuthHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/AuthHelper.php" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/model/RankingModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RankingModel.php" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/public/js/ruleta.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/ruleta.js" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/view/lobbyView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/lobbyView.mustache" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/view/rankingView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/rankingView.mustache" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+Index: model/PreguntaModel.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\nclass PreguntaModel {\r\n    private $db;\r\n\r\n    public function __construct($db) {\r\n        $this->db = $db;\r\n    }\r\n\r\n    public function getDbConnection() {\r\n        return $this->db->getConnection();\r\n    }\r\n    public function getUserId($username){\r\n        $id = $this->db->query(\"SELECT id_usuario FROM usuarios WHERE nombre_usuario = '$username'\");\r\n        return $id;\r\n    }\r\n    // Trae una pregunta aleatoria con sus respuestas\r\n\r\n    public function getPreguntaAleatoria($userid) {\r\n        $userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/\r\n        $pregunta = $this->db->getConnection()->query(\"\r\n        SELECT p.id_pregunta, p.pregunta, c.categoria, c.color\r\n        FROM pregunta p\r\n        JOIN categoria c ON p.id_categoria = c.id_categoria\r\n        WHERE NOT EXISTS (\r\n            SELECT *\r\n            FROM pregunta_usuarios pu \r\n            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = $userid\r\n        )\r\n        ORDER BY RAND()\r\n        LIMIT 1\r\n        \")->fetch_assoc();\r\n\r\n        if (!$pregunta) return null;\r\n\r\n        $id_pregunta = $pregunta['id_pregunta'];\r\n\r\n        $respuestas = $this->db->getConnection()->query(\"\r\n        SELECT id_respuesta, respuesta \r\n        FROM respuesta \r\n        WHERE id_pregunta = $id_pregunta\r\n        ORDER BY RAND()\r\n\"       )->fetch_all(MYSQLI_ASSOC);\r\n\r\n        $pregunta['respuestas'] = $respuestas;\r\n\r\n        return $pregunta;\r\n    }\r\n\r\n    // Verifica si una respuesta es correcta\r\n    public function esCorrecta($id_respuesta) {\r\n        $result = $this->db->getConnection()->query(\"\r\n        SELECT es_correcta FROM respuesta WHERE id_respuesta = $id_respuesta\r\n        \")->fetch_assoc();\r\n\r\n        return $result['es_correcta'];\r\n    }\r\n\r\n    /*borrar el contenido de una tabla se se vio todas las preguntas\r\n    SELECT *\r\n            FROM pregunta_usuarios pu\r\n            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = $userid*/\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/model/PreguntaModel.php b/model/PreguntaModel.php
+--- a/model/PreguntaModel.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/model/PreguntaModel.php	(date 1749607188141)
+@@ -15,17 +15,12 @@
+     }
+     // Trae una pregunta aleatoria con sus respuestas
+ 
+-    public function getPreguntaAleatoria($userid) {
+-        $userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/
++    public function getPreguntaAleatoria() {
++        //$userid = (int)$userid;/*al valor lo hago int para que pueda buscarlo*/
+         $pregunta = $this->db->getConnection()->query("
+         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
+         FROM pregunta p
+         JOIN categoria c ON p.id_categoria = c.id_categoria
+-        WHERE NOT EXISTS (
+-            SELECT *
+-            FROM pregunta_usuarios pu 
+-            WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = $userid
+-        )
+         ORDER BY RAND()
+         LIMIT 1
+         ")->fetch_assoc();
+@@ -55,6 +50,57 @@
+         return $result['es_correcta'];
+     }
+ 
++    public function getPreguntaPorCategoria ($categoria)
++    {$pregunta = $this->db->getConnection()->query("
++        SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
++        FROM pregunta p
++        JOIN categoria c ON p.id_categoria = c.id_categoria
++        where c.categoria = '$categoria'
++        ORDER BY RAND()
++        LIMIT 1
++        ")->fetch_assoc();
++
++        if (!$pregunta) return null;
++
++        $id_pregunta = $pregunta['id_pregunta'];
++
++        $respuestas = $this->db->getConnection()->query("
++        SELECT id_respuesta, respuesta 
++        FROM respuesta 
++        WHERE id_pregunta = $id_pregunta
++        ORDER BY RAND()
++"       )->fetch_all(MYSQLI_ASSOC);
++
++        $pregunta['respuestas'] = $respuestas;
++
++        return $pregunta;
++    }
++
++    public function insertarPartidaNueva($username, $puntaje_total)
++    {
++        // Insertar la partida
++        $sql = "INSERT INTO partidas (puntaje) VALUES (:puntaje_total)";
++        $stmt = $this->db->prepare($sql);
++        $stmt->bindParam(':puntaje', $puntaje_total);
++        if (!$stmt->execute()) {
++            var_dump($stmt->errorInfo());
++            return;
++        }
++
++        // Obtener ID de la nueva partida
++        $id_partida = $this->db->lastInsertId();
++
++        // Insertar relación con el usuario
++        $sql2 = "INSERT INTO partidas_usuarios (id_partidas, id_usuario) VALUES (:partida, :usuario)";
++        $stmt2 = $this->db->prepare($sql2);
++        $stmt2->bindParam(':partida', $id_partida);
++        $stmt2->bindParam(':usuario', $username); // Asegurate de pasar el ID del usuario
++        if (!$stmt2->execute()) {
++            var_dump($stmt2->errorInfo());
++        }
++    }
++
++
+     /*borrar el contenido de una tabla se se vio todas las preguntas
+     SELECT *
+             FROM pregunta_usuarios pu
+Index: controller/IndexController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nrequire_once (\"configuration/constants.php\");\r\n\r\nclass indexController{\r\n    private $view;\r\n\r\n    public function __construct($view)\r\n    {\r\n        $this->view = $view;\r\n    }\r\n\r\n    public function show() {\r\n        $username = checkLogin(); // <- Obligatorio antes de usar $_SESSION\r\n\r\n        $username = $_SESSION[\"user\"][\"nombre_usuario\"] ?? null;\r\n\r\n        $this->view->render(\"index\", [\r\n            \"username\" => $username[\"nombre_usuario\"]\r\n        ]);\r\n    }\r\n\r\n\r\n    private function redirectTo($str)\r\n    {\r\n        header(\"Location: \" . $str);\r\n        exit();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/IndexController.php b/controller/IndexController.php
+--- a/controller/IndexController.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/controller/IndexController.php	(date 1749595636300)
+@@ -16,7 +16,7 @@
+         $username = $_SESSION["user"]["nombre_usuario"] ?? null;
+ 
+         $this->view->render("index", [
+-            "username" => $username["nombre_usuario"]
++            "username" => $username
+         ]);
+     }
+ 
+Index: controller/LobbyController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\nclass LobbyController {\r\nprivate $view;\r\n\r\npublic function __construct($view) {\r\n$this->view = $view;\r\n}\r\n\r\n    public function show() {\r\n        $username = '';\r\n\r\n        if (isset($_SESSION[\"user\"]) && is_array($_SESSION[\"user\"])) {\r\n            $username = $_SESSION[\"user\"][\"nombre_usuario\"] ?? '';\r\n        }\r\n\r\n        $this->view->render(\"lobby\", [\r\n            \"username\" => $username\r\n        ]);\r\n    }\r\n\r\n\r\n    private function redirectTo($str)\r\n    {\r\n        header(\"Location: \" . $str);\r\n        exit();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/LobbyController.php b/controller/LobbyController.php
+--- a/controller/LobbyController.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/controller/LobbyController.php	(date 1749598452396)
+@@ -1,20 +1,28 @@
+ <?php
+ class LobbyController {
+-private $view;
++
++    private $model;
++    private $view;
+ 
+-public function __construct($view) {
+-$this->view = $view;
++
++public function __construct($model,$view) {
++    $this->model = $model;
++    $this->view = $view;
+ }
+ 
+     public function show() {
+-        $username = '';
++     /*   $username = '';
+ 
+         if (isset($_SESSION["user"]) && is_array($_SESSION["user"])) {
+             $username = $_SESSION["user"]["nombre_usuario"] ?? '';
+-        }
++        }*/
++
++        $username = $_SESSION["user"]["nombre_usuario"] ?? '';
++        $data = $this->model->getRankingDelUsuarioIniciado($username);
+ 
+         $this->view->render("lobby", [
+-            "username" => $username
++            "username" => $username,
++            "ranking" => $data
+         ]);
+     }
+ 
+Index: model/RankingModel.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nclass RankingModel{\r\n\r\n    private $database;\r\n\r\n    public function __construct($database){\r\n        $this->database = $database;\r\n    }\r\n\r\n\r\n    /*tener en cuenta que hay que crear una tabla de sea de ranking donde tendo el id usuario,el nuemro de puntaje ,ect*/\r\n    public function getRanking(){\r\n        return $this->database->query(\"SELECT  u.nombre_usuario , u.tipo_ranking, r.puntaje_acumulado\r\n                                       FROM ranking r JOIN usuarios u ON r.id_ranking = u.tipo_ranking\r\n                                       ORDER BY r.puntaje_acumulado DESC\");\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/model/RankingModel.php b/model/RankingModel.php
+--- a/model/RankingModel.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/model/RankingModel.php	(date 1749598280479)
+@@ -9,6 +9,13 @@
+     }
+ 
+ 
++    public function getRankingDelUsuarioIniciado($username)
++    {return $this->database->query("SELECT  u.nombre_usuario , u.tipo_ranking
++                                       FROM ranking r JOIN usuarios u ON r.id_ranking = u.tipo_ranking
++                                       where u.nombre_usuario = '$username'");
++
++    }
++
+     /*tener en cuenta que hay que crear una tabla de sea de ranking donde tendo el id usuario,el nuemro de puntaje ,ect*/
+     public function getRanking(){
+         return $this->database->query("SELECT  u.nombre_usuario , u.tipo_ranking, r.puntaje_acumulado
+@@ -16,4 +23,6 @@
+                                        ORDER BY r.puntaje_acumulado DESC");
+     }
+ 
++
++
+ }
+\ No newline at end of file
+Index: view/rankingView.mustache
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><div class=\"w3-container w3-content w3-center w3-padding-64\" style=\"max-width:800px\" id=\"band\">\r\n    <h2 class=\"w3-wide\">lista de Ranking</h2>\r\n    <table class=\"w3-table\">\r\n        <tr>\r\n            <th>Nombre Usuario</th>\r\n            <th>Ranking</th>\r\n            <th>Puntaje</th>\r\n        </tr>\r\n        {{#usuarios}}\r\n            <tr>\r\n                <td><a href=\"/Pregunta2/profileGamer/show?usuario={{nombre_usuario}}\">{{nombre_usuario}}</a></td>\r\n                <td>{{tipo_ranking}}</td>\r\n                <td> {{puntaje_acumulado}} </td>\r\n            </tr>\r\n        {{/usuarios}}\r\n    </table>\r\n    <h2 class=\"w3-wide\">lista de partidas ejemplo</h2>\r\n    <a href=\"/Pregunta2/lobby/show\" class=\"boton\">volver</a>\r\n</div>\r\n\r\n</div>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/view/rankingView.mustache b/view/rankingView.mustache
+--- a/view/rankingView.mustache	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/view/rankingView.mustache	(date 1749599762602)
+@@ -6,16 +6,16 @@
+             <th>Ranking</th>
+             <th>Puntaje</th>
+         </tr>
+-        {{#usuarios}}
++        {{#ranking}}
+             <tr>
+-                <td><a href="/Pregunta2/profileGamer/show?usuario={{nombre_usuario}}">{{nombre_usuario}}</a></td>
++                <td><a href="/profileGamer/show?usuario={{nombre_usuario}}">{{nombre_usuario}}</a></td>
+                 <td>{{tipo_ranking}}</td>
+                 <td> {{puntaje_acumulado}} </td>
+             </tr>
+-        {{/usuarios}}
++        {{/ranking}}
+     </table>
+-    <h2 class="w3-wide">lista de partidas ejemplo</h2>
+-    <a href="/Pregunta2/lobby/show" class="boton">volver</a>
++    <a href="/partidas/show" class="boton">partidas mias</a>
++    <a href="/lobby/show" class="boton">volver</a>
+ </div>
+ 
+ </div>
+\ No newline at end of file
+Index: index.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nsession_start();\r\n\r\nrequire_once(\"Configuration.php\");\r\nsession_start();\r\n\r\n$configuration = new Configuration();\r\n$router = $configuration->getRouter();\r\n\r\n$router->go(\r\n    $_GET[\"controller\"]  ,\r\n    $_GET[\"method\"]\r\n);
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/index.php b/index.php
+--- a/index.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/index.php	(date 1749606314498)
+@@ -1,9 +1,9 @@
+ <?php
+-
++/*si lo borro no me aparece la sesion en el libby ver como rreglar*/
++//require_once ("core/AuthHelper.php");
+ session_start();
+-
+ require_once("Configuration.php");
+-session_start();
++
+ 
+ $configuration = new Configuration();
+ $router = $configuration->getRouter();
+Index: Configuration.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\nrequire_once(\"core/Database.php\");\r\nrequire_once(\"core/FilePresenter.php\");\r\nrequire_once(\"core/MustachePresenter.php\");\r\nrequire_once(\"core/Router.php\");\r\nrequire_once(\"core/AuthHelper.php\");\r\nrequire_once (\"configuration/constants.php\");\r\n\r\n\r\nrequire_once(\"controller/RegisterController.php\");\r\nrequire_once(\"controller/IndexController.php\");\r\nrequire_once(\"controller/ProfileController.php\");\r\nrequire_once(\"controller/LobbyController.php\");\r\nrequire_once(\"controller/RankingController.php\");\r\nrequire_once(\"controller/CuestionController.php\");\r\nrequire_once(\"controller/ProfileGamerController.php\");\r\nrequire_once(\"controller/JuegoController.php\");\r\nrequire_once(\"controller/LobbyController.php\");\r\nrequire_once(\"controller/RuletaController.php\");\r\n\r\n\r\n\r\nrequire_once(\"model/RegisterModel.php\");\r\nrequire_once(\"model/LoginModel.php\");\r\nrequire_once(\"model/UserModel.php\");\r\nrequire_once(\"model/PreguntaModel.php\");\r\nrequire_once(\"model/RankingModel.php\");\r\n\r\n\r\n\r\ninclude_once('vendor/mustache/src/Mustache/Autoloader.php');\r\n\r\nclass Configuration\r\n{\r\n    public function getDatabase()\r\n    {\r\n        $config = $this->getIniConfig();\r\n\r\n        return new Database(\r\n            $config[\"database\"][\"server\"],\r\n            $config[\"database\"][\"user\"],\r\n            $config[\"database\"][\"dbname\"],\r\n            $config[\"database\"][\"pass\"]\r\n        );\r\n    }\r\n\r\n    public function getIniConfig()\r\n    {\r\n        return parse_ini_file(\"configuration/config.ini\", true);\r\n    }\r\n\r\n    public function getLobbyController()\r\n    {\r\n        return new LobbyController($this->getViewer());\r\n    }\r\n\r\n    public function getProfileController(){\r\n        return new ProfileController(new UserModel($this->getDatabase()), $this->getViewer()\r\n        );\r\n    }\r\n\r\n    // Juego\r\n    public function getRuletaController() {\r\n        return new RuletaController($this->getViewer());\r\n    }\r\n\r\n    public function getJuegoController() {\r\n        return new JuegoController(new PreguntaModel($this->getDatabase()), $this->getViewer()\r\n        );\r\n    }\r\n\r\n\r\n    // Sesiones\r\n    public function getRegisterController()\r\n    {\r\n        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());\r\n    }\r\n\r\n    public function getLoginController() {\r\n        return new LoginController(new LoginModel($this->getDatabase()), $this->getViewer()\r\n        );\r\n    }\r\n\r\n    public function getIndexController() {\r\n        return new IndexController($this->getViewer());\r\n    }\r\n\r\n    public function getRankingController(){\r\n        return new RankingController(new RankingModel($this->getDatabase()),$this->getViewer());\r\n    }\r\n\r\n    public function getCuestionController(){\r\n        return new CuestionController($this->getViewer());\r\n\r\n    public function getProfileGamerController(){\r\n        return new ProfileGamerController( new UserModel($this->getDatabase()),$this->getViewer());\r\n    }\r\n\r\n    /*-------------------------------------------------------------*/\r\n\r\n    public function getRouter(){\r\n        return new Router(\"getIndexController\", \"show\", $this);\r\n    }\r\n    public function getViewer()\r\n    {\r\n        //return new FileView();\r\n        return new MustachePresenter(\"view\");\r\n    }\r\n\r\n}\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Configuration.php b/Configuration.php
+--- a/Configuration.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/Configuration.php	(date 1749599453832)
+@@ -17,6 +17,8 @@
+ require_once("controller/JuegoController.php");
+ require_once("controller/LobbyController.php");
+ require_once("controller/RuletaController.php");
++require_once("controller/LoginController.php");
++require_once("controller/PartidasController.php");
+ 
+ 
+ 
+@@ -25,6 +27,7 @@
+ require_once("model/UserModel.php");
+ require_once("model/PreguntaModel.php");
+ require_once("model/RankingModel.php");
++require_once("model/PartidasModel.php");
+ 
+ 
+ 
+@@ -51,7 +54,7 @@
+ 
+     public function getLobbyController()
+     {
+-        return new LobbyController($this->getViewer());
++        return new LobbyController(new RankingModel($this->getDatabase()),$this->getViewer());
+     }
+ 
+     public function getProfileController(){
+@@ -89,13 +92,18 @@
+         return new RankingController(new RankingModel($this->getDatabase()),$this->getViewer());
+     }
+ 
+-    public function getCuestionController(){
++    public function getCuestionController()
++    {
+         return new CuestionController($this->getViewer());
+-
++    }
+     public function getProfileGamerController(){
+         return new ProfileGamerController( new UserModel($this->getDatabase()),$this->getViewer());
+     }
+ 
++    public function getPartidasController(){
++        return new PartidasController( new PartidasModel($this->getDatabase()),$this->getViewer());
++    }
++
+     /*-------------------------------------------------------------*/
+ 
+     public function getRouter(){
+@@ -107,5 +115,4 @@
+         return new MustachePresenter("view");
+     }
+ 
+-}
+ }
+\ No newline at end of file
+Index: controller/RankingController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nclass RankingController{\r\n    public $model;\r\n    public $view;\r\n\r\n\r\n    public function __construct($model,$view){\r\n        $this->model = $model;\r\n        $this->view = $view;\r\n    }\r\n\r\n    public function show(){\r\n        session_start();\r\n        $userdata= $_SESSION['user'] ?? null;\r\n\r\n        $data = [\"usuarios\" => $this->model->getRanking()];/*guardo en un array toda la lista que me traiga de ranking*/\r\n\r\n        $context = array_merge($data, ['userdata' => $userdata]);/*combina dos array : la lista ranking y los datos del saueiro session*/\r\n\r\n        $this->view->render('ranking', $context);\r\n    }\r\n\r\n}\r\n\r\n/*ROLES\r\n- USUARIO -> REPORTAR QUE PREGUNTA ES INVALIDA DESDE LA PANTALLA Y CREAR PREGUNTAS NUEVAS\r\n- USUARIO EDITOR -> PERMITIR DAR DE ALTA ,BAJA Y MODIFICAR LAS PREGUNTAS\r\n- USUARIO ADMINISTRADOR -> VER LA CANT DE JUGADARES, CANT DE PARTIDAS JUGADAS,CANT DE PREGUNTAS DEL JUEGO,CANT PREGUNTAS CREADAS,ETC\r\n-\r\n\r\n*/
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/controller/RankingController.php b/controller/RankingController.php
+--- a/controller/RankingController.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/controller/RankingController.php	(date 1749598637098)
+@@ -11,14 +11,15 @@
+     }
+ 
+     public function show(){
+-        session_start();
+-        $userdata= $_SESSION['user'] ?? null;
+ 
+-        $data = ["usuarios" => $this->model->getRanking()];/*guardo en un array toda la lista que me traiga de ranking*/
++        $username = $_SESSION['user']['nombre_usuario'] ?? null;
+ 
+-        $context = array_merge($data, ['userdata' => $userdata]);/*combina dos array : la lista ranking y los datos del saueiro session*/
++      //  $data = ["usuarios" => $this->model->getRanking()];/*guardo en un array toda la lista que me traiga de ranking*/
+ 
+-        $this->view->render('ranking', $context);
++        $this->view->render('ranking', [
++            'username' => $username,
++            'ranking' => $this->model->getRanking()
++        ]);
+     }
+ 
+ }
+Index: view/partidasView.mustache
+===================================================================
+diff --git a/view/partidasView.mustache b/view/partidasView.mustache
+new file mode 100644
+--- /dev/null	(date 1749599121057)
++++ b/view/partidasView.mustache	(date 1749599121057)
+@@ -0,0 +1,17 @@
++<div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
++    <h2 class="w3-wide">lista de Partidas mias </h2>
++    <table class="w3-table">
++        <tr>
++            <th>Numero de partida</th>
++            <th>Puntos</th>
++        </tr>
++        {{#partidas}}
++            <tr>
++                <td><a href="/show?usuario={{nombre_usuario}}">{{nombre_usuario}}</a></td>
++                <td>{{id_partidas}}</td>
++                <td> {{puntaje}} </td>
++            </tr>
++        {{/partidas}}
++    </table>
++    <a href="/lobby/show" class="boton">volver</a>
++</div>
+Index: controller/PartidasController.php
+===================================================================
+diff --git a/controller/PartidasController.php b/controller/PartidasController.php
+new file mode 100644
+--- /dev/null	(date 1749599823078)
++++ b/controller/PartidasController.php	(date 1749599823078)
+@@ -0,0 +1,22 @@
++<?php
++class PartidasController
++{
++    public $model;
++    public $view;
++
++    public function __construct($model,$view){
++        $this->model = $model;
++        $this->view = $view;
++    }
++    public function show()
++    {   $username = $_SESSION['user']['nombre_usuario'] ;
++        $data = $this->model->getPartidasDeUnUsuario($username);
++
++        $this->view->render('partidas', [
++            'username' => $username,
++            'partidas' => $data,
++        ]);
++
++    }
++
++}
+\ No newline at end of file
+Index: model/PartidasModel.php
+===================================================================
+diff --git a/model/PartidasModel.php b/model/PartidasModel.php
+new file mode 100644
+--- /dev/null	(date 1749605127060)
++++ b/model/PartidasModel.php	(date 1749605127060)
+@@ -0,0 +1,21 @@
++<?php
++class PartidasModel {
++    private $data;
++    public function __construct($data) {
++        $this->data = $data;
++    }
++
++
++    public function  buscarIdPartida(){
++        return $this->data->query("SELECT id_pregunta
++                                   FROM partidas");
++    }
++
++    public function getPartidasDeUnUsuario($username)
++    { return $this->data->query("
++    select p.id_partidas, p.puntaje
++    from partidas p join partidas_usuarios pu on p.id_partidas=pu.id_partidas join  usuarios u on pu.id_usuario = u.id_usuario
++    where u.nombre_usuario = '$username'");
++
++    }
++}
+\ No newline at end of file
+Index: controller/JuegoController.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\n\r\nclass JuegoController\r\n{\r\n    private $view;\r\n    private $model;\r\n\r\n    public function __construct($model, $view){\r\n        $this->model = $model;\r\n        $this->view = $view;\r\n        $this->user = Security::checkLogin();\r\n\r\n    }\r\n\r\n    public function jugar(){\r\n        session_start();\r\n        $userdata= $_SESSION[\"user\"]; /*llama al usuairo de la session*/\r\n        $username =  $userdata['nombre_usuario'];\r\n\r\n        $userid =$this->model->getUserId($username);\r\n\r\n       // $pregunta = $this->model->getPreguntaAleatoria($userid);\r\n\r\n         public function jugar($categoria = null){\r\n        $pregunta = $this->model->getPreguntaAleatoria();\r\n\r\n        if (!$categoria) {\r\n            // Si no se recibió categoría, redirigimos o mostramos un error\r\n            header(\"Location: /ruleta/show\");\r\n            exit;\r\n        }\r\n\r\n        $pregunta = $this->model->getPreguntaPorCategoria($categoria);\r\n\r\n        if (!$pregunta) {\r\n            $this->view->render(\"resultado\", ['puntaje' => $_SESSION['puntaje'] ?? 0]);\r\n            return;\r\n        }\r\n\r\n        $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];\r\n\r\n        $pregunta['username'] = $username['nombre_usuario'] ?? null;\r\n\r\n\r\n        $this->view->render(\"pregunta\", $pregunta);\r\n    }\r\n\r\n\r\n\r\n    // Procesa la respuesta del usuario\r\n    public function responder() {\r\n        $id_respuesta = $_POST['respuesta'];\r\n        $id_pregunta = $_POST['id_pregunta'];\r\n\r\n        $es_correcta = $this->model->esCorrecta($id_respuesta);\r\n\r\n        if ($es_correcta) {\r\n            $_SESSION['puntaje']++;\r\n            header(\"Location: /juego/jugar\");\r\n            exit;\r\n        } else {\r\n            header(\"Location: /juego/resultado\");\r\n            exit;\r\n        }\r\n    }\r\n\r\n    // Muestra el resultado final\r\n    public function resultado() {\r\n        $username = $this->user['username'];\r\n        $puntaje = $_SESSION['puntaje'] ?? 0;\r\n\r\n        $this->view->render(\"resultado\", ['puntaje' => $puntaje,\r\n        'username' => $username['nombre_usuario']]);\r\n    }\r\n}
+===================================================================
+diff --git a/controller/JuegoController.php b/controller/JuegoController.php
+--- a/controller/JuegoController.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/controller/JuegoController.php	(date 1749606583057)
+@@ -5,48 +5,44 @@
+     private $view;
+     private $model;
+ 
++
+     public function __construct($model, $view){
+         $this->model = $model;
+         $this->view = $view;
+         $this->user = Security::checkLogin();
+ 
++
+     }
+ 
+     public function jugar(){
+-        session_start();
+-        $userdata= $_SESSION["user"]; /*llama al usuairo de la session*/
+-        $username =  $userdata['nombre_usuario'];
+-
+-        $userid =$this->model->getUserId($username);
+-
+-       // $pregunta = $this->model->getPreguntaAleatoria($userid);
+-
+-         public function jugar($categoria = null){
++        $username = checkLogin();
+         $pregunta = $this->model->getPreguntaAleatoria();
+ 
+-        if (!$categoria) {
+-            // Si no se recibió categoría, redirigimos o mostramos un error
+-            header("Location: /ruleta/show");
+-            exit;
+-        }
+-
+-        $pregunta = $this->model->getPreguntaPorCategoria($categoria);
+-
++        /*se termina el juego*/
+         if (!$pregunta) {
+-            $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
++
++            $puntaje_total = $_SESSION['puntaje'] ?? 0;
++            /*crear una partida*/
++            $this->model->insertarPartidaNueva($username, $puntaje_total);
++
++            /*se podria fija la cantidad de respuestas correctas la dificultad*/
++
++            $this->view->render("resultado", ['puntaje' => $puntaje_total]);
+             return;
+         }
+ 
++        /*si hay preguntas */
++
+         $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
+ 
+         $pregunta['username'] = $username['nombre_usuario'] ?? null;
+ 
++        /*se guardan*/
++        //$this->model->insertarLaPreguntaEnPreguntaUsuario($pregunta['id_pregunta'], $username['nombre_usuario']);
+ 
+         $this->view->render("pregunta", $pregunta);
+     }
+ 
+-
+-
+     // Procesa la respuesta del usuario
+     public function responder() {
+         $id_respuesta = $_POST['respuesta'];
+@@ -54,6 +50,9 @@
+ 
+         $es_correcta = $this->model->esCorrecta($id_respuesta);
+ 
++        /*logica se a esa pregunta cuantas veces la respondieron bien
++        insertar a pregunta correcta en una tabla */
++
+         if ($es_correcta) {
+             $_SESSION['puntaje']++;
+             header("Location: /juego/jugar");
+Index: core/AuthHelper.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?php\r\nfunction checkLogin() {\r\n    session_start();\r\n\r\n    if (!isset($_SESSION[\"user\"])) {\r\n        header(\"Location: \" . \"login/show\");\r\n        exit();\r\n    }\r\n\r\n    return $_SESSION[\"user\"]; // El usuario está logueado correctamente\r\n}
+===================================================================
+diff --git a/core/AuthHelper.php b/core/AuthHelper.php
+--- a/core/AuthHelper.php	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/core/AuthHelper.php	(date 1749606331675)
+@@ -1,6 +1,6 @@
+ <?php
+ function checkLogin() {
+-    session_start();
++   // session_start();
+ 
+     if (!isset($_SESSION["user"])) {
+         header("Location: " . "login/show");
+Index: public/js/ruleta.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>document.addEventListener('DOMContentLoaded', () => {\r\n    console.log('Winwheel:', typeof Winwheel); // para chequear que está definido\r\n\r\n    if(typeof Winwheel === 'undefined') {\r\n        console.error('Winwheel no está cargado.');\r\n        return;\r\n    }\r\n\r\n    const ruleta = new Winwheel({\r\n        canvasId: 'canvas',\r\n        numSegments: 6,\r\n        segments: [\r\n            { fillStyle: '#A0522D', text: 'Historia' },\r\n            { fillStyle: '#7ED957', text: 'Ciencia' },\r\n            { fillStyle: '#FF6B6B', text: 'Arte' },\r\n            { fillStyle: '#A0A0A0', text: 'Geografía' },\r\n            { fillStyle: '#FFA94D', text: 'Cultura' },\r\n            { fillStyle: '#4A90E2', text: 'Deportes' }\r\n        ],\r\n        pointerGuide: {\r\n            display: false\r\n        },\r\n        animation: {\r\n            type: 'spinToStop',\r\n            duration: 5,\r\n            spins: 8,\r\n            callbackFinished: (segment) => {\r\n                alert(`Categoría elegida: ${segment.text}`);  // muestra el alert y espera que el usuario cierre\r\n\r\n                // Cuando el usuario cierre el alert, redirigimos:\r\n                window.location.href = `juego/jugar/${encodeURIComponent(segment.text)}`;\r\n            }\r\n        }\r\n    });\r\n\r\n    document.getElementById('canvas').addEventListener('click', () => {\r\n        ruleta.startAnimation();\r\n    });\r\n});\r\n
+===================================================================
+diff --git a/public/js/ruleta.js b/public/js/ruleta.js
+--- a/public/js/ruleta.js	(revision 2a152ef2a3af30096dfe194e3da03229e7d6e309)
++++ b/public/js/ruleta.js	(date 1749597752175)
+@@ -28,7 +28,7 @@
+                 alert(`Categoría elegida: ${segment.text}`);  // muestra el alert y espera que el usuario cierre
+ 
+                 // Cuando el usuario cierre el alert, redirigimos:
+-                window.location.href = `juego/jugar/${encodeURIComponent(segment.text)}`;
++                window.location.href = `/juego/jugar/${encodeURIComponent(segment.text)}`;
+             }
+         }
+     });
