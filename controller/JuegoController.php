@@ -24,12 +24,20 @@ class JuegoController
 
         $categoria = urldecode($categoria);
 
-        $pregunta = $this->model->getPreguntaPorCategoria($categoria,$idUsuario);
+        $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario);
 
         if (!$pregunta) {
-            $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
-            $this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
-            return;
+            // alert que me diga que ya contestaste todas las preguntas de cierta categoria y va a buscar otra
+            $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
+
+            if ($nuevaCategoria) {
+                $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($nuevaCategoria,$idUsuario);
+            } else {
+                $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
+                return;
+            }
+
         }
 
         $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
@@ -45,9 +53,13 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
+        $idUsuario = $this->user['id_usuario'];
         $id_respuesta = $_POST['respuesta'];
+        $pregunta =  $_SESSION['pregunta_actual'];
 
         $es_correcta = $this->model->esCorrecta($id_respuesta);
+        /*guarda las preguntas y respuesta que el usuario ya vio y contesto */
+        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta);
 
         if ($es_correcta) {
             $_SESSION['puntaje']++;
