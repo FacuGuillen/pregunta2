@@ -42,25 +42,36 @@ class PreguntaModel {
         $pregunta = $resultado->fetch_assoc();
         $stmt->close();
 
-        if (!$pregunta) return null;
+        if (!$pregunta) {
+           return ['status' => 'no-preguntas-disponibles'];
+        }
 
-        $id_pregunta = $pregunta['id_pregunta'];
+        $cantidad = $this->cantidadDeVecesRespondidaPorPregunta($pregunta['id_pregunta']);
+        if ($cantidad > 10) {
+               return ['status' => 'repetida-muchas-veces'];
+        }
 
-        // Consulta de respuestas (acá también podrías usar prepared si querés)
+
+       // $id_pregunta = $pregunta['id_pregunta'];
+        // busca la respuesta
         $resStmt = $conn->prepare("
         SELECT id_respuesta, respuesta 
         FROM respuesta 
         WHERE id_pregunta = ?
         ORDER BY RAND()
     ");
-        $resStmt->bind_param("i", $id_pregunta);
+        $resStmt->bind_param("i", $pregunta['id_pregunta']);
         $resStmt->execute();
         $respuestas = $resStmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $resStmt->close();
 
+        /*preguntas se les asigna las respuestas */
         $pregunta['respuestas'] = $respuestas;
 
-        return $pregunta;
+        return [
+            'status' => 'ok',
+            'pregunta' => $pregunta,
+        ];
     }
     public function guardarPartida($puntaje){
         $db = $this->db->getConnection();
@@ -175,6 +186,22 @@ class PreguntaModel {
 
     public function nuevaCategoriaDisponible($idUsuario)
     {   $db = $this->db->getConnection();
+        $categoria = null;
+        $sql = "SELECT c.categoria 
+                FROM categoria c join pregunta p on c.id_categoria=p.id_categoria 
+                WHERE NOT EXISTS ( SELECT 1 
+                                   FROM pregunta_usuarios pu 
+                                   WHERE pu.id_pregunta = p.id_pregunta AND pu.id_usuario = ?)
+                ORDER BY RAND()
+                LIMIT 1";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
+
+        $stmt->bind_result($categoria);
+        $stmt->fetch();
+        $stmt->close();
+        return $categoria;
 
     }
 
@@ -221,6 +248,21 @@ class PreguntaModel {
         $stmt->fetch();
         $stmt->close();
         return $total;
+    }
+
+    private function cantidadDeVecesRespondidaPorPregunta($id_pregunta)
+    {  $db = $this->db->getConnection();
+       $total = 0;
+
+       $sql = "SELECT COUNT(*) FROM pregunta_usuarios pu WHERE pu.id_pregunta = ? ";
+       $stmt = $db->prepare($sql);
+       $stmt->bind_param("i", $id_pregunta);
+       $stmt->execute();
+
+       $stmt->bind_result($total);
+       $stmt->fetch();
+       $stmt->close();
+       return $total;
     }
 
 }

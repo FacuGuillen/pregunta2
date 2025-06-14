@@ -13,7 +13,8 @@ class JuegoController
         $this->user = Security::getUser();
     }
 
-    public function jugar($categoria = null){
+    public function jugar($categoria = null)
+    {
 
         $idUsuario = $this->user['id_usuario'];
 
@@ -24,23 +25,40 @@ class JuegoController
 
         $categoria = urldecode($categoria);
 
-        $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario);
+        $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
-        if (!$pregunta) {
-            // alert que me diga que ya contestaste todas las preguntas de cierta categoria y va a buscar otra
+        /*si no encuntra pregunta con esos filtros */
+        if ($respuesta['status'] === 'no-preguntas-disponibles') {
             $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
-
+            echo"<script>alert('buscando otra categoria :". addslashes($nuevaCategoria) ."');</script>";
             if ($nuevaCategoria) {
-                $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($nuevaCategoria,$idUsuario);
-            } else {
-                $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
+                $categoria = $nuevaCategoria;
+                echo"<script>alert('buscando otra pregunta ". json_encode($respuesta) ."');</script>";
+            }else {
+                echo "<script>alert('ya se vieron todas las preguntas');</script>";
+             //   $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                 //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
-                return;
             }
 
         }
 
-        $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
+        if ($respuesta['status'] === 'repetida-muchas-veces') {
+            echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
+            $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario);
+        }
+
+        if ($respuesta['status'] === 'ok') {
+            $pregunta = $respuesta['pregunta'];
+        }
+
+        if (!isset($pregunta) || !isset($pregunta['id_pregunta'])) {
+            echo "<script>alert(' no se encontro preguntas');</script>";
+            $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+            return;
+        }
+
+        $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'] ;
 
         $pregunta['username'] = $this->user['nombre_usuario'] ?? null;
 
