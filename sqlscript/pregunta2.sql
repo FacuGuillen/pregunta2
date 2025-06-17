@@ -279,6 +279,16 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `sexo`, `email`, `co
 	(2, 'Ana', 'García', 'Femenino', 'ana@example.com', 'clave456', 'anita', '1998-08-22', 'foto_ana.jpg', 1, 2, 2),
 	(3, 'Lautaro', 'Rossi', 'masculinmo', 'lautarorossi99@gmail.com', '$2y$10$egKhe3mdSjYGM3/uJ0mC/eYjDUVIrWXunV6yDWI0WKuCPjwsas/o.', 'poli', '2025-06-16', 'aaa', NULL, NULL, NULL);
 
+--tabla de preguntas,usuario y si respondio bien o respondio mal
+CREATE TABLE IF NOT EXISTS  `preguntas_usuarios_respuestas`(
+    `id_preguntas_usuarios_respuestas` int(11) NOT NULL AUTO_INCREMENT,
+    `id_usuario` int(11) DEFAULT NULL,
+    `id_preguntas` int(11) DEFAULT NULL,
+    `respuesta_correcta`  BOOLEAN,
+    PRIMARY KEY (`id_preguntas_usuarios_respuestas`),
+    CONSTRAINT `pregunta_usuarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+    CONSTRAINT `pregunta_usuarios_ibfk_2` FOREIGN KEY (`id_preguntas`) REFERENCES `pregunta` (`id_pregunta`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
