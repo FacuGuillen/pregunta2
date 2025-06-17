@@ -20,6 +20,8 @@ class RegisterModel
         $email = $db->real_escape_string($data['email']);
         $contrasena = $db->real_escape_string($data['password']);
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
+
+        /*guardar imagen*/
         $foto_perfil = $db->real_escape_string($data['photo']);
 
         $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil)
