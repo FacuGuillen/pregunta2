@@ -13,6 +13,7 @@ require_once("controller/JuegoController.php");
 require_once("controller/LobbyController.php");
 require_once("controller/RuletaController.php");
 require_once("controller/RankingController.php");
+require_once("controller/ProfileGamerController.php");
 
 
 require_once("model/RegisterModel.php");
@@ -20,6 +21,7 @@ require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
 require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
+require_once("model/ProfileGamerModel.php");
 
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
@@ -55,6 +57,10 @@ class Configuration
 
     public function getRankingController(){
         return new RankingController(new RankingModel($this->getDatabase()),$this->getViewer()
+        );
+    }
+    public function getProfileGamerController(){
+        return new ProfileGamerController(new ProfileGamerModel($this->getDatabase()),$this->getViewer()
         );
     }
 
