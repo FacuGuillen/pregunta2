@@ -1,21 +1,19 @@
-
 <div class="container d-flex justify-content-center align-items-center vh-100 table-responsive">
 
     <table class="table table-bordered table-striped text-center">
         <thead class="table-primary">
         <tr>
-            <th>Nombre</th>
+            <th>Partida</th>
             <th>Puntaje Total</th>
         </tr>
         </thead>
         <tbody>
-        {{#usuarios}}
-        <tr>
-            <td><a href="/profileGamer/show/{{nombre_usuario}}">{{nombre_usuario}}</a></td>
-            <td> {{puntaje_acumulado}} </td>
-        </tr>
-        {{/usuarios}}
+        {{#usuario}}
+            <tr>
+                <td>{{nro_partida}}</td>
+                <td> {{puntaje_total}} </td>
+            </tr>
+        {{/usuario}}
         </tbody>
     </table>
 </div>
-<a href="/listaPartida/show">ver mis partidas</a>

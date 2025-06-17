@@ -14,6 +14,7 @@ require_once("controller/LobbyController.php");
 require_once("controller/RuletaController.php");
 require_once("controller/RankingController.php");
 require_once("controller/ProfileGamerController.php");
+require_once("controller/ListaPartidaController.php");
 
 
 require_once("model/RegisterModel.php");
@@ -61,6 +62,10 @@ class Configuration
     }
     public function getProfileGamerController(){
         return new ProfileGamerController(new ProfileGamerModel($this->getDatabase()),$this->getViewer()
+        );
+    }
+    public function getListaPartidaController(){
+        return new ListaPartidaController(new UserModel($this->getDatabase()),$this->getViewer()
         );
     }
 
