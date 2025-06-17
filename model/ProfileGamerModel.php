@@ -7,8 +7,10 @@ class ProfileGamerModel{
     }
 
     public function traerLosdatosDelUsuarioYSuRanking($nombreJugador){
-        return $this->database->query("SELECT u.nombre_usuario , r.puntaje_acumulado,r.cantidad_partidas
-                                       FROM ranking r JOIN usuarios u ON r.id_ranking=u.tipo_ranking 
+        return $this->database->query("SELECT SUM(p.puntaje) as puntaje_total , u.nombre_usuario as nombre_usuario ,COUNT(pu.id_usuario) as cant_partidas 
+                                       FROM `partidas` p 
+                                           join partidas_usuarios pu on p.id_partidas=pu.id_partidas 
+                                           join usuarios u on u.id_usuario=pu.id_usuario 
                                        WHERE u.nombre_usuario = '$nombreJugador'");
     }
 
