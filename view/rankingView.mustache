@@ -1,0 +1,22 @@
+
+<div class="container d-flex justify-content-center align-items-center vh-100 table-responsive">
+
+    <table class="table table-bordered table-striped text-center">
+        <thead class="table-primary">
+        <tr>
+            <th>Nombre</th>
+            <th>Ranking</th>
+            <th>Puntaje Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#usuarios}}
+        <tr>
+            <td><a >{{nombre_usuario}}</a></td>
+            <td>{{tipo_ranking}}</td>
+            <td> {{puntaje_acumulado}} </td>
+        </tr>
+        {{/usuarios}}
+        </tbody>
+    </table>
+</div>
