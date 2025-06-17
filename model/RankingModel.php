@@ -11,11 +11,11 @@ class RankingModel{
 
     /*tener en cuenta que hay que crear una tabla de sea de ranking donde tendo el id usuario,el nuemro de puntaje ,ect*/
     public function getRanking(){
-        return $this->database->query("SELECT u.nombre_usuario AS nombre_usuario,
-                                              COUNT(pur.id_preguntas) AS cantidad_preguntas,
-                                              SUM(pur.respuesta_correcta) AS puntaje_acumulado
-                                       FROM usuarios u JOIN preguntas_usuarios_respuestas pur ON u.id_usuario = pur.id_usuario
-                                       GROUP BY u.id_usuario
-                                       ORDER BY puntaje_acumulado DESC");
+        return $this->database->query("SELECT u.nombre_usuario AS nombre_usuario, 
+                                             SUM(p.puntaje) AS puntaje_acumulado 
+                                      FROM partidas p JOIN partidas_usuarios pu ON pu.id_partidas = p.id_partidas 
+                                                      JOIN usuarios u ON u.id_usuario = pu.id_usuario 
+                                      GROUP by u.id_usuario 
+                                      ORDER BY puntaje_acumulado DESC");
     }
 }
