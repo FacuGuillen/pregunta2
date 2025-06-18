@@ -5,14 +5,14 @@
         <thead class="table-primary">
         <tr>
             <th>Nombre</th>
-            <th>Puntaje Total</th>
+            <th>Puntaje Maximo</th>
         </tr>
         </thead>
         <tbody>
         {{#usuarios}}
         <tr>
             <td><a href="/profileGamer/show/{{nombre_usuario}}">{{nombre_usuario}}</a></td>
-            <td> {{puntaje_acumulado}} </td>
+            <td> {{puntaje_maximo}} </td>
         </tr>
         {{/usuarios}}
         </tbody>
