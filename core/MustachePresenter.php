@@ -13,10 +13,13 @@ class MustachePresenter{
         $this->partialsPathLoader = $partialsPathLoader;
     }
 
-    /*vistas CON header y footer*/
-    public function render($contentFile , $data = array() ){
-        echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
+    public function render($contentFile, $data = array()) {
+        if (!isset($data["css"])) {
+            $data["css"] = $contentFile . ".css";
+        }
+        echo $this->generateHtml($this->partialsPathLoader . '/' . $contentFile . "View.mustache", $data);
     }
+
 
     public function generateHtml($contentFile, $data = array()) {
         $contentAsString = file_get_contents(  $this->partialsPathLoader .'/header.mustache');
