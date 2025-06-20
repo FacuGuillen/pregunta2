@@ -53,6 +53,10 @@ INSERT INTO `partidas` (`id_partidas`, `puntaje`) VALUES
 	(6, 0),
 	(7, 2);
 
+--20/6 agregue campo fecha a la partida DEFAULT CURRENT_TIMESTAMP-> comando para poner la fecha actual por defecto
+ALTER TABLE `partidas`
+    ADD COLUMN `fecha` DATE DEFAULT CURRENT_TIMESTAMP;
+
 -- Volcando estructura para tabla pregunta2.partidas_usuarios
 CREATE TABLE IF NOT EXISTS `partidas_usuarios` (
   `id_partidas_usuarios` int(11) NOT NULL AUTO_INCREMENT,

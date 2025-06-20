@@ -26,8 +26,8 @@ class LoginController
 
         $user = $this->model->getUserByUsername($username);
 
-        if ($user && password_verify($password, $user['contrasena'])) {
-        //if ($user['nombre_usuario'] === $username && $user['contrasena'] === $password) {
+        //if ($user && password_verify($password, $user['contrasena'])) {
+        if ($user['nombre_usuario'] === $username && $user['contrasena'] === $password) {
             $_SESSION["user"] = $user;
 
             $this->view->render("lobby", [

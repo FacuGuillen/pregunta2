@@ -34,10 +34,11 @@ class JuegoController
                     $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
                     $categoria = $nuevaCategoria;
                 } else {
-                    echo "<script>alert('ya se vieron todas las preguntas');</script>";
+
                     //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
                     //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                     header("Location: /lobby/show");
+                    echo "<script>alert('ya se vieron todas las preguntas');</script>";
                 }
 
             }

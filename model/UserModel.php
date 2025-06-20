@@ -11,7 +11,7 @@ class UserModel{
     }
 
     public function traerLasPartidasDeUnUsuario($username)
-    {  return $this->database->query("SELECT  p.id_partidas AS nro_partida,
+    {  return $this->database->query("SELECT  p.fecha AS fecha,
                                               SUM(p.puntaje) AS puntaje_total
                                       FROM partidas p
                                       JOIN partidas_usuarios pu ON pu.id_partidas = p.id_partidas
