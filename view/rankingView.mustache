@@ -1,21 +1,22 @@
+<main>
+        <table>
+            <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Puntaje acumulado actual</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#usuarios}}
+                <tr onclick="window.location='/profileGamer/show/{{nombre_usuario}}'">
+                    <td class="nombre-perfil">
+                        <img class="fotito-perfil rounded-circle" src="{{BASE_URL}}/public/uploads/{{foto_perfil}}" alt="perfil">
+                        {{nombre_usuario}}
+                    </td>
+                    <td>{{puntaje_maximo}}</td>
+                </tr>
+            {{/usuarios}}
+            </tbody>
+        </table>
 
-<div class="container d-flex justify-content-center align-items-center vh-100 table-responsive">
-
-    <table class="table table-bordered table-striped text-center">
-        <thead class="table-primary">
-        <tr>
-            <th>Nombre</th>
-            <th>Puntaje Maximo</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#usuarios}}
-        <tr>
-            <td><a href="/profileGamer/show/{{nombre_usuario}}">{{nombre_usuario}}</a></td>
-            <td> {{puntaje_maximo}} </td>
-        </tr>
-        {{/usuarios}}
-        </tbody>
-    </table>
-</div>
-<a href="/listaPartida/show">ver mis partidas</a>
+</main>
