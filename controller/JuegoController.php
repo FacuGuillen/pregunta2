@@ -30,7 +30,6 @@ class JuegoController
             /*si no encuntra pregunta con esos filtros */
             if ($respuesta['status'] === 'no-preguntas-disponibles') {
                 $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
-                echo "<script>alert('buscando otra categoria :" . addslashes($nuevaCategoria) . "');</script>";
                 if ($nuevaCategoria) {
                     $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
                     $categoria = $nuevaCategoria;
