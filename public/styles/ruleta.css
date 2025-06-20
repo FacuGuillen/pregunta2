@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    min-height: 90vh;
+}
+
+.contenedor-ruleta{
+    display: flex;
+    justify-content: center;
+    margin: 0% !important;
+}
+
+.flecha{
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}

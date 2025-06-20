@@ -10,7 +10,6 @@ class PreguntaModel {
         return $this->db->getConnection();
     }
 
-    // Verifica si una respuesta es correcta
     public function esCorrecta($id_respuesta) {
         $result = $this->db->getConnection()->query("
         SELECT es_correcta FROM respuesta WHERE id_respuesta = $id_respuesta
@@ -51,9 +50,6 @@ class PreguntaModel {
                return ['status' => 'repetida-muchas-veces'];
         }
 
-
-       // $id_pregunta = $pregunta['id_pregunta'];
-        // busca la respuesta
         $resStmt = $conn->prepare("
         SELECT id_respuesta, respuesta 
         FROM respuesta 
@@ -65,7 +61,12 @@ class PreguntaModel {
         $respuestas = $resStmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $resStmt->close();
 
-        /*preguntas se les asigna las respuestas */
+        //Mando colorcito a la vista!
+        $consulta = $conn->query("SELECT color FROM categoria WHERE categoria = '$categoria'");
+        $color = $consulta->fetch_assoc();
+        $pregunta['color'] = $color['color'];
+
+
         $pregunta['respuestas'] = $respuestas;
 
         return [

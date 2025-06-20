@@ -34,17 +34,16 @@ class JuegoController
             if ($nuevaCategoria) {
                 $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
                 $categoria = $nuevaCategoria;
-                echo"<script>alert('buscando otra pregunta ". json_encode($respuesta) ."');</script>";
             }else {
                 echo "<script>alert('ya se vieron todas las preguntas');</script>";
-             //   $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                 //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
             }
 
         }
 
         if ($respuesta['status'] === 'repetida-muchas-veces') {
-            echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
+            //echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
             $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario);
         }
 
@@ -67,9 +66,6 @@ class JuegoController
         $this->view->render("pregunta", $pregunta);
     }
 
-
-
-    // Procesa la respuesta del usuario
     public function responder() {
         $idUsuario = $this->user['id_usuario'];
         $id_respuesta = $_POST['respuesta'];

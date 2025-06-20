@@ -13,33 +13,28 @@ main {
     min-height: 90vh;
 }
 
-.contenedor-principal{
-    padding: 3em;
+.contenedor-resultado{
+    padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    height: auto;
-    justify-content: center;
-    align-items: center;
+    min-width: 40%;
     display: flex;
     flex-direction: column;
-}
-
-.contenedor-gifs{
-    display: flex;
     justify-content: center;
+    align-items: center;
+    row-gap: 0.5em;
 }
 
-.quiz-image{
-    width: 25%;
+.carita{
+    width: 30%;
     height: auto;
 }
 
-.boton-comenzar-partida{
+.boton-volver-lobby{
     background-color: #ffd43b;
     color: #ffffff;
-    padding: 12px 24px;
-    font-size: 1.2rem;
+    padding: 8px 16px;
+    font-size: 1rem;
     font-weight: bold;
     border: none;
     border-radius: 12px;
@@ -49,28 +44,7 @@ main {
     text-decoration: none;
 }
 
-.boton-comenzar-partida:hover{
+.boton-volver-lobby:hover{
     transform: scale(1.05);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.13);
-}
-
-footer{
-    position: relative;
-    width: 100%;
-    margin-top: auto;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.contenedor-principal {
-    animation: fadeInUp 0.8s ease-out;
 }
