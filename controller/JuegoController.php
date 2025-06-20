@@ -25,45 +25,44 @@ class JuegoController
 
         $categoria = urldecode($categoria);
 
-        $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
+            $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
-        /*si no encuntra pregunta con esos filtros */
-        if ($respuesta['status'] === 'no-preguntas-disponibles') {
-            $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
-            echo"<script>alert('buscando otra categoria :". addslashes($nuevaCategoria) ."');</script>";
-            if ($nuevaCategoria) {
-                $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
-                $categoria = $nuevaCategoria;
-                echo"<script>alert('buscando otra pregunta ". json_encode($respuesta) ."');</script>";
-            }else {
-                echo "<script>alert('ya se vieron todas las preguntas');</script>";
-             //   $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
-                //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
+            /*si no encuntra pregunta con esos filtros */
+            if ($respuesta['status'] === 'no-preguntas-disponibles') {
+                $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
+                echo "<script>alert('buscando otra categoria :" . addslashes($nuevaCategoria) . "');</script>";
+                if ($nuevaCategoria) {
+                    $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
+                    $categoria = $nuevaCategoria;
+                } else {
+                    echo "<script>alert('ya se vieron todas las preguntas');</script>";
+                    //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
+                    //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                    header("Location: /lobby/show");
+                }
+
             }
 
-        }
+            if ($respuesta['status'] === 'repetida-muchas-veces') {
+                echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
+                $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria, $idUsuario);
+            }
 
-        if ($respuesta['status'] === 'repetida-muchas-veces') {
-            echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
-            $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario);
-        }
+            if ($respuesta['status'] === 'ok') {
+                $pregunta = $respuesta['pregunta'];
+            }
 
-        if ($respuesta['status'] === 'ok') {
-            $pregunta = $respuesta['pregunta'];
-        }
+            if (!isset($pregunta) || !isset($pregunta['id_pregunta'])) {
+                echo "<script>alert(' no se encontro preguntas');</script>";
+                $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                return;
+            }
 
-        if (!isset($pregunta) || !isset($pregunta['id_pregunta'])) {
-            echo "<script>alert(' no se encontro preguntas');</script>";
-            $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
-            return;
-        }
+            $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
+            $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
 
-        $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'] ;
 
         $pregunta['username'] = $this->user['nombre_usuario'] ?? null;
-
-        $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario,$pregunta['id_pregunta']);
-
         $this->view->render("pregunta", $pregunta);
     }
 
