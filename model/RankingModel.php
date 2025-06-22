@@ -21,5 +21,5 @@ class RankingModel{
         GROUP BY u.id_usuario
         ORDER BY puntaje_maximo DESC");
     }
-    /*SELECT MAX(p.puntaje) as puntaje, u.nombre_usuario as nombre_usuario, p.id_partidas as nro_partida FROM partidas p join partidas_usuarios pu on p.id_partidas=pu.id_partidas JOIN usuarios u on u.id_usuario=pu.id_usuario GROUP BY u.id_usuario;*/
+
 }

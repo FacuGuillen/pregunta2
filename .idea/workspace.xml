@@ -6,11 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/RankingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RankingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/RankingModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RankingModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sqlscript/pregunta2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/pregunta2.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="anahi" />
+        <entry key="$PROJECT_DIR$" value="ramaqr" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,18 +48,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;anahi-pilar&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "anahi-pilar",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Pregunta2\public\imgs" />
@@ -84,7 +91,9 @@
       <workItem from="1750168388978" duration="937000" />
       <workItem from="1750209645018" duration="2271000" />
       <workItem from="1750384729665" duration="1044000" />
-      <workItem from="1750457806549" duration="944000" />
+      <workItem from="1750457806549" duration="6513000" />
+      <workItem from="1750506846998" duration="11185000" />
+      <workItem from="1750549849205" duration="1359000" />
     </task>
     <servers />
   </component>

@@ -10,6 +10,7 @@ class UserModel{
         return $this->database->query("SELECT * FROM usuarios WHERE nombre = '$username'");
     }
 
+
     public function traerLasPartidasDeUnUsuario($username)
     {  return $this->database->query("SELECT  p.fecha AS fecha,
                                               SUM(p.puntaje) AS puntaje_total
@@ -20,4 +21,5 @@ class UserModel{
                                       GROUP by p.id_partidas");
 
     }
+
 }
