@@ -1,23 +1,22 @@
 <?php
 
+require_once ("configuration/constants.php");
+
 class indexController{
     private $view;
+    private $user;
 
     public function __construct($view)
     {
         $this->view = $view;
+        $this->user = Security::getUser();
     }
 
     public function show() {
-        session_start(); //<- Obligatorio antes de usar $_SESSION
 
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
-
-        $this->view->render("index", [
-            "username" => $username
-        ]);
-
+        $this->view->render("index",$this->user );
     }
+
 
     private function redirectTo($str)
     {

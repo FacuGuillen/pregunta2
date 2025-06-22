@@ -1,39 +1,31 @@
 <?php
 
 class RankingController{
-    public $model;
-    public $view;
-
+    private $model;
+    private $view;
+    private $user;
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
+        $this->user = Security::getUser();
     }
 
     public function show(){
 
-        session_start();
-        $userdata= $_SESSION['user'] ?? null;
+        $username = $this->user['username'];
 
-        /*cambiar desues a ramking
-        $data["usuarios"] = $this->model->getRanking();*/
+        $data = [
+            "usuarios" => $this->model->getRanking()
+        ];/*guardo en un array toda la lista que me traiga de ranking*/
 
-        $data = ["usuarios" => $this->model->getRanking($userdata)];
+        $context = array_merge($data, ['username' => $username]);/*combina dos array : la lista ranking y los datos del saueiro session*/
 
-        $context = array_merge($data,[
-            'userdata' => $userdata,
-        ]);
+        header("Cache-Control: no-cache, no-store, must-revalidate");
+        header("Pragma: no-cache");
+        header("Expires: 0");
 
-
-        $this->view->render('ranking',$context);
+        $this->view->render('ranking', $context);
     }
 
 }
-
-/*ROLES
-- USUARIO -> REPORTAR QUE PREGUNTA ES INVALIDA DESDE LA PANTALLA Y CREAR PREGUNTAS NUEVAS
-- USUARIO EDITOR -> PERMITIR DAR DE ALTA ,BAJA Y MODIFICAR LAS PREGUNTAS
-- USUARIO ADMINISTRADOR -> VER LA CANT DE JUGADARES, CANT DE PARTIDAS JUGADAS,CANT DE PREGUNTAS DEL JUEGO,CANT PREGUNTAS CREADAS,ETC
--
-
-*/

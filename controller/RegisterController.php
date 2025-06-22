@@ -43,12 +43,29 @@ class RegisterController{
         if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
             empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
 
-            $this->redirectTo("/Pregunta2/register/show?error=campos_vacios");
+            $this->redirectTo("register/show?error=campos_vacios");
             return;
         }
 
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("/Pregunta2/register/show?error=contrasena_no_coinciden");
+            $this->redirectTo("register/show?error=contrasena_no_coinciden");
+            return;
+        }
+
+
+        // Manejo de la imagen
+        $nombreArchivo = null;
+
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $nombreArchivo = uniqid() . "_" . basename($_FILES['photo']['name']);
+            $destino = "public/uploads/" . $nombreArchivo;
+
+            if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
+                $this->redirectTo("register/show?error=error_foto");
+                return;
+            }
+        } else {
+            $this->redirectTo("register/show?error=error_foto");
             return;
         }
 
@@ -59,23 +76,24 @@ class RegisterController{
             'date' => $_POST['date'],
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            'nameuser' => $_POST['nameuser']
+            'nameuser' => $_POST['nameuser'],
+            'photo' => $nombreArchivo  // Guardás solo el nombre o la ruta relativa
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("/Pregunta2/register/show?error=usuario_existente");
+            $this->redirectTo("register/show?error=usuario_existente");
             return;
         }
 
-        $resultado = $this->model->createUser($data,$_FILES);
+        $resultado = $this->model->createUser($data);
 
         if ($resultado !== true) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("/Pregunta2/register/show?error=error_bd");
+            $this->redirectTo("register/show?error=error_bd");
             return;
         }
 
-        $this->redirectTo("/Pregunta2/login/show?success=ok");
+        $this->redirectTo("register/show?success=1");
     }
 
     private function redirectTo($str)

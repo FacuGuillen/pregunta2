@@ -1,5 +1,7 @@
 <?php
+session_start();
 require_once("Configuration.php");
+
 
 $configuration = new Configuration();
 $router = $configuration->getRouter();

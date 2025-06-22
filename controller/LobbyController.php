@@ -1,22 +1,21 @@
 <?php
-class LobbyController {
-private $view;
+class LobbyController{
+    private $view;
+    private $user;
+    public function __construct($view)
+    {
+        $this->view = $view;
+        $this->user = Security::getUser();
+    }
 
-public function __construct($view) {
-$this->view = $view;
-}
-
-    public function show(){
-
-    session_start();
-    $userdata= $_SESSION['user'] ?? null;
-
-    $context = [
-        'userdata' => $userdata
-    ];
+    public function show() {
+        $this->view->render("lobby", $this->user);
+    }
 
 
-    $this->view->render("lobby",$context);
-}
-
+    private function redirectTo($str)
+    {
+        header("Location: " . $str);
+        exit();
+    }
 }

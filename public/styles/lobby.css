@@ -1,47 +1,76 @@
-main{
-    display: flex;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    min-height: 90vh;
+}
+
+.contenedor-principal{
+    padding: 3em;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    height: auto;
     justify-content: center;
     align-items: center;
-    padding: 2em;
+    display: flex;
+    flex-direction: column;
 }
 
-.contenedor-partida {
-    width: 50%;
-    background-color: #e1e1e1;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
+.contenedor-gifs{
+    display: flex;
+    justify-content: center;
 }
 
-.smiley-face {
-    font-size: 50px;
-    margin-bottom: 10px;
+.quiz-image{
+    width: 25%;
+    height: auto;
 }
 
-h1 {
-    font-family: Arial, sans-serif;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 18px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.boton {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 18px;
-    color: white;
-    background-color: #c1c1c1;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background 0.3s;
+.boton-comenzar-partida{
+    background-color: #ffd43b;
+    color: #ffffff;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-.boton:hover {
-    background-color: #0056b3;
+.boton-comenzar-partida:hover{
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.13);
+}
+
+footer{
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contenedor-principal {
+    animation: fadeInUp 0.8s ease-out;
 }

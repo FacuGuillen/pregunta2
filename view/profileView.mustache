@@ -1,19 +1,30 @@
-<div class="container mt-5" style="max-width: 400px;">
-    <div class="card text-center shadow-sm">
-        <!-- Parte superior: Imagen -->
-        <div class="card-header bg-light">
-            <img src="/pregunta2/public/imgs/{{foto_perfil}}" class="rounded-circle img-fluid" alt="Foto de perfil" style="width: 150px; margin-top: -75px; border: 5px solid white">
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow p-4" style="width: 100%; max-width: 420px; border-radius: 1rem;">
+        <!-- Encabezado -->
+        <h3 class="text-center mb-4 text-primary fw-bold d-flex justify-content-center align-items-center gap-2">
+            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
+            Mi Perfil
+            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
+        </h3>
 
+        <!-- Imagen de perfil -->
+        <div class="text-center mb-3">
+            <img src="/public/uploads/{{foto_perfil}}" class="rounded-circle border border-3 border-danger shadow-sm"
+                 style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
         </div>
 
-        <!-- Parte inferior: Información -->
-        <div class="card-body">
-            <h5 class="card-title">Nombre de Usuario: {{nombre_usuario}}</h5>
-            <p class="card-text text-muted mb-1">Email: {{email}}</p>
-            <p class="card-text text-muted mb-1">Nombre Completo:{{nombre}}</p>
-            <p class="card-text text-muted mb-1">Fecha de Nacimiento:{{fecha_nacimiento}}</p>
-            <p class="card-text text-muted mb-1">Sexo:{{sexo}}</p>
-            <!--<a href="#" class="btn btn-primary">Editar perfil</a>-->
-        </div>
+        <!-- Datos del usuario -->
+        <ul class="list-group list-group-flush mb-3">
+            <li class="list-group-item"><strong> Usuario:</strong> {{nombre_usuario}}</li>
+            <li class="list-group-item"><strong> Email:</strong> {{email}}</li>
+            <li class="list-group-item"><strong> Nombre:</strong> {{nombre}}</li>
+            <li class="list-group-item"><strong> Nacimiento:</strong> {{fecha_nacimiento}}</li>
+            <li class="list-group-item"><strong> Sexo:</strong> {{sexo}}</li>
+            <li class="list-group-item"><strong> País:</strong> {{tipo_residencia}}</li>
+        </ul>
+        <!-- Botón opcional -->
+        <!-- <div class="d-grid">
+            <a href="#" class="btn btn-outline-primary btn-sm">Editar perfil</a>
+        </div> -->
     </div>
 </div>

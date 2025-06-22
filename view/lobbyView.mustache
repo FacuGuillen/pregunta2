@@ -1,12 +1,13 @@
 <main>
-    <div class="contenedor-partida">
-            <div class="smiley-face">😊</div>
-            <h1>¡Hola! {{nombre_usuario}} </h1>
-            <p>Tu puntaje en el ranking es :</p>
-            <p>¿Listo para jugar?</p>
-            <a href="/Pregunta2/partida/show" class="w3-button w3-black w3-large w3-margin-top">Comenzar partida</a>
-            <a href="/Pregunta2/ranking/show" class="w3-button w3-black w3-large w3-margin-top">Ranking total</a>
-        <a href="/Pregunta2/cuestion/show" class="w3-button w3-black w3-large w3-margin-top">Crear preguntas nuevas</a>
-        <p>(suponiendo) desea aceptar la partida? </p>
+    <div class="contenedor-principal">
+        <div class="contenedor-gifs">
+            <img src="{{BASE_URL}}/public/imgs/signo.gif" alt="Trivia" class="quiz-image ">
+            <img src="{{BASE_URL}}/public/imgs/signo.gif" alt="Trivia" class="quiz-image ">
+            <img src="{{BASE_URL}}/public/imgs/signo.gif" alt="Trivia" class="quiz-image ">
+        </div>
+        <h2 class="text-center mt-2">¿Cuántas preguntas sos capaz de responder?</h2>
+        <p class="text-center fs-5 fst-italic mt-1">Demostrá tu conocimiento. ¡Empezá cuando quieras!</p>
+        <a href="/ruleta/show" class="boton-comenzar-partida">¡Comenzar!</a>
+
     </div>
 </main>
