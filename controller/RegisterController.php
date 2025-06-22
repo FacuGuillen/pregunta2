@@ -93,7 +93,7 @@ class RegisterController{
             return;
         }
 
-        $this->redirectTo("login/show?success=1");
+        $this->redirectTo("register/show?success=1");
     }
 
     private function redirectTo($str)
