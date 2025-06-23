@@ -1,0 +1,63 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-start;
+    padding: 1em;
+    min-height: 100vh;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.8s ease-in-out;
+    margin-top: 2em;
+    text-align: center;
+}
+
+thead {
+    background-color: #FFB14D;
+}
+
+td{
+    padding: 0.5em;
+}
+
+tbody tr {
+    border-bottom: 1px solid gray;
+    transition: background-color 0.3s ease;
+}
+
+
+thead th {
+    padding: 1em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+td:last-child,
+th:last-child {
+    text-align: center;
+}
+
+
+tbody tr:hover {
+    background-color: #d5cccc;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

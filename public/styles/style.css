@@ -1,0 +1,47 @@
+.error {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+.text-nav{
+    color: #FFD700;
+}
+
+.img-nav{
+    width: 15%;
+    height: 15%;
+}
+
+h1{
+    font-size: 60px;
+}
+
+
+.fb {
+    color: #3b5998; /* Facebook azul */
+}
+
+.ig {
+    color: #e1306c; /* Instagram rosa/magenta */
+}
+
+.sp {
+    color: #fffc00; /* Snapchat amarillo */
+}
+
+.pt {
+    color: #bd081c; /* Pinterest rojo */
+}
+
+.tw {
+    color: #1da1f2; /* Twitter celeste */
+}
+
+.lk {
+    color: #0077b5; /* LinkedIn azul oscuro */
+}
+
+.p-footer{
+    color: rgba(255, 215, 0, 0.64);
+    font-size: 15px;
+}
