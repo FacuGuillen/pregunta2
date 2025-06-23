@@ -1,0 +1,45 @@
+<div class="container mt-5" style="max-width: 700px;">
+    <div class="card shadow p-4">
+        <h4 class="text-center fw-bold mb-4">Crear una Pregunta</h4>
+
+        <form action="/editor/guardarPregunta" method="post">
+            <div class="mb-3">
+                <label for="pregunta" class="form-label">Pregunta</label>
+                <input type="text" name="pregunta" id="pregunta" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <select name="categoria" id="categoria" class="form-select" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="Ciencia">Ciencia</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Historia">Historia</option>
+                    <option value="Geografía">Geografía</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dificultad" class="form-label">Dificultad</label>
+                <select name="dificultad" id="dificultad" class="form-select" required>
+                    <option value="">Seleccione una dificultad</option>
+                    <option value="1">Fácil</option>
+                    <option value="2">Media</option>
+                    <option value="3">Difícil</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Opciones de respuesta</label>
+                <input type="text" name="respuesta_correcta" class="form-control mb-2" placeholder="Respuesta correcta" required>
+                <input type="text" name="respuesta_incorrecta1" class="form-control mb-2" placeholder="Respuesta incorrecta 1" required>
+                <input type="text" name="respuesta_incorrecta2" class="form-control mb-2" placeholder="Respuesta incorrecta 2" required>
+                <input type="text" name="respuesta_incorrecta3" class="form-control mb-2" placeholder="Respuesta incorrecta 3" required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Guardar Pregunta</button>
+            </div>
+        </form>
+    </div>
+</div>

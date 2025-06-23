@@ -18,12 +18,14 @@ require_once("controller/ProfileGamerController.php");
 require_once("controller/ListaPartidaController.php");
 
 
+
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
 require_once("model/UserModel.php");
 require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
 require_once("model/ProfileGamerModel.php");
+
 
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');

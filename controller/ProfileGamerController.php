@@ -32,4 +32,6 @@ class ProfileGamerController{
 
         $this->view->render("profileGamer", $context);
     }
+
+
 }
