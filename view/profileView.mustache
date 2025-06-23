@@ -1,30 +1,22 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 100%; max-width: 420px; border-radius: 1rem;">
-        <!-- Encabezado -->
-        <h3 class="text-center mb-4 text-primary fw-bold d-flex justify-content-center align-items-center gap-2">
-            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
-            Mi Perfil
-            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
-        </h3>
-
-        <!-- Imagen de perfil -->
-        <div class="text-center mb-3">
-            <img src="/public/uploads/{{foto_perfil}}" class="rounded-circle border border-3 border-danger shadow-sm"
-                 style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
+<main>
+    <div class="perfil-card">
+        <div class="perfil-imagen">
+            <img src="/public/uploads/{{foto_perfil}}" alt="Foto de perfil" class="foto-perfil" />
         </div>
 
-        <!-- Datos del usuario -->
-        <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item"><strong> Usuario:</strong> {{nombre_usuario}}</li>
-            <li class="list-group-item"><strong> Email:</strong> {{email}}</li>
-            <li class="list-group-item"><strong> Nombre:</strong> {{nombre}}</li>
-            <li class="list-group-item"><strong> Nacimiento:</strong> {{fecha_nacimiento}}</li>
-            <li class="list-group-item"><strong> Sexo:</strong> {{sexo}}</li>
-            <li class="list-group-item"><strong> País:</strong> {{tipo_residencia}}</li>
-        </ul>
-        <!-- Botón opcional -->
-        <!-- <div class="d-grid">
-            <a href="#" class="btn btn-outline-primary btn-sm">Editar perfil</a>
-        </div> -->
+        <div class="perfil-datos">
+            <h2 class="perfil-titulo">Perfil de Usuario</h2>
+            <p><span>Nombre de usuario:</span> {{nombre_usuario}}</p>
+            <p><span>Email:</span> {{email}}</p>
+            <p><span>Nombre:</span> {{nombre}} {{apellido}}</p>
+            <p><span>Nacimiento:</span> {{fecha_nacimiento}}</p>
+            <p><span>Sexo:</span> {{sexo}}</p>
+            <p><span>País:</span> {{tipo_residencia}}</p>
+        </div>
+
+        <div class="perfil-accion">
+            <a href="#" class="btn-editar">Editar Perfil</a>
+            <a class="btn-salir" href="/login/logout">Cerrar Sesión</a>
+        </div>
     </div>
-</div>
+</main>
