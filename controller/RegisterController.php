@@ -40,32 +40,43 @@ class RegisterController{
 
     public function addUser()
     {
+        $mensaje = "";
+        $tipo = "";
+
+        // Validación de campos vacíos
         if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
             empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
 
-            $this->redirectTo("register/show?error=campos_vacios");
+            $mensaje = "Todos los campos son obligatorios.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
+        // Validación de contraseñas
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("register/show?error=contrasena_no_coinciden");
+            $mensaje = "Las contraseñas no coinciden.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
-
 
         // Manejo de la imagen
         $nombreArchivo = null;
-
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $nombreArchivo = uniqid() . "_" . basename($_FILES['photo']['name']);
             $destino = "public/uploads/" . $nombreArchivo;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
-                $this->redirectTo("register/show?error=error_foto");
+                $mensaje = "Error al subir la imagen.";
+                $tipo = "error";
+                $this->view->render("register", compact("mensaje", "tipo"));
                 return;
             }
         } else {
-            $this->redirectTo("register/show?error=error_foto");
+            $mensaje = "Debe subir una imagen.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
@@ -77,23 +88,28 @@ class RegisterController{
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
-            'photo' => $nombreArchivo  // Guardás solo el nombre o la ruta relativa
+            'photo' => $nombreArchivo
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("register/show?error=usuario_existente");
+            $mensaje = "El nombre de usuario ya existe.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
         $resultado = $this->model->createUser($data);
-
         if ($resultado !== true) {
-            // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("register/show?error=error_bd");
+            $mensaje = "Error en la base de datos.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
-        $this->redirectTo("register/show?success=1");
+        // Registro exitoso
+        $mensaje = "¡Usuario registrado exitosamente!";
+        $tipo = "success";
+        $this->view->render("register", compact("mensaje", "tipo"));
     }
 
     private function redirectTo($str)

@@ -27,14 +27,13 @@ class LoginController
         $user = $this->model->getUserByUsername($username);
 
         if ($user && password_verify($password, $user['contrasena'])) {
-
+       // if ($user['nombre_usuario'] === $username && $user['contrasena'] === $password) {
             $_SESSION["user"] = $user;
 
-            $this->redirectTo("/lobby");
+            $this->view->render("lobby", [
+                "username" => $username
+            ]);
 
-            //$this->view->render("lobby", [
-                //"username" => $username
-            //]);
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",
