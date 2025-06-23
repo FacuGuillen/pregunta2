@@ -27,12 +27,26 @@ class LoginController
         $user = $this->model->getUserByUsername($username);
 
         if ($user && password_verify($password, $user['contrasena'])) {
-       // if ($user['nombre_usuario'] === $username && $user['contrasena'] === $password) {
             $_SESSION["user"] = $user;
 
-            $this->view->render("lobby", [
-                "username" => $username
-            ]);
+            if (Security::isAdmin()) {
+                $this->view->render("admin", [
+                    "username" => $username,
+                ]);
+            } elseif (Security::isEditor()) {
+                $this->view->render("editor", [
+                    "username" => $username,
+                ]);
+            } elseif (Security::isPlayer()) {
+                $this->view->render("lobby", [
+                    "username" => $username,
+                ]);
+            } else {
+                // En caso de que no tenga rol definido
+                $this->view->render("login", [
+                    "error" => "Rol no válido.",
+                ]);
+            }
 
         } else {
             $this->view->render("login", [
@@ -40,6 +54,7 @@ class LoginController
             ]);
         }
     }
+
 
     public function logout() {
         session_destroy(); // Destruir todos los datos de la sesión

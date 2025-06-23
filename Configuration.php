@@ -12,6 +12,7 @@ require_once("controller/ProfileController.php");
 require_once("controller/JuegoController.php");
 require_once("controller/LobbyController.php");
 require_once("controller/RuletaController.php");
+require_once("controller/EditorController.php");
 
 
 require_once("model/RegisterModel.php");
@@ -44,6 +45,11 @@ class Configuration
     public function getLobbyController()
     {
         return new LobbyController($this->getViewer());
+    }
+
+    public function getEditorController()
+    {
+        return new EditorController(new PreguntaModel($this->getDatabase()),$this->getViewer());
     }
 
     public function getProfileController(){

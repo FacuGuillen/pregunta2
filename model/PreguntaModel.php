@@ -91,4 +91,17 @@ class PreguntaModel {
         return true;
     }
 
+    public function getAllQuestions() {
+        $sql = "SELECT * FROM pregunta";
+        $result = $this->db->getConnection()->query($sql);
+
+        if (!$result) {
+            die("Error en la consulta: " . $this->db->getConnection()->error);
+        }
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
+
 }

@@ -88,7 +88,8 @@ class RegisterController{
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
-            'photo' => $nombreArchivo
+            'photo' => $nombreArchivo,
+            'tipo_usuario' => 1  // ← usuario tipo jugador por defecto
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
