@@ -17,4 +17,20 @@ class Security{
         $user["username"] = $user["nombre_usuario"] ?? null;
         return $user;
     }
+/*
+    public static function isAdmin() {
+        $user = self::checkLogin();
+        return isset($user['rol']) && $user['rol'] === 'administrador';
+    }
+
+    public static function isEditor() {
+        $user = self::checkLogin();
+        return isset($user['rol']) && $user['rol'] === 'editor';
+    }
+
+    public static function isPlayer() {
+        $user = self::checkLogin();
+        return isset($user['rol']) && $user['rol'] === 'jugador';
+    }
+*/
 }

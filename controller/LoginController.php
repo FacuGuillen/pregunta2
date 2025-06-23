@@ -30,9 +30,11 @@ class LoginController
 
             $_SESSION["user"] = $user;
 
-            $this->view->render("lobby", [
-                "username" => $username
-            ]);
+            $this->redirectTo("/lobby");
+
+            //$this->view->render("lobby", [
+                //"username" => $username
+            //]);
         } else {
             $this->view->render("login", [
                 "error" => "Credenciales incorrectas",

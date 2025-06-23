@@ -4,9 +4,6 @@ class ProfileController{
 
     private $model;
     private $view;
-    /**
-     * @var mixed|null
-     */
     private $user;
 
     public function __construct($model,$view){
