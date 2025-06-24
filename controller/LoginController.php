@@ -34,9 +34,8 @@ class LoginController
                     "username" => $username,
                 ]);
             } elseif (Security::isEditor()) {
-                $this->view->render("editor", [
-                    "username" => $username,
-                ]);
+                header("Location: /editor/show");
+                exit;
             } elseif (Security::isPlayer()) {
                 $this->view->render("lobby", [
                     "username" => $username,
@@ -61,9 +60,4 @@ class LoginController
         $this->view->render("lobby", []);
     }
 
-    private function redirectTo($str)
-    {
-        header("Location: " . $str);
-        exit();
-    }
 }

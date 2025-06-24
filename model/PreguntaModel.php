@@ -26,7 +26,7 @@ class PreguntaModel {
         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
-        WHERE c.categoria = ?
+        WHERE c.categoria = ? and p.activo = 1
         ORDER BY RAND()
         LIMIT 1
     ");
@@ -40,7 +40,6 @@ class PreguntaModel {
 
         $id_pregunta = $pregunta['id_pregunta'];
 
-        // Consulta de respuestas (acá también podrías usar prepared si querés)
         $resStmt = $conn->prepare("
         SELECT id_respuesta, respuesta 
         FROM respuesta 
@@ -101,6 +100,91 @@ class PreguntaModel {
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getPreguntasPorIdCategoria($idCategoria) {
+        $stmt = $this->db->getConnection()->prepare("
+        SELECT id_pregunta, pregunta, activo
+        FROM pregunta
+        WHERE id_categoria = ?
+    ");
+        $stmt->bind_param("i", $idCategoria);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPregunta($id_pregunta) {
+        $stmt = $this->db->getConnection()->prepare("
+        select * from pregunta where id_pregunta = ?");
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function getRespuestasPorPregunta($id_pregunta) {
+        $stmt = $this->db->getConnection()->prepare("
+        SELECT * FROM respuesta WHERE id_pregunta = ?
+    ");
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function actualizarPregunta($idPregunta, $texto) {
+        $stmt = $this->db->getConnection()->prepare("
+        UPDATE pregunta 
+        SET pregunta = ? 
+        WHERE id_pregunta = ?
+    ");
+        $stmt->bind_param("si", $texto, $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function actualizarRespuesta($idRespuesta, $texto, $esCorrecta) {
+        $stmt = $this->db->getConnection()->prepare("
+        UPDATE respuesta 
+        SET respuesta = ?, es_correcta = ? 
+        WHERE id_respuesta = ?
+    ");
+        $stmt->bind_param("sii", $texto, $esCorrecta, $idRespuesta);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function eliminarPregunta($idPregunta) {
+        $conn = $this->db->getConnection();
+
+        // Primero borrar las respuestas relacionadas
+        $stmt = $conn->prepare("DELETE FROM respuesta WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+
+        // Luego borrar la pregunta
+        $stmt2 = $conn->prepare("DELETE FROM pregunta WHERE id_pregunta = ?");
+        $stmt2->bind_param("i", $idPregunta);
+        $stmt2->execute();
+        $stmt2->close();
+
+        return true;
+    }
+
+
+    public function pausarPregunta($idPregunta) {
+        $conn = $this->db->getConnection();
+        $stmt = $conn->prepare("
+        UPDATE pregunta
+        SET activo = CASE WHEN activo = 1 THEN 0 ELSE 1 END
+        WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
 
 
 

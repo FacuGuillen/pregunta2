@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="" />
+    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/js/eliminar_pregunta.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/editarPreguntaView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/EditorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/EditorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/editorView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/editorView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +21,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,7 +87,9 @@
       <workItem from="1750635064563" duration="659000" />
       <workItem from="1750642482044" duration="1678000" />
       <workItem from="1750698138191" duration="878000" />
-      <workItem from="1750699022809" duration="385000" />
+      <workItem from="1750699022809" duration="6984000" />
+      <workItem from="1750720119913" duration="6535000" />
+      <workItem from="1750732482117" duration="1624000" />
     </task>
     <servers />
   </component>

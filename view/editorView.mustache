@@ -1,11 +1,66 @@
-<h1>Listado de Preguntas</h1>
+<h1>Perfil editor</h1>
 
-<ul>
+<form action="/editor/filterCategory" method="POST" class="mb-4 d-flex gap-3 align-items-end flex-wrap">
+    <!-- Select de categoría -->
+    <div class="form-group">
+        <label for="categoriaSelect">Categoría:</label>
+        <select id="categoriaSelect" name="id_categoria" class="form-control">
+            <option value="">-- Todas las categorías --</option>
+            <option value="1">Historia</option>
+            <option value="2">Deporte</option>
+            <option value="3">Ciencia</option>
+            <option value="4">Cultura</option>
+            <option value="5">Geografía</option>
+            <option value="6">Arte</option>
+        </select>
+    </div>
+
+    <!-- Select para tipo de pregunta -->
+    <div class="form-group">
+        <label for="tipoPreguntaSelect">Tipo de pregunta:</label>
+        <select id="tipoPreguntaSelect" name="tipo_pregunta" class="form-control">
+            <option value="">-- Todas --</option>
+            <option value="propuesta">Solo propuestas</option>
+            <option value="reportadas">Reportadas</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
+<h2>Listado de Preguntas</h2>
+
+<ul class="list-group">
     {{#preguntas}}
-        <li>{{pregunta}}</li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{pregunta}}</span>
+
+            <div class="d-flex gap-2">
+                <!-- Formulario de edición -->
+                <form action="/editor/editarPregunta" method="POST" class="mb-0">
+                    <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
+                    <button type="submit" class="btn btn-sm btn-primary">Editar</button>
+                </form>
+
+                <!-- Formulario de pausa -->
+                <form action="/editor/togglePregunta" method="POST" class="mb-0">
+                    <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
+                    <button type="submit" class="btn btn-sm {{#activo}}btn-warning{{/activo}}{{^activo}}btn-success{{/activo}}">
+                        {{#activo}}Pausar{{/activo}}{{^activo}}Activar{{/activo}}
+                    </button>
+                </form>
+
+                <!-- Formulario de eliminación -->
+                <form method="POST" class="mb-0 eliminar-form">
+                    <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
+                    <button type="button" class="btn btn-sm btn-danger btn-eliminar">Eliminar</button>
+                </form>
+            </div>
+        </li>
     {{/preguntas}}
 
     {{^preguntas}}
-        <li>No hay preguntas para mostrar.</li>
+        <li class="list-group-item">No hay preguntas para mostrar.</li>
     {{/preguntas}}
 </ul>
+
