@@ -4,6 +4,7 @@ class ProfileController{
 
     private $model;
     private $view;
+
     private $user;
 
     public function __construct($model,$view){
@@ -15,4 +16,5 @@ class ProfileController{
     public function show(){
         $this->view->render("profile", $this->user);
     }
+
 }

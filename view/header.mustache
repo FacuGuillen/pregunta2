@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>W3.CSS Template</title>
+<title>{{titulo}}</title>
+<link rel="stylesheet" href="/public/styles/{{css}}?v=123456789123897634578">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -23,7 +24,14 @@
 
             {{#username}}
                 <li class="nav-item text-white mx-2 ms-5 text-nav fs-5">
-                   Hola, {{username}}!
+                    Hola, {{username}}!
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-nav ms-5 fs-5" href="/ranking/show">Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nav ms-5 fs-5" href="/listaPartida/show">Partidas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nav ms-5 fs-5" href="/profile/show">Perfil</a>
@@ -31,6 +39,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-nav ms-5 fs-5" href="/login/logout">Salir</a>
                 </li>
+
             {{/username}}
 
             {{^username}}

@@ -33,7 +33,6 @@ class RegisterModel
         return true;
     }
 
-
     public function existeUsuario($usuario)
     {
         $sql = "SELECT * FROM usuarios WHERE nombre_usuario = '$usuario'";
@@ -43,4 +42,7 @@ class RegisterModel
         // Si es array, verificamos si tiene elementos (usuario encontrado)
         return !empty($resultado);
     }
+
+
+
 }

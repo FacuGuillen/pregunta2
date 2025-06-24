@@ -13,7 +13,10 @@ class JuegoController
         $this->user = Security::getUser();
     }
 
-    public function jugar($categoria = null){
+    public function jugar($categoria = null)
+    {
+
+        $idUsuario = $this->user['id_usuario'];
 
         if (!$categoria) {
             header("Location: /ruleta/show");
@@ -22,18 +25,44 @@ class JuegoController
 
         $categoria = urldecode($categoria);
 
-        $pregunta = $this->model->getPreguntaPorCategoria($categoria);
+        $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
-        if (!$pregunta) {
+        /*si no encuntra pregunta con esos filtros */
+        if ($respuesta['status'] === 'no-preguntas-disponibles') {
+            $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
+            if ($nuevaCategoria) {
+                $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
+                $categoria = $nuevaCategoria;
+            } else {
+
+                //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
+                //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
+                header("Location: /lobby/show");
+                echo "<script>alert('ya se vieron todas las preguntas');</script>";
+            }
+
+        }
+
+        if ($respuesta['status'] === 'repetida-muchas-veces') {
+            echo "<script>alert('pregunta respondida mas de 10 veces se busca por dificultad y categoria ');</script>";
+            $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria, $idUsuario);
+        }
+
+        if ($respuesta['status'] === 'ok') {
+            $pregunta = $respuesta['pregunta'];
+        }
+
+        if (!isset($pregunta) || !isset($pregunta['id_pregunta'])) {
+            echo "<script>alert(' no se encontro preguntas');</script>";
             $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
             return;
         }
 
         $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
+        $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
+
 
         $pregunta['username'] = $this->user['nombre_usuario'] ?? null;
-
-
         $this->view->render("pregunta", $pregunta);
     }
 
@@ -41,12 +70,24 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
+        $idUsuario = $this->user['id_usuario'];
+
+        if (!isset($_POST['respuesta']) || !isset($_SESSION['pregunta_actual'])) {
+            // Redirecciona con error
+            header("Location: /juego/resultado");
+            exit;
+        }
+
         $id_respuesta = $_POST['respuesta'];
+        $pregunta = $_SESSION['pregunta_actual'];
 
         $es_correcta = $this->model->esCorrecta($id_respuesta);
 
+        // Guarda pregunta respondida
+        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
+
         if ($es_correcta) {
-            $_SESSION['puntaje']++;
+            $_SESSION['puntaje'] = ($_SESSION['puntaje'] ?? 0) + 1;
             header("Location: /juego/jugar");
             exit;
         } else {

@@ -113,9 +113,4 @@ class RegisterController{
         $this->view->render("register", compact("mensaje", "tipo"));
     }
 
-    private function redirectTo($str)
-    {
-        header("Location: " . $str);
-        exit();
-    }
 }

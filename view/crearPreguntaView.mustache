@@ -1,0 +1,90 @@
+<div class="container mt-5" style="max-width: 700px;">
+    <div class="card shadow p-4">
+        <h4 class="text-center fw-bold mb-4">Crear una Pregunta</h4>
+
+        <form action="/proponer/guardarPregunta" method="post">
+            <div class="mb-3">
+                <label for="pregunta" class="form-label">Pregunta</label>
+                <input type="text" name="pregunta" id="pregunta" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <select name="categoria" id="categoria" class="form-select" required>
+                    <option value="">Seleccione una categoría</option>
+                    {{#categorias}}
+                        <option value="{{id_categoria}}">{{categoria}}</option>
+                    {{/categorias}}
+                    {{^categorias}}
+                        <option value="">No hay categorías disponibles</option>
+                    {{/categorias}}
+                </select>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Opciones de respuesta</label>
+                <input type="text" name="respuesta_correcta" id="respuesta_correcta" class="form-control mb-2" placeholder="Respuesta correcta" required>
+                <input type="text" name="respuesta_incorrecta1" id="respuesta_incorrecta1" class="form-control mb-2" placeholder="Respuesta incorrecta 1" required>
+                <input type="text" name="respuesta_incorrecta2" id="respuesta_incorrecta2" class="form-control mb-2" placeholder="Respuesta incorrecta 2" required>
+                <input type="text" name="respuesta_incorrecta3" id="respuesta_incorrecta3" class="form-control mb-2" placeholder="Respuesta incorrecta 3" required>
+
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">Proponer Pregunta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalExitoLabel">¡Pregunta enviada!</h5>
+            </div>
+            <div class="modal-body">
+                Tu propuesta fue enviada con éxito para revisión del editor.
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a href="/lobby/show" class="btn btn-success" type="button">Volver al lobby</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const campos = ["pregunta", "categoria", "respuesta_correcta", "respuesta_incorrecta1", "respuesta_incorrecta2", "respuesta_incorrecta3"];
+            let vacio = campos.some(id => !document.querySelector(`[name="${id}"]`).value.trim());
+
+            if (vacio) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            const datos = new FormData(form);
+
+            fetch("/proponer/guardarPregunta", {
+                method: "POST",
+                body: datos
+            })
+                    .then(res => {
+                        if (!res.ok) throw new Error("Error al guardar");
+                        const modalElement = document.getElementById("modalExito");
+                        const modal = new bootstrap.Modal(modalElement);
+                        modal.show();
+                    })
+                    .catch(err => {
+                        alert("Ocurrió un error al guardar la pregunta.");
+                        console.error(err);
+                    });
+        });
+    });
+</script>

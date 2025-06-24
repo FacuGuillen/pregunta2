@@ -53,6 +53,13 @@ INSERT INTO `partidas` (`id_partidas`, `puntaje`) VALUES
 	(6, 0),
 	(7, 2);
 
+<<<<<<< HEAD
+=======
+--20/6 agregue campo fecha a la partida DEFAULT CURRENT_TIMESTAMP-> comando para poner la fecha actual por defecto
+ALTER TABLE `partidas`
+    ADD COLUMN `fecha` DATE DEFAULT CURRENT_TIMESTAMP;
+
+>>>>>>> editorfl
 -- Volcando estructura para tabla pregunta2.partidas_usuarios
 CREATE TABLE IF NOT EXISTS `partidas_usuarios` (
   `id_partidas_usuarios` int(11) NOT NULL AUTO_INCREMENT,
@@ -279,6 +286,32 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `sexo`, `email`, `co
 	(2, 'Ana', 'García', 'Femenino', 'ana@example.com', 'clave456', 'anita', '1998-08-22', 'foto_ana.jpg', 1, 2, 2),
 	(3, 'Lautaro', 'Rossi', 'masculinmo', 'lautarorossi99@gmail.com', '$2y$10$egKhe3mdSjYGM3/uJ0mC/eYjDUVIrWXunV6yDWI0WKuCPjwsas/o.', 'poli', '2025-06-16', 'aaa', NULL, NULL, NULL);
 
+<<<<<<< HEAD
+=======
+--tabla de preguntas,usuario y si respondio bien o respondio mal
+CREATE TABLE IF NOT EXISTS  `preguntas_usuarios_respuestas`(
+    `id_preguntas_usuarios_respuestas` int(11) NOT NULL AUTO_INCREMENT,
+    `id_usuario` int(11) DEFAULT NULL,
+    `id_preguntas` int(11) DEFAULT NULL,
+    `respuesta_correcta`  BOOLEAN,
+    PRIMARY KEY (`id_preguntas_usuarios_respuestas`),
+    CONSTRAINT `pregunta_usuarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+    CONSTRAINT `pregunta_usuarios_ibfk_2` FOREIGN KEY (`id_preguntas`) REFERENCES `pregunta` (`id_pregunta`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+-- tabla qr que se relaciona con usuario
+ALTER TABLE usuarios ADD UNIQUE (nombre_usuario);
+
+CREATE TABLE qr_usuarios (
+                             id_qr_usuario int AUTO_INCREMENT PRIMARY KEY,
+                             nombre_usuario varchar(50),
+                             qr_path varchar(50),
+                             qr_url text,
+                             KEY nombre_usuario(nombre_usuario),
+                             CONSTRAINT qr_usuarios_1 FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
+);
+
+
+>>>>>>> editorfl
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
