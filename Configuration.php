@@ -16,6 +16,7 @@ require_once("controller/RuletaController.php");
 require_once("controller/RankingController.php");
 require_once("controller/ProfileGamerController.php");
 require_once("controller/ListaPartidaController.php");
+require_once("controller/ProponerController.php");
 
 
 
@@ -25,6 +26,8 @@ require_once("model/UserModel.php");
 require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
 require_once("model/ProfileGamerModel.php");
+require_once("model/ProponerModel.php");
+
 
 
 
@@ -96,6 +99,12 @@ class Configuration
 
     public function getIndexController() {
         return new IndexController($this->getViewer());
+    }
+
+    public function getProponerController()
+    {
+        return new ProponerController(new ProponerModel($this->getDatabase()), $this->getViewer());
+
     }
 
     public function getRouter()
