@@ -10,6 +10,10 @@ class UserModel{
         return $this->database->query("SELECT * FROM usuarios WHERE nombre = '$username'");
     }
 
+    public function buscarJugadorPorId($idUsuario){
+        return $this->database->query("SELECT * FROM usuarios WHERE id_usuario = '$idUsuario'");
+
+    }
 
     public function traerLasPartidasDeUnUsuario($username)
     {  return $this->database->query("SELECT  p.fecha AS fecha,

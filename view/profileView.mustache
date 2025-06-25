@@ -3,7 +3,8 @@
         <!-- Encabezado -->
         <h3 class="text-center mb-4 text-primary fw-bold d-flex justify-content-center align-items-center gap-2">
             <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
-            Mi Perfil
+            {{#es_propio}}Mi Perfil{{/es_propio}}
+            {{^es_propio}}Perfil del Jugador{{/es_propio}}
             <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
         </h3>
 
@@ -22,9 +23,11 @@
             <li class="list-group-item"><strong> Sexo:</strong> {{sexo}}</li>
             <li class="list-group-item"><strong> País:</strong> {{tipo_residencia}}</li>
         </ul>
-        <!-- Botón opcional -->
-        <!-- <div class="d-grid">
-            <a href="#" class="btn btn-outline-primary btn-sm">Editar perfil</a>
-        </div> -->
+
+        {{#es_propio}}
+            <div class="d-grid">
+                <a href="/editar-perfil" class="btn btn-outline-primary btn-sm">Editar perfil</a>
+            </div>
+        {{/es_propio}}
     </div>
 </div>

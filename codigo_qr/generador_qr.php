@@ -11,6 +11,4 @@ QRcode::png('xdlfjhsdfljghsfd','cacho.png');
 
 
 
-
-
 ?>
