@@ -11,6 +11,7 @@ main {
     justify-content: center;
     padding: 1em;
     min-height: 90vh;
+    row-gap: 0.5em;
 }
 
 .contenedor-pregunta {
@@ -110,4 +111,27 @@ form h4 {
 
 .contenedor-pregunta {
     animation: fadeInUp 0.8s ease-out;
+}
+
+#timer-container {
+    min-width: 50%;
+}
+
+.barra-fondo {
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.barra-progreso {
+    width: 100%;
+    height: 100%;
+    background-color: #6dd372;
+    transition: width 1s linear, background-color 1s linear;
+}
+
+.contenedor-pregunta, #timer-container{
+    margin-bottom: 1em;
 }

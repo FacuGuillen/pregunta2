@@ -35,7 +35,7 @@ INSERT INTO integrantes(nombre, instrumento) VALUE ('facu', 'ukelele')*/
 CREATE DATABASE IF NOT EXISTS pregunta2;
 USE pregunta2;
 
-create table tipo_usuario(
+create table rol(
  id_tipo_usuario int auto_increment primary key,
  tipo_usuario varchar (50)
 );
@@ -62,7 +62,7 @@ email varchar(100),
 contrasena varchar(250),
 nombre_usuario varchar(50),
 fecha_nacimiento date,
-foto_perfil text,
+foto_perfil varchar(50),
 tipo_usuario int,
 tipo_residencia int,
 tipo_ranking int,
@@ -72,4 +72,3 @@ FOREIGN KEY (tipo_residencia) REFERENCES residencia(id_residencia),
 FOREIGN KEY (tipo_ranking) REFERENCES ranking(id_ranking)
 );
 
-select * from usuarios;

@@ -1,17 +1,67 @@
 <main>
+    <div id="timer-container">
+        <div class="barra-fondo">
+            <div class="barra-progreso"></div>
+        </div>
+    </div>
     <div class="contenedor-pregunta {{color}}">
-        <form method="POST" action="/juego/responder">
+
+        <form method="POST" action="/juego/responder" id="form-respuesta">
             <input type="hidden" name="id_pregunta" value="{{id_pregunta}}">
+            <input type="hidden" name="respuesta" id="respuesta-default" value="">
 
             <h4 class="pregunta">{{pregunta}}</h4>
 
             <div class="respuestas">
                 {{#respuestas}}
-                        <button type="submit" name="respuesta" value="{{id_respuesta}}" class="boton-respuesta">
-                            {{respuesta}}
-                        </button>
+                    <button type="submit" name="respuesta" value="{{id_respuesta}}" class="boton-respuesta">
+                        {{respuesta}}
+                    </button>
                 {{/respuestas}}
             </div>
         </form>
     </div>
 </main>
+
+<script>
+    let tiempo = 10; // Tiempo total -> Desde acá lo modificamos o_<
+    const barraProgreso = document.querySelector('.barra-progreso');
+    const form = document.getElementById('form-respuesta');
+    const duracionTotal = tiempo;
+
+    const countdown = setInterval(() => {
+        tiempo--;
+
+        // Acá calculamos el porcentaje restante
+        const porcentaje = (tiempo / duracionTotal) * 100;
+        barraProgreso.style.width = porcentaje + '%';
+
+        // Acá cambiamos el color
+        const color = calcularColor(tiempo, duracionTotal);
+        barraProgreso.style.backgroundColor = color;
+
+        if (tiempo <= 0) {
+            clearInterval(countdown);
+            form.submit();
+        }
+    }, 1000);
+
+    const botones = document.querySelectorAll(".boton-respuesta");
+    botones.forEach(boton => {
+        boton.addEventListener("click", () => {
+            clearInterval(countdown);
+        });
+    });
+
+    // Acá se hace el cambio del color!
+    function calcularColor(tiempoRestante, tiempoTotal) {
+        const porcentaje = 1 - (tiempoRestante / tiempoTotal);
+
+        const rojo = Math.round(76 + (244 - 76) * porcentaje); // de 76 a 244
+        const verde = Math.round(175 - (175 - 67) * porcentaje); // de 175 a 67
+        const azul = Math.round(80 - (80 - 54) * porcentaje); // de 80 a 54
+
+        return `rgb(${rojo}, ${verde}, ${azul})`;
+    }
+
+</script>
