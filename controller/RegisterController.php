@@ -43,12 +43,12 @@ class RegisterController{
         if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
             empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
 
-            $this->redirectTo("register/show?error=campos_vacios");
+            $this->redirectTo("/register/show?error=campos_vacios");
             return;
         }
 
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("register/show?error=contrasena_no_coinciden");
+            $this->redirectTo("/register/show?error=contrasena_no_coinciden");
             return;
         }
 
@@ -61,11 +61,11 @@ class RegisterController{
             $destino = "public/uploads/" . $nombreArchivo;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
-                $this->redirectTo("register/show?error=error_foto");
+                $this->redirectTo("/register/show?error=error_foto");
                 return;
             }
         } else {
-            $this->redirectTo("register/show?error=error_foto");
+            $this->redirectTo("/register/show?error=error_foto");
             return;
         }
 
@@ -81,7 +81,7 @@ class RegisterController{
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("register/show?error=usuario_existente");
+            $this->redirectTo("/register/show?error=usuario_existente");
             return;
         }
 
@@ -89,11 +89,11 @@ class RegisterController{
 
         if ($resultado !== true) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("register/show?error=error_bd");
+            $this->redirectTo("/register/show?error=error_bd");
             return;
         }
 
-        $this->redirectTo("register/show?success=1");
+        $this->redirectTo("/register/show?success=1");
     }
 
     private function redirectTo($str)
