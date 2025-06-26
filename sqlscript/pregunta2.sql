@@ -293,17 +293,7 @@ CREATE TABLE IF NOT EXISTS  `preguntas_usuarios_respuestas`(
     CONSTRAINT `pregunta_usuarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
     CONSTRAINT `pregunta_usuarios_ibfk_2` FOREIGN KEY (`id_preguntas`) REFERENCES `pregunta` (`id_pregunta`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
--- tabla qr que se relaciona con usuario
-ALTER TABLE usuarios ADD UNIQUE (nombre_usuario);
 
-CREATE TABLE qr_usuarios (
-                             id_qr_usuario int AUTO_INCREMENT PRIMARY KEY,
-                             nombre_usuario varchar(50),
-                             qr_path varchar(50),
-                             qr_url text,
-                             KEY nombre_usuario(nombre_usuario),
-                             CONSTRAINT qr_usuarios_1 FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
-);
 
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
