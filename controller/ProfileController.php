@@ -15,13 +15,12 @@ class ProfileController{
 
     public function show($idUsuario = null)
     {
-        // Siempre usás el usuario logueado para la sesión
         $username = $this->user['username'];
 
         // Si no hay ID → es el perfil propio
         if ($idUsuario === null) {
             $data = $this->user;
-            $data['es_propio'] = true; // marcador opcional para la vista
+            $data['es_propio'] = true;
         } else {
             $jugador = $this->model->buscarJugadorPorId($idUsuario);
             $data = array_merge($jugador[0], [

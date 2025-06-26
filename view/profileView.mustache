@@ -5,7 +5,8 @@
         </div>
 
         <div class="perfil-datos">
-            <h2 class="perfil-titulo">Perfil de Usuario</h2>
+            {{#es_propio}}<h2 class="perfil-titulo">Perfil de Usuario</h2>{{/es_propio}}
+            {{^es_propio}}<h2 class="perfil-titulo">Perfil del Jugador</h2>{{/es_propio}}
             <p><span>Nombre de usuario:</span> {{nombre_usuario}}</p>
             <p><span>Email:</span> {{email}}</p>
             <p><span>Nombre:</span> {{nombre}} {{apellido}}</p>
@@ -14,9 +15,11 @@
             <p><span>País:</span> {{tipo_residencia}}</p>
         </div>
 
+{{#es_propio}}
         <div class="perfil-accion">
             <a href="#" class="btn-editar">Editar Perfil</a>
             <a class="btn-salir" href="/login/logout">Cerrar Sesión</a>
         </div>
+{{/es_propio}}
     </div>
 </main>
