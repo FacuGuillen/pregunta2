@@ -130,6 +130,21 @@ class EditorController{
     }
 
 
+//lautaro preguntas propuestas
+
+    public function verPropuestas() {
+        $preguntas = $this->model->getPreguntasPropuestas();
+
+        // Agregar respuestas asociadas a cada pregunta
+        foreach ($preguntas as &$pregunta) {
+            $pregunta['respuestas'] = $this->model->getRespuestasPropuestasPorPregunta($pregunta['id_pregunta_propuesta']);
+        }
+
+        $this->view->render("preguntasPropuestasEditor", [
+            'preguntas' => $preguntas
+        ]);
+    }
+
 
 
 

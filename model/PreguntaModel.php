@@ -127,7 +127,7 @@ class PreguntaModel {
 
     public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
     {  $db = $this->db->getConnection();
-        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_pregunta, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();
@@ -361,6 +361,28 @@ class PreguntaModel {
         return true;
     }
 
+    //lautaro preguntas propuestas
+    // Devuelve todas las preguntas propuestas con categoría y usuario
+    public function getPreguntasPropuestas() {
+        $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
+            FROM preguntas_propuestas pp
+            JOIN categoria c ON pp.id_categoria = c.id_categoria
+            JOIN usuarios u ON pp.id_usuario = u.id_usuario
+            WHERE pp.estado = 'pendiente'";
+
+        $result = $this->db->getConnection()->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+// Devuelve respuestas asociadas a una pregunta propuesta
+    public function getRespuestasPropuestasPorPregunta($id_pregunta_propuesta) {
+        $sql = "SELECT * FROM respuestas_propuestas WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("i", $id_pregunta_propuesta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
 
 }
