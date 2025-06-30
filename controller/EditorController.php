@@ -15,16 +15,23 @@ class EditorController{
         $this->user = Security::getUser();
     }
 
-    public function show()
-    {
+    public function show() {
         $username = $_SESSION["user"]["nameuser"] ?? null;
-        $preguntas = $this->model->getAllQuestions();
+
+        $preguntasNormales = $this->model->getAllQuestions();
+        $preguntasPropuestas = $this->model->getPreguntasPropuestas();
+
+        foreach ($preguntasPropuestas as &$pregunta) {
+            $pregunta['respuestas'] = $this->model->getRespuestasPropuestasPorPregunta($pregunta['id_pregunta_propuesta']);
+        }
 
         $this->view->render("editor", [
             "username" => $username,
-            "preguntas" => $preguntas
+            "preguntasNormales" => $preguntasNormales,
+            "preguntasPropuestas" => $preguntasPropuestas
         ]);
     }
+
 
     public function filterCategory()
     {
@@ -145,8 +152,61 @@ class EditorController{
         ]);
     }
 
+    public function verPropuesta() {
+        $id = $_POST["id_pregunta_propuesta"] ?? null;
 
+        if (!$id) {
+            $this->redirectTo("/editor/show");
+            return;
+        }
 
+        $pregunta = $this->model->getPreguntaPropuestaById($id);
+        $respuestas = $this->model->getRespuestasPropuestasPorPregunta($id);
 
+        $this->view->render("verPreguntaPropuesta", [
+            "pregunta" => $pregunta['pregunta'],
+            "categoria" => $pregunta['categoria'],
+            "nombre_usuario" => $pregunta['nombre_usuario'],
+            "id_pregunta_propuesta" => $pregunta['id_pregunta_propuesta'],
+            "respuestas" => $respuestas
+        ]);
+    }
+
+    public function rechazarPropuesta() {
+        $id = $_POST["id_pregunta_propuesta"] ?? null;
+        if ($id) {
+            $this->model->actualizarEstadoPropuesta($id, 'rechazada');
+            $this->model->actualizarEstadoRespuestasPropuestas($id, 'rechazada'); // 👈 también cambia las respuestas
+        }
+        header("Location: /editor/show");
+        exit;
+    }
+
+    public function aceptarPropuesta() {
+        $id = $_POST["id_pregunta_propuesta"] ?? null;
+        if (!$id) {
+            header("Location: /editor/show");
+            exit;
+        }
+
+        // Traemos la pregunta y respuestas propuestas
+        $pregunta = $this->model->getPreguntaPropuestaById($id);
+        $respuestas = $this->model->getRespuestasPropuestasPorPregunta($id);
+
+        // Insertamos en la tabla final de preguntas
+        $idPreguntaNueva = $this->model->insertarPreguntaFinal($pregunta['pregunta'], $pregunta['id_categoria']);
+
+        // Insertamos las respuestas
+        foreach ($respuestas as $respuesta) {
+            $this->model->insertarRespuestaFinal($idPreguntaNueva, $respuesta['respuesta'], $respuesta['es_correcta']);
+        }
+
+        // Actualizar estado en ambas tablas
+        $this->model->actualizarEstadoPropuesta($id, 'aprobada');
+        $this->model->actualizarEstadoRespuestasPropuestas($id, 'aprobada');
+
+        header("Location: /editor/show");
+        exit;
+    }
 
 }

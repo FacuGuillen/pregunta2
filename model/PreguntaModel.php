@@ -384,5 +384,49 @@ class PreguntaModel {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+//preguntas propuestas
+    public function getPreguntaPropuestaById($id) {
+        $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
+            FROM preguntas_propuestas pp
+            JOIN categoria c ON pp.id_categoria = c.id_categoria
+            JOIN usuarios u ON pp.id_usuario = u.id_usuario
+            WHERE pp.id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+}
+
+
+// Cambia estado de propuesta
+    public function actualizarEstadoPropuesta($id, $estado) {
+        $sql = "UPDATE preguntas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $estado, $id);
+        $stmt->execute();
+    }
+
+    public function actualizarEstadoRespuestasPropuestas($id_pregunta_propuesta, $estado) {
+        $sql = "UPDATE respuestas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $estado, $id_pregunta_propuesta);
+        $stmt->execute();
+    }
+
+
+    public function insertarPreguntaFinal($pregunta, $idCategoria) {
+        $sql = "INSERT INTO pregunta (pregunta, id_categoria, activo) VALUES (?, ?, 1)";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $pregunta, $idCategoria);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function insertarRespuestaFinal($idPregunta, $respuesta, $esCorrecta) {
+        $sql = "INSERT INTO respuesta (id_pregunta, respuesta, es_correcta) VALUES (?, ?, ?)";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("isi", $idPregunta, $respuesta, $esCorrecta);
+        $stmt->execute();
+    }
 
 }

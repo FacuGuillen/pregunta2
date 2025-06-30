@@ -1,0 +1,31 @@
+<h2 class="mb-4">Revisión de Pregunta Propuesta</h2>
+
+<div class="card mb-3">
+    <h2>{{pregunta}}</h2>
+    <p><strong>Categoría:</strong> {{categoria}}</p>
+    <p><strong>Propuesta por:</strong> {{nombre_usuario}}</p>
+
+    <h4>Respuestas:</h4>
+    <ul class="list-group">
+        {{#respuestas}}
+            <li class="list-group-item">
+                {{respuesta}} {{#es_correcta}}✅{{/es_correcta}}
+            </li>
+        {{/respuestas}}
+
+        {{^respuestas}}
+            <li class="list-group-item">No hay respuestas cargadas.</li>
+        {{/respuestas}}
+    </ul>
+</div>
+
+<div class="d-flex gap-2">
+    <form action="/editor/aceptarPropuesta" method="POST">
+        <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
+        <button class="btn btn-success">Aceptar</button>
+    </form>
+    <form action="/editor/rechazarPropuesta" method="POST">
+        <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
+        <button class="btn btn-danger">Rechazar</button>
+    </form>
+</div>
