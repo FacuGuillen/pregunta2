@@ -18,7 +18,7 @@ class AdministradorController{
         $cantidadUsuarios = $this->model->getJugadoresRegistrados($username);
         $cantidadPartidasJugadas = $this->model->cantidadPartidasJugadas();
         $cantidadPreguntas = $this->model->cantidadPreguntasEnElJuego();
-        //$cantidadPreguntasCreadasPorUsuarios = $this->model->cantidadCreadas();
+        $cantidadPreguntasCreadasPorUsuarios = $this->model->getPreguntasCreadasPorUsuarios();
         $cantidadUsuariosNuevos = $this->model->getUsuariosNuevos();
 
         $this->view->render("administrador", [
@@ -26,7 +26,7 @@ class AdministradorController{
             "cantidad_usuarios" => $cantidadUsuarios,
             "cantidad_partidas" => $cantidadPartidasJugadas,
             "cantidad_preguntas" => $cantidadPreguntas,
-            //"cantidad_preguntas_creadas_por_usuarios" => $cantidadPreguntasCreadasPorUsuarios,
+            "cantidad_preguntas_creadas_por_usuarios" => $cantidadPreguntasCreadasPorUsuarios,
             "cantidad_usuarios_nuevos" => $cantidadUsuariosNuevos
         ]);
     }

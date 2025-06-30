@@ -58,5 +58,16 @@ class AdministradorModel{
     }
 
 
+    public function getPreguntasCreadasPorUsuarios(){
+        $sql = "SELECT COUNT(*) AS total FROM preguntas_propuestas where estado = 'aprobada'";
+        $resultado = $this->getDbConnection()->query($sql);
+        if ($resultado) {
+            $fila = $resultado->fetch_assoc();
+            return (int) $fila['total'];
+        }
+        return 0;
+    }
+
+
 
 }

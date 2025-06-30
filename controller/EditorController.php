@@ -135,6 +135,17 @@ class EditorController{
     }
 
 
+    public function verReportadas(){
+        $username = $_SESSION["user"]["nameuser"] ?? null;
+        //$pregunta = $this->model->getPreguntasReportadas();
+        $this->view->render("preguntasReportadas", [
+            "username" => $username,
+            //"preguntas" => $pregunta,
+        ]);
+
+    }
+
+
 //lautaro preguntas propuestas
 
     public function verPropuestas() {
