@@ -38,14 +38,21 @@ class EditorController{
         $idCategoria = $_POST['id_categoria'] ?? '';
 
         if ($idCategoria !== '') {
-            $preguntas = $this->model->getPreguntasPorIdCategoria((int)$idCategoria);
+            $preguntasNormales = $this->model->getPreguntasPorIdCategoria((int)$idCategoria);
         } else {
-            $preguntas = $this->model->getAllQuestions();
+            $preguntasNormales = $this->model->getAllQuestions();
+        }
+
+        $preguntasPropuestas = $this->model->getPreguntasPropuestas();
+
+        foreach ($preguntasPropuestas as &$pregunta) {
+            $pregunta['respuestas'] = $this->model->getRespuestasPropuestasPorPregunta($pregunta['id_pregunta_propuesta']);
         }
 
         $this->view->render("editor", [
             "username" => $username,
-            "preguntas" => $preguntas
+            "preguntasNormales" => $preguntasNormales,
+            "preguntasPropuestas" => $preguntasPropuestas
         ]);
     }
 
