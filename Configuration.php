@@ -18,7 +18,7 @@ require_once("controller/ProfileGamerController.php");
 require_once("controller/ListaPartidaController.php");
 require_once("controller/ProponerController.php");
 require_once("controller/EditorController.php");
-
+require_once("controller/AdministradorController.php");
 
 
 require_once("model/RegisterModel.php");
@@ -28,7 +28,7 @@ require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
 require_once("model/ProfileGamerModel.php");
 require_once("model/ProponerModel.php");
-
+require_once ("model/AdministradorModel.php");
 
 
 
@@ -66,6 +66,10 @@ class Configuration
     public function getProfileController(){
         return new ProfileController(new UserModel($this->getDatabase()), $this->getViewer()
         );
+    }
+
+    public function getAdministradorController(){
+        return new AdministradorController(new AdministradorModel($this->getDatabase()), $this->getViewer());
     }
 
     public function getRankingController(){

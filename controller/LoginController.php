@@ -30,9 +30,8 @@ class LoginController
             $_SESSION["user"] = $user;
 
             if (Security::isAdmin()) {
-                $this->view->render("admin", [
-                    "username" => $username,
-                ]);
+                header("Location: /administrador/show");
+                exit;
             } elseif (Security::isEditor()) {
                 header("Location: /editor/show");
                 exit;

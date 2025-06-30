@@ -1,7 +1,5 @@
 <?php
 
-require_once ("configuration/constants.php");
-
 class EditorController{
     private $view;
     private $model;
@@ -42,7 +40,7 @@ class EditorController{
         if ($idCategoria !== '') {
             $preguntas = $this->model->getPreguntasPorIdCategoria((int)$idCategoria);
         } else {
-            $preguntas = $this->model->getAllQuestions(); // sin filtro
+            $preguntas = $this->model->getAllQuestions();
         }
 
         $this->view->render("editor", [

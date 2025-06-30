@@ -39,5 +39,4 @@ class PartidaModel
         return (!empty($resultado) && $resultado[0]['es_correcta'] == 1);
     }
 
-
 }
