@@ -1,0 +1,79 @@
+<div class="container py-5">
+    <h1 class="mb-5 text-center fw-bold">📊 Panel de Administración</h1>
+
+    <!-- Filtros -->
+    <div class="row g-3 align-items-end mb-4">
+        <div class="col-md-4">
+            <label class="form-label">Filtrar por período:</label>
+            <select class="form-select">
+                <option>Día</option>
+                <option>Semana</option>
+                <option>Mes</option>
+                <option>Año</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary w-100">Aplicar filtro</button>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success w-100">Imprimir tablas</button>
+        </div>
+    </div>
+
+    <!-- Resumen General -->
+    <div class="card mb-5 chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+        <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">📌 Resumen general</div>
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>Métrica</th>
+                    <th>Valor</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>Jugadores registrados</td><td>{{cantidad_usuarios}}</td></tr>
+                <tr><td>Partidas jugadas</td><td>{{cantidad_partidas}}</td></tr>
+                <tr><td>Preguntas en el juego</td><td>{{cantidad_preguntas}}</td></tr>
+                <tr><td>Preguntas creadas</td><td>{{cantidad_preguntas_creadas_por_usuarios}}</td></tr>
+                <tr><td>Usuarios nuevos (últimos 7 días)</td><td>{{cantidad_usuarios_nuevos}}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Gráficos Chart.js -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+                <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">✅ % de respuestas correctas por usuario</div>
+                <div class="card-body"><canvas id="graficoRespuestas"></canvas></div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+                <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">👥 Usuarios por sexo</div>
+                <div class="card-body"><canvas id="graficoSexo"></canvas></div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+                <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">🎂 Usuarios por grupo etario</div>
+                <div class="card-body"><canvas id="graficoEdad"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mapa mundial -->
+    <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+        <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">🌍 Usuarios por país (mapa mundial)</div>
+        <div class="card-body">
+            <div id="geo_chart_div" style="width: 100%; height: 500px;"></div>
+        </div>
+    </div>
+</div>
+
+
+
