@@ -1,28 +1,18 @@
-<h2>Preguntas Propuestas</h2>
+<h2 class="mt-5">Preguntas Propuestas por Usuarios</h2>
 
-{{#preguntas}}
-    <div class="card mb-3">
-        <div class="card-header fw-bold">
-            {{pregunta}} ({{categoria}}) - Propuesta por {{nombre_usuario}}
-        </div>
-        <ul class="list-group list-group-flush">
-            {{#respuestas}}
-                <li class="list-group-item">{{respuesta}} {{#es_correcta}}✅{{/es_correcta}}</li>
-            {{/respuestas}}
-        </ul>
-        <div class="card-footer d-flex gap-2">
-            <form action="/editor/aceptarPropuesta" method="POST">
-                <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
-                <button class="btn btn-success">Aceptar</button>
-            </form>
-            <form action="/editor/rechazarPropuesta" method="POST">
-                <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
-                <button class="btn btn-danger">Rechazar</button>
-            </form>
-        </div>
-    </div>
-{{/preguntas}}
+<ul class="list-group">
+    {{#preguntasPropuestas}}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{pregunta}} ({{categoria}}) - {{nombre_usuario}}</span>
 
-{{^preguntas}}
-    <p>No hay preguntas propuestas pendientes.</p>
-{{/preguntas}}
+            <form action="/editor/verPropuesta" method="POST" class="mb-0">
+                <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
+                <button type="submit" class="btn btn-sm btn-info">Ver</button>
+            </form>
+        </li>
+    {{/preguntasPropuestas}}
+
+    {{^preguntasPropuestas}}
+        <li class="list-group-item">No hay preguntas propuestas para mostrar.</li>
+    {{/preguntasPropuestas}}
+</ul>

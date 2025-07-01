@@ -3,6 +3,8 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
+
+
 require_once ("configuration/constants.php");
 require_once ("codigo_qr/phpqrcode/qrlib.php");
 
@@ -19,7 +21,6 @@ require_once("controller/ListaPartidaController.php");
 require_once("controller/ProponerController.php");
 require_once("controller/EditorController.php");
 require_once("controller/AdministradorController.php");
-
 
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");

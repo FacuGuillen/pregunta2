@@ -3,30 +3,21 @@
 class EditorController{
     private $view;
     private $model;
-    private $user;
 
     public function __construct($model, $view)
     {
         $this->model = $model;
         $this->view = $view;
-
-        $this->user = Security::getUser();
     }
 
     public function show() {
         $username = $_SESSION["user"]["nameuser"] ?? null;
 
-        $preguntasNormales = $this->model->getAllQuestions();
-        $preguntasPropuestas = $this->model->getPreguntasPropuestas();
+        $preguntas = $this->model->getAllQuestions();
 
-        foreach ($preguntasPropuestas as &$pregunta) {
-            $pregunta['respuestas'] = $this->model->getRespuestasPropuestasPorPregunta($pregunta['id_pregunta_propuesta']);
-        }
-
-        $this->view->render("editor", [
+        $this->view->render("editor",[
             "username" => $username,
-            "preguntasNormales" => $preguntasNormales,
-            "preguntasPropuestas" => $preguntasPropuestas
+            "preguntas" => $preguntas
         ]);
     }
 
@@ -45,8 +36,8 @@ class EditorController{
 
         $this->view->render("editor", [
             "username" => $username,
-            "preguntas" => $preguntas
-        ]);
+            "preguntas" => $preguntas,
+            ]);
     }
 
     public function editarPregunta(){
@@ -57,10 +48,10 @@ class EditorController{
             $pregunta = $this->model->getPregunta($idPregunta);
             $respuestas = $this->model->getRespuestasPorPregunta($idPregunta);
 
-            $this->view->render("editarPregunta", [
+            $this->view->render("editarPregunta",[
                 "username" => $username,
                 "pregunta" => $pregunta,
-                "respuestas" => $respuestas
+                "respuestas" => $respuestas,
             ]);
         } /*else {
             $this->redirectTo('/editor/show');
@@ -99,7 +90,7 @@ class EditorController{
         $this->view->render("editor", [
             "username" => $username,
             "preguntas" => $preguntas,
-            "mensaje" => "Pregunta actualizada correctamente"
+            "mensaje" => "Pregunta actualizada correctamente",
         ]);
     }
 
@@ -113,10 +104,10 @@ class EditorController{
 
         $preguntas = $this->model->getAllQuestions();
 
-        $this->view->render("editor", [
+        $this->view->render("editor",[
             "username" => $username,
             "preguntas" => $preguntas,
-            "mensaje" => "Pregunta eliminada correctamente"
+            "mensaje" => "Pregunta eliminada correctamente",
         ]);
     }
 
@@ -130,7 +121,7 @@ class EditorController{
         $this->view->render("editor", [
             "username" => $username,
             "preguntas" => $preguntas,
-            "mensaje" => "Pregunta pausada correctamente"
+            "mensaje" => "Pregunta pausada correctamente",
         ]);
     }
 
@@ -149,15 +140,14 @@ class EditorController{
 //lautaro preguntas propuestas
 
     public function verPropuestas() {
-        $preguntas = $this->model->getPreguntasPropuestas();
+        $preguntasPropuestas = $this->model->getPreguntasPropuestas();
 
-        // Agregar respuestas asociadas a cada pregunta
-        foreach ($preguntas as &$pregunta) {
+        foreach ($preguntasPropuestas as &$pregunta) {
             $pregunta['respuestas'] = $this->model->getRespuestasPropuestasPorPregunta($pregunta['id_pregunta_propuesta']);
         }
 
         $this->view->render("preguntasPropuestasEditor", [
-            'preguntas' => $preguntas
+            'preguntasPropuestas' => $preguntasPropuestas,
         ]);
     }
 
@@ -165,21 +155,23 @@ class EditorController{
         $id = $_POST["id_pregunta_propuesta"] ?? null;
 
         if (!$id) {
-            $this->redirectTo("/editor/show");
-            return;
+            header("Location: /editor/verPropuestas");
+            exit;
         }
 
         $pregunta = $this->model->getPreguntaPropuestaById($id);
         $respuestas = $this->model->getRespuestasPropuestasPorPregunta($id);
 
-        $this->view->render("verPreguntaPropuesta", [
+        $this->view->render("verPreguntaPropuesta",[
             "pregunta" => $pregunta['pregunta'],
             "categoria" => $pregunta['categoria'],
             "nombre_usuario" => $pregunta['nombre_usuario'],
             "id_pregunta_propuesta" => $pregunta['id_pregunta_propuesta'],
-            "respuestas" => $respuestas
+            "respuestas" => $respuestas,
         ]);
     }
+
+
 
     public function rechazarPropuesta() {
         $id = $_POST["id_pregunta_propuesta"] ?? null;

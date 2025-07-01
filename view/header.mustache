@@ -31,29 +31,26 @@
                     Hola, {{username}}!
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-nav ms-5 fs-5" href="/ranking/show">Ranking</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-nav ms-5 fs-5" href="/listaPartida/show">Partidas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-nav ms-5 fs-5" href="/profile/show">Perfil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-nav ms-5 fs-5" href="/login/logout">Salir</a>
-                </li>
+                {{#isJugador}}
+                    <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/ranking/show">Ranking</a></li>
+                    <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/listaPartida/show">Partidas</a></li>
+                {{/isJugador}}
 
+                {{#isEditor}}
+                    <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/editor/show">Editor</a></li>
+                {{/isEditor}}
+
+                {{#isAdmin}}
+                    <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/administrador/show">Administrador</a></li>
+                {{/isAdmin}}
+
+                <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/profile/show">Perfil</a></li>
+                <li class="nav-item"><a class="nav-link text-nav ms-5 fs-5" href="/login/logout">Salir</a></li>
             {{/username}}
 
             {{^username}}
-
-                <li class="nav-item">
-                    <a class="btn btn-warning me-2" href="/register/show">Registrarse</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-light me-2" href="/login/show">Login</a>
-                </li>
+                <li class="nav-item"><a class="btn btn-warning me-2" href="/register/show">Registrarse</a></li>
+                <li class="nav-item"><a class="btn btn-outline-light me-2" href="/login/show">Login</a></li>
             {{/username}}
 
         </ul>

@@ -17,6 +17,19 @@ class MustachePresenter{
         if (!isset($data["css"])) {
             $data["css"] = $contentFile . ".css";
         }
+
+        // Agregamos el usuario global si está logueado
+        if (isset($_SESSION["user"])) {
+            $user = $_SESSION["user"];
+            $data["username"] = $user["nombre_usuario"] ?? null;
+            $data["tipo_usuario"] = $user["tipo_usuario"] ?? null;
+
+            // Agregamos banderas según tipo
+            $data["isJugador"] = $user["tipo_usuario"] == 1;
+            $data["isEditor"] = $user["tipo_usuario"] == 2;
+            $data["isAdmin"] = $user["tipo_usuario"] == 3;
+        }
+
         echo $this->generateHtml($this->partialsPathLoader . '/' . $contentFile . "View.mustache", $data);
     }
 

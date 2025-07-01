@@ -3,17 +3,17 @@
 class RankingController{
     private $model;
     private $view;
-    private $user;
+
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
+
     }
 
     public function show(){
 
-        $username = $this->user['username'];
+        $username = ['username'];
 
         $data = [
             "usuarios" => $this->model->getRanking()

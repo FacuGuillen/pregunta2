@@ -5,18 +5,16 @@ class JuegoController
     private $view;
     private $model;
 
-    private $user;
 
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function jugar($categoria = null)
     {
 
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = ['id_usuario'];
 
         if (!$categoria) {
             header("Location: /ruleta/show");
@@ -70,7 +68,7 @@ class JuegoController
 
     // Procesa la respuesta del usuario
     public function responder() {
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = ['id_usuario'];
 
         if (!isset($_POST['respuesta']) || !isset($_SESSION['pregunta_actual'])) {
             // Redirecciona con error
@@ -98,16 +96,17 @@ class JuegoController
 
     // Muestra el resultado final
     public function resultado() {
-        $username = $this->user['username'];
+        $username =['username'];
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $guardarPartida = $this->model->guardarPartida($puntaje);
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = ['id_usuario'];
         $idPartida = $guardarPartida;
         $guardarPartidaDeUsuario = $this->model->guardarPartidaUsuario($idUsuario, $idPartida);
 
         $this->view->render("resultado", ['puntaje' => $puntaje,
-            'username' => $username
+            'username' => $username,
+
         ]);
         unset($_SESSION['puntaje']);
     }

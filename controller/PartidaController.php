@@ -17,7 +17,8 @@ class PartidaController
 
         $this->view->render("partida", [
             "partida" => $partida,
-            "preguntas" => $preguntas
+            "preguntas" => $preguntas,
+
         ]);
     }
 
@@ -34,7 +35,8 @@ class PartidaController
         $partidaId = $_GET["id"];
         $resultado = $this->model->getResultado($partidaId);
 
-        $this->view->render("partidaResultado", ["resultado" => $resultado]);
+        $this->view->render("partidaResultado", ["resultado" => $resultado],
+            );
     }
 
     private function redirectTo($url)

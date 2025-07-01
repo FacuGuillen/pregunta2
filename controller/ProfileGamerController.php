@@ -4,13 +4,11 @@ class ProfileGamerController{
 
     public $view;
     private $model;
-    private $user;
 
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show($nombreJugador = null){
@@ -20,7 +18,7 @@ class ProfileGamerController{
             exit();
         }
 
-        $username = $this->user['username'];
+        $username = ['username'];
 
         $data = [
             "jugador" => $this->model->traerLosdatosDelUsuarioYSuRanking($nombreJugador)
