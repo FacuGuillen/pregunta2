@@ -45,7 +45,8 @@ class RegisterController{
 
         // Validación de campos vacíos
         if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
-            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
+            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])
+            || empty($_POST["latitud"]) || empty($_POST["longitud"])) {
 
             $mensaje = "Todos los campos son obligatorios.";
             $tipo = "error";
@@ -80,6 +81,22 @@ class RegisterController{
             return;
         }
 
+        $residenciaData = [
+            'ciudad' => $_POST['ciudad'],
+            'pais' => $_POST['pais'],
+            'latitud' => $_POST['latitud'],
+            'longitud' => $_POST['longitud']
+        ];
+
+        $idResidencia = $this->model->insertarResidencia($residenciaData);
+
+        if (!$idResidencia) {
+            $mensaje = "Error al guardar la residencia.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
+            return;
+        }
+
         $data = [
             'name' => $_POST['name'],
             'lastname' => $_POST['lastname'],
@@ -89,7 +106,8 @@ class RegisterController{
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
             'photo' => $nombreArchivo,
-            'tipo_usuario' => 1  // ← usuario tipo jugador por defecto
+            'tipo_usuario' => 1,  // ← usuario tipo jugador por defecto
+            'residencia' => $idResidencia
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {

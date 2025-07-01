@@ -3,6 +3,7 @@
 <div class="container d-flex justify-content-center">
     <form id="registerForm" class="row g-3 w-75" method="post" action="/register/addUser" enctype="multipart/form-data">
 
+        <!-- Tus campos existentes... -->
         <div class="col-md-6">
             <label class="form-label">Nombre</label>
             <input type="text" name="name" class="form-control form-control-sm" />
@@ -15,7 +16,11 @@
 
         <div class="col-md-6">
             <label class="form-label">Sexo</label>
-            <input type="text" name="sex" class="form-control form-control-sm" />
+            <select name="sex" class="form-control form-control-sm">
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
+            </select>
         </div>
 
         <div class="col-md-6">
@@ -48,6 +53,50 @@
             <input type="file" name="photo" class="form-control form-control-sm" />
         </div>
 
+        <!-- Select de país -->
+        <div class="col-md-6">
+            <label class="form-label">País</label>
+            <select name="pais" id="pais" class="form-control form-control-sm">
+                <option value="">Seleccione un país</option>
+                <option value="ar">Argentina</option>
+                <option value="bo">Bolivia</option>
+                <option value="br">Brasil</option>
+                <option value="cl">Chile</option>
+                <option value="co">Colombia</option>
+                <option value="ec">Ecuador</option>
+                <option value="gy">Guyana</option>
+                <option value="py">Paraguay</option>
+                <option value="pe">Perú</option>
+                <option value="sr">Surinam</option>
+                <option value="uy">Uruguay</option>
+                <option value="ve">Venezuela</option>
+            </select>
+        </div>
+
+
+        <!-- Campo de ciudad con autocomplete -->
+        <div class="col-md-6 position-relative">
+            <label class="form-label">Ciudad</label>
+            <input type="text" id="ciudad" name="ciudad" class="form-control form-control-sm" placeholder="Escribí tu ciudad..." autocomplete="off" />
+            <div id="autocomplete-list" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+        </div>
+
+
+        <!-- Lat/Lng ocultos -->
+        <input type="hidden" name="latitud" id="latitud">
+        <input type="hidden" name="longitud" id="longitud">
+
+        <!-- Botón para ver mapa -->
+        <div class="col-12">
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="mostrarMapa()">Ver en mapa</button>
+        </div>
+
+        <!-- Mapa -->
+        <div class="col-12" id="mapaContainer" style="display: none;">
+            <label class="form-label">Ajustar ubicación:</label>
+            <div id="map" style="height: 300px;"></div>
+        </div>
+
         <div class="col-12 text-end mt-3">
             <button type="submit" class="btn btn-sm btn-primary px-4">Registrarse</button>
         </div>
@@ -55,9 +104,10 @@
     </form>
 </div>
 
-
 {{#mensaje}}
     <script>
         alert("{{mensaje}}");
     </script>
 {{/mensaje}}
+
+
