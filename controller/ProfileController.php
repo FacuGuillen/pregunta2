@@ -1,16 +1,30 @@
 <?php
-
-class ProfileController{
+class ProfileController {
 
     private $model;
     private $view;
 
-    private $user;
-
-    public function __construct($model,$view){
+    public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
+    }
 
+    private function nombreCompletoPais($codigo) {
+        $paises = [
+            'ar' => 'Argentina',
+            'bo' => 'Bolivia',
+            'br' => 'Brasil',
+            'cl' => 'Chile',
+            'co' => 'Colombia',
+            'ec' => 'Ecuador',
+            'gy' => 'Guyana',
+            'py' => 'Paraguay',
+            'pe' => 'Perú',
+            'sr' => 'Surinam',
+            'uy' => 'Uruguay',
+            've' => 'Venezuela'
+        ];
+        return $paises[strtolower($codigo)] ?? $codigo;
     }
 
     public function show(){
@@ -24,8 +38,12 @@ class ProfileController{
             die("Usuario no encontrado.");
         }
 
-        // Pasamos $idUsuario directamente
         $userLocacion = $this->model->getUserLocacionById($idUsuario);
+
+
+
+        $paisCodigo = $userLocacion['pais'] ?? null;
+        $paisNombre = $this->nombreCompletoPais($paisCodigo);
 
         $this->view->render("profile", [
             "nombre" => $user['nombre'],
@@ -34,13 +52,10 @@ class ProfileController{
             "fecha_nacimiento" => $user['fecha_nacimiento'],
             "sexo" => $user['sexo'],
             "foto_perfil" => $user['foto_perfil'],
-            // Si no hay locacion, mostrar valor por defecto para evitar errores
-            "pais" => $userLocacion['pais'] ?? null,
+            "pais" => $paisNombre,
             "ciudad" => $userLocacion['ciudad'] ?? null,
             "latitud" => $userLocacion['latitud'] ?? null,
             "longitud" => $userLocacion['longitud'] ?? null,
         ]);
     }
-
-
 }

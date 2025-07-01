@@ -127,7 +127,7 @@ class PreguntaModel {
 
     public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
     {  $db = $this->db->getConnection();
-        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_pregunta, respuesta_correcta) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();

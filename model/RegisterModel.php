@@ -22,10 +22,10 @@ class RegisterModel
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
         $foto_perfil = $db->real_escape_string($data['photo']);
         $tipo_usuario = isset($data['tipo_usuario']) ? intval($data['tipo_usuario']) : 1;  // Por si no viene, poner 1 por defecto
-        $residencia = $db->real_escape_string($data['residencia']);
+        $residencia = $db->real_escape_string($data['tipo_residencia']);
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil, tipo_usuario, residencia)
-            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$tipo_usuario', '$residencia')";
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil, tipo_usuario, tipo_residencia)
+        VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$tipo_usuario', '$residencia')";
 
         if (!$db->query($sql)) {
             return $db->error;

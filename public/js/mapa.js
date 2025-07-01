@@ -44,33 +44,30 @@ async function geocodificarCiudadYPais(ciudad, pais) {
     document.getElementById("latitud").value = lat;
     document.getElementById("longitud").value = lng;
 }
-
-
-    async function mostrarMapa() {
+async function mostrarMapa() {
     document.getElementById("mapaContainer").style.display = "block";
+
+    await new Promise(r => setTimeout(r, 200)); // <- importante
 
     const ciudad = document.getElementById("ciudad").value.trim();
     const pais = document.getElementById("pais").value.trim();
 
-    alert(`Buscando coordenadas para: ${ciudad}, ${pais}`);
-
-    let lat = -34.6037; // Valor por defecto: Buenos Aires
+    let lat = -34.6037;
     let lon = -58.3816;
 
     if (ciudad && pais) {
-    const coords = await geocodificarCiudadYPais(ciudad, pais);
-    if (coords) {
-    lat = coords.lat;
-    lon = coords.lon;
-    alert(`Coordenadas encontradas: lat=${lat}, lon=${lon}`);
-} else {
-    alert("No se encontraron coordenadas, se usará ubicación por defecto.");
-}
-} else {
-    alert("Faltan ciudad o país para buscar ubicación");
-}
+        const coords = await geocodificarCiudadYPais(ciudad, pais);
+        if (coords) {
+            lat = coords.lat;
+            lon = coords.lon;
+        }
+    }
 
     initMap(lat, lon);
+
+    if (map) {
+        map.invalidateSize();
+    }
+
+
 }
-
-

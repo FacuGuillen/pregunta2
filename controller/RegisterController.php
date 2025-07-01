@@ -107,7 +107,7 @@ class RegisterController{
             'nameuser' => $_POST['nameuser'],
             'photo' => $nombreArchivo,
             'tipo_usuario' => 1,  // ← usuario tipo jugador por defecto
-            'residencia' => $idResidencia
+            'tipo_residencia' => $idResidencia
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {

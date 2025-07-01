@@ -25,7 +25,7 @@
 
         </ul>
 
-        <div id="map" style="height: 300px; border-radius: 1rem;"></div>
+        <div id="mapPerfil" style="height: 300px; border-radius: 1rem;"></div>
         <!-- Botón opcional -->
         <!-- <div class="d-grid">
             <a href="#" class="btn btn-outline-primary btn-sm">Editar perfil</a>
@@ -33,5 +33,9 @@
     </div>
 </div>
 
+<script>
+    const userLat = Number({{latitud}}) || -34.6037;
+    const userLon = Number({{longitud}}) || -58.3816;
+</script>
 
 

@@ -24,11 +24,12 @@ class UserModel{
     public function getUserLocacionById($id){
         $db = $this->database->getConnection();
         $id = $db->real_escape_string($id);
-        $sql = "SELECT u.*, r.pais, r.ciudad
+        $sql = "SELECT r.pais, r.ciudad, r.latitud, r.longitud
         FROM usuarios u
         LEFT JOIN residencia r ON r.id_residencia = u.tipo_residencia
         WHERE u.id_usuario = '$id'
         LIMIT 1";
+
         $result = $db->query($sql);
 
         if ($result && $result->num_rows > 0) {
