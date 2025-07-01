@@ -29,10 +29,10 @@ class EmailSender {
             $mail->Body    = $body; // contenido del mensaje
 
             $mail->send();
-            echo "Correo enviado exitosamente a $email<br>";
+           // echo "Correo enviado exitosamente a $email<br>";
             return true;
         } catch (Exception $e) {
-            echo "Error al enviar el correo: {$mail->ErrorInfo}";
+           // echo "Error al enviar el correo: {$mail->ErrorInfo}";
             return false;
         }
     }

@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/core/EmailSender.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Pregunta2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Pregunta2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_6_2025_21_29_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_6_2025_21_29__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/EmailSender.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/EmailSender.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +96,7 @@
       <workItem from="1750549849205" duration="1739000" />
       <workItem from="1751235118790" duration="5111000" />
       <workItem from="1751241956045" duration="3749000" />
-      <workItem from="1751396252673" duration="5218000" />
+      <workItem from="1751396252673" duration="11141000" />
     </task>
     <servers />
   </component>

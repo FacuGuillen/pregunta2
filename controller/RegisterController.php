@@ -26,11 +26,14 @@ class RegisterController{
             if ($_GET["error"] === "contrasena_no_coinciden") {
                 $mensaje = "Las contraseñas no coinciden.";
             }
+            if ($_GET["error"] === "email_no_enviado") {
+                $mensaje = "El email no se pudo enviar";
+            }
         }
 
         if (isset($_GET["success"])) {
             $tipo = "success";
-            $mensaje = "¡Usuario registrado exitosamente!";
+            $mensaje = "¡Usuario registrado exitosamente!Valide su cuenta";
         }
 
         // Paso los datos a la vista
@@ -100,11 +103,11 @@ class RegisterController{
         $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);
         $exito = $this->emailSender->send($resultado["email"], $body);
 
-        if (!$exito) {
-            echo "error";
-            exit();
+        if ($exito) {
+           $this->redirectTo("/register/show?success");
+        } else{
+            $this->redirectTo("/register/show?error=email_no_enviado");
         }
-        //$this->redirectTo("/register/show?success=1");
     }
 
     private function redirectTo($str)
@@ -126,13 +129,15 @@ class RegisterController{
         $usuario = $usuarios[0];
 
         if (!$usuario || $usuario['numero_random'] != $codigo) {
-            echo "Verificación incorrecta o caducada";
+            echo "Verificación incorrecta";
             return;
         }
 
         // Actualizar a validado
         $this->model->marcarComoValidado($id);
-        echo "Cuenta verificada correctamente. Ahora puedes iniciar sesión.";
+
+        $this->redirectTo("/login/show?success");
+
 
     }
 
