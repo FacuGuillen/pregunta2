@@ -1,0 +1,27 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        {{#correcta}}
+            Swal.fire({
+                title: '¡Correcto!',
+                text: 'Girá la ruleta para la próxima pregunta.',
+                icon: 'success',
+                confirmButtonText: 'Ir a la ruleta'
+            }).then(() => {
+                window.location.href = '/ruleta/show';
+            });
+        {{/correcta}}
+
+        {{^correcta}}
+            Swal.fire({
+                title: 'Incorrecto',
+                text: 'La respuesta correcta era: {{respuesta_correcta}}',
+                icon: 'error',
+                confirmButtonText: 'Ver resultado'
+            }).then(() => {
+                window.location.href = '/juego/resultado';
+            });
+        {{/correcta}}
+    });
+</script>

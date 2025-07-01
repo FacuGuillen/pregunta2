@@ -67,34 +67,38 @@ class JuegoController
     }
 
 
-
-    // Procesa la respuesta del usuario
-    public function responder() {
+    public function responder()
+    {
         $idUsuario = $this->user['id_usuario'];
 
         if (!isset($_POST['respuesta']) || !isset($_SESSION['pregunta_actual'])) {
-            // Redirecciona con error
             header("Location: /juego/resultado");
             exit;
         }
 
         $id_respuesta = $_POST['respuesta'];
-        $pregunta = $_SESSION['pregunta_actual'];
+        $id_pregunta = $_SESSION['pregunta_actual'];
 
         $es_correcta = $this->model->esCorrecta($id_respuesta);
 
-        // Guarda pregunta respondida
-        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
+        // Guarda la respuesta del usuario
+        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $id_pregunta, $es_correcta);
 
         if ($es_correcta) {
             $_SESSION['puntaje'] = ($_SESSION['puntaje'] ?? 0) + 1;
-            header("Location: /juego/jugar");
-            exit;
+            $this->view->render("respuestaFeedback", [
+                "correcta" => true
+            ]);
         } else {
-            header("Location: /juego/resultado");
-            exit;
+            // Buscar la respuesta correcta
+            $respuesta_correcta = $this->model->traerRespuestaCorrectaDePregunta($id_pregunta);
+            $this->view->render("respuestaFeedback", [
+                "correcta" => false,
+                "respuesta_correcta" => $respuesta_correcta
+            ]);
         }
     }
+
 
     // Muestra el resultado final
     public function resultado() {
