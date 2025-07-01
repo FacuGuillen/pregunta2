@@ -24,14 +24,45 @@ class RegisterModel
         /*guardar imagen*/
         $foto_perfil = $db->real_escape_string($data['photo']);
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil)
-            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil')";
+        /*generar numero random*/
+        $numeroRandom = rand(10000, 99999);
+        $estado = false;
+
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil,numero_random,estado)
+            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$numeroRandom', '$estado')";
 
         if (!$db->query($sql)) {
             return $db->error;
         }
+        $id = $db->insert_id;
 
-        return true;
+        return [
+            "id_usuario" => $id,
+            "nombre_usuario" => $nombre_usuario,
+            "email" => $email,
+            "numero_random" => $numeroRandom
+        ];
+    }
+    public function existeUsuario($usuario)
+    {
+        $sql = "SELECT * FROM usuarios WHERE nombre_usuario = '$usuario'";
+        $resultado = $this->database->query($sql);
+
+        // $resultado es un array o false, dependiendo cómo esté implementado tu métodoquery
+        // Si es array, verificamos si tiene elementos (usuario encontrado)
+        return !empty($resultado);
+    }
+
+    /*validacion mail*/
+    public function buscarPorId($id)
+    {
+        return $this->database->query("SELECT * FROM usuarios WHERE id_usuario = '$id'");
+
+    }
+
+    public function marcarComoValidado($id)
+    {
+        return $this->database->execute("UPDATE usuarios SET estado = '1' WHERE id_usuario = '$id'");
     }
 
 

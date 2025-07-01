@@ -3,9 +3,11 @@
 class RegisterController{
     private $view;
 
-    public function __construct($model, $view){
+    public function __construct($model, $view,$emailSender){
         $this->model = $model;
         $this->view = $view;
+        $this->emailSender = $emailSender;
+
     }
 
     public function show()
@@ -85,15 +87,24 @@ class RegisterController{
             return;
         }
 
+        /*cambie ya no me devuelve tru sino un array para que despues use los datos necesarios para enviar el mensaje*/
         $resultado = $this->model->createUser($data);
 
-        if ($resultado !== true) {
+        if (!is_array($resultado)) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
             $this->redirectTo("/register/show?error=error_bd");
             return;
         }
 
-        $this->redirectTo("/register/show?success=1");
+        //mandar el correo
+        $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);
+        $exito = $this->emailSender->send($resultado["email"], $body);
+
+        if (!$exito) {
+            echo "error";
+            exit();
+        }
+        //$this->redirectTo("/register/show?success=1");
     }
 
     private function redirectTo($str)
@@ -101,4 +112,39 @@ class RegisterController{
         header("Location: " . $str);
         exit();
     }
+
+  /* Faltar Terminar y Validar */
+    public function validar()
+    {    $id = $_GET['idusuario'] ?? null;
+        $codigo = $_GET['idverificador'] ?? null;
+
+        if (!$id || !$codigo) {
+            echo "Enlace inválido";
+            return;
+        }
+        $usuarios = $this->model->buscarPorId($id);
+        $usuario = $usuarios[0];
+
+        if (!$usuario || $usuario['numero_random'] != $codigo) {
+            echo "Verificación incorrecta o caducada";
+            return;
+        }
+
+        // Actualizar a validado
+        $this->model->marcarComoValidado($id);
+        echo "Cuenta verificada correctamente. Ahora puedes iniciar sesión.";
+
+    }
+
+    private function generarEmailBodyPara($id_usuario, $nombre_usuario, $numero_random)
+    {
+        return "<body>Hola $nombre_usuario, hacé click acá para validar tu cuenta: 
+            <a href='http://localhost:8080/register/validar?idusuario=$id_usuario&idverificador=$numero_random'>
+                Validar cuenta
+            </a></body>";
+    }
+
+
+
+
 }
