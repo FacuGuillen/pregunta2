@@ -121,18 +121,48 @@ class PreguntaModel {
     {   $db = $this->db->getConnection();
         $sql = "INSERT INTO pregunta_usuarios (id_usuario, id_pregunta) VALUES (?, ?)";
         $stmt = $db->prepare($sql);
+        if (!$stmt) {
+            die("Error en prepare: " . $db->error);
+            return false;
+        }
         $stmt->bind_param("ii", $idUsuario, $idPregunta);
-        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            die("Error en execute: " . $stmt->error);
+            return false;
+        }
+
+        $stmt->close();
+        return true;
+    }
+    public function guardarPreguntasUsuariosABorrar($idUsuario, $idPregunta)
+    { $db = $this->db->getConnection();
+        $sql = "INSERT INTO pregunta_usuarios_borrar (id_usuario, id_pregunta) VALUES (?, ?)";
+        $stmt = $db->prepare($sql);
+        if (!$stmt) {
+            die("Error en prepare: " . $db->error);
+            return false;
+        }
+        $stmt->bind_param("ii", $idUsuario, $idPregunta);
+
+        if (!$stmt->execute()) {
+            die("Error en execute: " . $stmt->error);
+            return false;
+        }
+
+        $stmt->close();
+        return true;
+
     }
 
-     public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
+   /*  public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
      {  $db = $this->db->getConnection();
         $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();
 
-     }
+     }*/
 
      /*-----------------------------------------------------------------------------*/
 

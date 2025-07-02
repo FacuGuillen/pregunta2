@@ -5,40 +5,38 @@ class JuegoController
     private $view;
     private $model;
 
-    private $user;
-
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function jugar($categoria = null)
     {
-
-        $idUsuario = $this->user['id_usuario'];
+        $username = $_SESSION["user"]["nameuser"] ?? null;
+        $idUsuario =(int) ($_SESSION["user"]["id_usuario"] ?? 0);
 
         if (!$categoria) {
             header("Location: /ruleta/show");
             exit;
         }
 
-        $categoria = urldecode($categoria);
+            $categoria = urldecode($categoria);
 
             $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
-            /*si no encuntra pregunta con esos filtros */
-            if ($respuesta['status'] === 'no-preguntas-disponibles') {
+            if ($respuesta['status'] == 'no-preguntas-disponibles') {
+                echo "<script>alert('Ya se vieron todas las preguntas de esa categoria. Buscando nueva categoria');</script>";
                 $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
                 if ($nuevaCategoria) {
+                    echo "<script>alert('Nueva categoria: $nuevaCategoria');</script>";
                     $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
                     $categoria = $nuevaCategoria;
                 } else {
 
-                    //$this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
+                    $this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
                     //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                     header("Location: /lobby/show");
-                    echo "<script>alert('ya se vieron todas las preguntas');</script>";
+                    exit();
                 }
 
             }
@@ -60,43 +58,45 @@ class JuegoController
 
             $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
             $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
+           // $this->model->guardarPreguntasUsuariosABorrar($idUsuario, $pregunta['id_pregunta']);
 
-
-        $pregunta['username'] = $this->user['nombre_usuario'] ?? null;
+        $pregunta['username'] = $username ?? null;
         $this->view->render("pregunta", $pregunta);
     }
-
-
-
-    // Procesa la respuesta del usuario
     public function responder() {
-        $idUsuario = $this->user['id_usuario'];
-        $id_respuesta = $_POST['respuesta'];
-        $pregunta =  $_SESSION['pregunta_actual'];
+        $idUsuario = (int) ($_SESSION["user"]["id_usuario"] ?? 0);
+        $id_respuesta = $_POST['respuesta'] ?? null;
+        $pregunta = $_SESSION['pregunta_actual'];
 
-        $es_correcta = $this->model->esCorrecta($id_respuesta);
-        /*guarda las preguntas y respuesta que el usuario ya vio y contesto */
-        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta);
+        if (!$id_respuesta) {
+            // No respondió a tiempo
+            $es_correcta = 0;
+        } else {
+            $es_correcta = $this->model->esCorrecta($id_respuesta);
+        }
 
-        if ($es_correcta) {
+       // $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
+
+         if ($es_correcta) {
             $_SESSION['puntaje']++;
             header("Location: /juego/jugar");
-            exit;
+            exit();
         } else {
             header("Location: /juego/resultado");
-            exit;
+            exit();
         }
     }
-
-    // Muestra el resultado final
     public function resultado() {
-        $username = $this->user['username'];
+        $username = $_SESSION["user"]["nameuser"] ?? null;
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $guardarPartida = $this->model->guardarPartida($puntaje);
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = (int) ($_SESSION["user"]["id_usuario"] ?? 0);
         $idPartida = $guardarPartida;
-        $guardarPartidaDeUsuario = $this->model->guardarPartidaUsuario($idUsuario, $idPartida);
+
+       // var_dump($idUsuario,$idPartida);
+        //exit();
+        $this->model->guardarPartidaUsuario($idUsuario, $idPartida);
 
         $this->view->render("resultado", ['puntaje' => $puntaje,
             'username' => $username

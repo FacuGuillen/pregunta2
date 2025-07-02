@@ -3,23 +3,28 @@
 class RankingController{
     private $model;
     private $view;
-    private $user;
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show(){
 
-        $username = $this->user['username'];
+        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
-        $data = [
-            "usuarios" => $this->model->getRanking()
-        ];/*guardo en un array toda la lista que me traiga de ranking*/
+        if (isset($_GET['error'])) {
+            if ($_GET['error'] === 'null') {
+                echo "<script>alert('Ingrese un usuario a buscar');</script>";
+            } elseif ($_GET['error'] === 'invalido') {
+                echo "<script>alert('Usuario inexistente');</script>";
+            }
+        }
 
-        $context = array_merge($data, ['username' => $username]);/*combina dos array : la lista ranking y los datos del saueiro session*/
+        $data = [ "usuarios" => $this->model->getRanking()];
+
+
+        $context = array_merge($data, ['username' => $username]);
 
         header("Cache-Control: no-cache, no-store, must-revalidate");
         header("Pragma: no-cache");
