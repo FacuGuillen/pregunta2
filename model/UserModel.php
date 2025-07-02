@@ -25,10 +25,7 @@ class UserModel{
                                       GROUP by p.id_partidas");
 
 
-        if (!$resultado || !isset($resultado[0]['nombre_usuario']) || $resultado[0]['nombre_usuario'] === null) {
-            return [];
-    }
-       return $resultado;
+        return $resultado;
     }
 
 }
