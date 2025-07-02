@@ -55,8 +55,7 @@ class LoginController
         $this->view->render("lobby", []);
     }
 
-    private function redirectTo($str)
-    {
+    private function redirectTo($str){
         header("Location: " . $str);
         exit();
     }
