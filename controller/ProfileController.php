@@ -8,8 +8,6 @@ class ProfileController {
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
-
-
     }
 
     private function nombreCompletoPais($codigo) {
@@ -30,20 +28,21 @@ class ProfileController {
         return $paises[strtolower($codigo)] ?? $codigo;
     }
 
-    public function show(){
-        $idUsuario = $_SESSION["user"]["id_usuario"] ?? null;
-        if (!$idUsuario) {
-            die("No hay usuario logueado.");
+    public function show($idUsuario = null){
+        $userSession = $_SESSION["user"];
+
+        if ($idUsuario === null) {
+            $idUsuario = $userSession["id_usuario"];
+            $esPropio = true;
         }
 
         $user = $this->model->getUserById($idUsuario);
         if (!$user) {
-            die("Usuario no encontrado.");
+            header('location: /lobby/show');
+            exit();
         }
 
         $userLocacion = $this->model->getUserLocacionById($idUsuario);
-
-
 
         $paisCodigo = $userLocacion['pais'] ?? null;
         $paisNombre = $this->nombreCompletoPais($paisCodigo);
