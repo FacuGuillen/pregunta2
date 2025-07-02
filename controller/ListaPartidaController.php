@@ -12,13 +12,11 @@ class ListaPartidaController
 
     public function show()
     {
-        $nombre = ['nombre_usuario'];
+        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
-        $data = [
-            "usuario" => $this->model->traerLasPartidasDeUnUsuario($nombre)
-        ] ;
+        $data = [ "usuario" => $this->model->traerLasPartidasDeUnUsuario($username)] ;
 
-        $context = array_merge($data, ['username']);
+        $context = array_merge($data, ['username' => $username]);
 
         $this->view->render("listaPartida", $context);
 

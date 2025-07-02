@@ -30,6 +30,7 @@ class ProfileController {
 
     public function show($idUsuario = null){
         $userSession = $_SESSION["user"];
+        $esPropio = false;
 
         if ($idUsuario === null) {
             $idUsuario = $userSession["id_usuario"];
@@ -58,7 +59,7 @@ class ProfileController {
             "ciudad" => $userLocacion['ciudad'] ?? null,
             "latitud" => $userLocacion['latitud'] ?? null,
             "longitud" => $userLocacion['longitud'] ?? null,
-
+            "es_propio" => $esPropio
         ]);
     }
 }
