@@ -109,25 +109,22 @@ INSERT INTO `pregunta` (`id_pregunta`, `pregunta`, `id_categoria`) VALUES
 
 -- Volcando estructura para tabla pregunta2.pregunta_usuarios
 CREATE TABLE IF NOT EXISTS `pregunta_usuarios` (
-  `id_pregunta_usuario` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(11) DEFAULT NULL,
-  `id_pregunta` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_pregunta_usuario`),
-  KEY `id_usuario` (`id_usuario`),
-  KEY `id_pregunta` (`id_pregunta`),
-  CONSTRAINT `pregunta_usuarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  CONSTRAINT `pregunta_usuarios_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+   id_pregunta_usuario INT AUTO_INCREMENT PRIMARY KEY,
+   id_usuario INT NOT NULL,
+   id_pregunta INT NOT NULL,
+   CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+   CONSTRAINT fk_pregunta FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla pregunta2.pregunta_usuarios: ~0 rows (aproximadamente)
-
+-- estructura de tabla a borar cuando el usuario vio todas
 -- Volcando estructura para tabla pregunta2.ranking
 CREATE TABLE IF NOT EXISTS `ranking` (
   `id_ranking` int(11) NOT NULL AUTO_INCREMENT,
   `puntaje_acumulado` int(11) DEFAULT NULL,
   `cantidad_partidas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_ranking`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Volcando datos para la tabla pregunta2.ranking: ~2 rows (aproximadamente)
 INSERT INTO `ranking` (`id_ranking`, `puntaje_acumulado`, `cantidad_partidas`) VALUES

@@ -136,8 +136,7 @@ class RegisterController{
         // Actualizar a validado
         $this->model->marcarComoValidado($id);
 
-        $this->redirectTo("/login/show?success");
-
+        $this->redirectTo("/login/show?success=usuario_validado");
 
     }
 

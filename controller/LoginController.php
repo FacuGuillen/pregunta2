@@ -1,6 +1,4 @@
 <?php
-
-
 class LoginController
 {
     private $view;
@@ -19,9 +17,7 @@ class LoginController
             echo "<script>alert(' Cuenta verificada. Ya podés iniciar sesión.');</script>";
         }
 
-        $this->view->render("login", [
-            "username" => $username,
-        ]);
+        $this->view->render("login", ["username" => $username]);
     }
 
     public function validateUser() {
@@ -36,6 +32,7 @@ class LoginController
             $this->view->render("lobby", [
                 "username" => $username
             ]);
+            return;
         }
 
         if (!$user) {
@@ -51,7 +48,6 @@ class LoginController
             $this->view->render("login", [
                 "error" => $error,
             ]);
-
     }
 
     public function logout() {
