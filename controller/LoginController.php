@@ -29,10 +29,8 @@ class LoginController
         if ($user && password_verify($password, $user['contrasena']) && $user['estado'] == 1) {
             $_SESSION["user"] = $user;
 
-            $this->view->render("lobby", [
-                "username" => $username
-            ]);
-            return;
+            $this->redirectTo("/lobby/show");
+
         }
 
         if (!$user) {

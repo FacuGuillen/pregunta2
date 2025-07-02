@@ -4,28 +4,24 @@ class ProfileGamerController{
 
     public $view;
     private $model;
-    private $user;
 
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show($nombreJugador = null){
 
-        if ($nombreJugador == null) {
-            header('location: /lobby/show');
-            exit();
-        }
+     //   if ($nombreJugador == null) {
+      //      header('location: /ranking/show?error=null');
+        //    exit();
+        //}
 
-        $username = $this->user['username'];
+        $username = $_SESSION["user"]["nameuser"] ?? null;
 
         $jugador = $this->model->traerLosdatosDelUsuarioYSuRanking($nombreJugador);
-        $data = [
-            "jugador" => $jugador[0]
-        ] ;
+        $data = [  "jugador" => $jugador[0]] ;
 
         // genero qr
         $idUsuario = $data["jugador"]["id_usuario"];
@@ -34,7 +30,7 @@ class ProfileGamerController{
 
         $context = array_merge($data, [
             'username' => $username,
-            $qr_url =>$qr_url
+            '$qr_url' =>$qr_url
         ]);
 
         $this->view->render("profileGamer", $context);
