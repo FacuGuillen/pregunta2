@@ -20,15 +20,15 @@ class JuegoController
             exit;
         }
 
-        $categoria = urldecode($categoria);
+            $categoria = urldecode($categoria);
 
             $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
-            /*si no encuntra pregunta con esos filtros */
             if ($respuesta['status'] == 'no-preguntas-disponibles') {
                 echo "<script>alert('Ya se vieron todas las preguntas de esa categoria. Buscando nueva categoria');</script>";
                 $nuevaCategoria = $this->model->nuevaCategoriaDisponible($idUsuario);
                 if ($nuevaCategoria) {
+                    echo "<script>alert('Nueva categoria: $nuevaCategoria');</script>";
                     $respuesta = $this->model->getPreguntaPorCategoria($nuevaCategoria, $idUsuario);
                     $categoria = $nuevaCategoria;
                 } else {
@@ -36,7 +36,7 @@ class JuegoController
                     $this->model->borrarTodasPreguntasqueYaVioElUsuario($idUsuario);
                     //$this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                     header("Location: /lobby/show");
-                    //echo "<script>alert('ya se vieron todas las preguntas');</script>";
+                    exit();
                 }
 
             }
@@ -57,13 +57,8 @@ class JuegoController
             }
 
             $_SESSION['pregunta_actual'] = $pregunta['id_pregunta'];
-             $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
+            $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
            // $this->model->guardarPreguntasUsuariosABorrar($idUsuario, $pregunta['id_pregunta']);
-           // if ($exito) {
-             //   echo "<script>alert('Pregunta guardada correctamente');</script>";
-            //}else{
-             //   echo "<script>alert('Error al guardar la pregunta');</script>";
-            //}
 
         $pregunta['username'] = $username ?? null;
         $this->view->render("pregunta", $pregunta);
@@ -82,17 +77,14 @@ class JuegoController
 
        // $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
 
-        /*YA ENCONTRE EL PROBLEMA DE XQ NO ME INSERTA EN LA TABLA Y ES DEBIDO A QUE ME ESTABA GUARDI EL ID DEL
-        USUARIO COM STRING EN VEZ DE COMO INT POR ESO FALLA
-        SOLUCION  $username = $_SESSION["user"]["nameuser"] ?? null; USAR ESTO PERO PARRA QUE ME TRAIGA EL ID
-        Y IMPLEMENTARLO EN CADA PARTE... YA QUE EL PROF DIJO QUE NO PODEMOS LLAMAR AL SEGURI EN CADA CLASE */
-        if ($es_correcta) {
+         if ($es_correcta) {
             $_SESSION['puntaje']++;
             header("Location: /juego/jugar");
+            exit();
         } else {
             header("Location: /juego/resultado");
+            exit();
         }
-        exit;
     }
     public function resultado() {
         $username = $_SESSION["user"]["nameuser"] ?? null;
