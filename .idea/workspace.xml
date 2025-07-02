@@ -5,7 +5,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/EmailSender.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/styles/profile.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/685872520e13f_pepe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/6858aab539dd9_nomo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/686433cb4a237_VanGog.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/68643465dd376_charmander.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/686438b3e6b27_baba.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/68643b6782405_baba.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/68643baa72244_baba.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/uploads/686469b70c537_charmander.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/autoload.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/InstalledVersions.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vendor/composer/platform_check.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Pregunta2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Pregunta2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_6_2025_21_29_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_21_6_2025_21_29__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/Conectarbd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/cacho.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/generador_qr.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/CuestionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ListaPartidaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ListaPartidaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LobbyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LobbyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/PartidaController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/RankingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RankingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/Security.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/Security.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PartidaModel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/ProfileGamerModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/ProfileGamerModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/RankingModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RankingModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/UserModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/styles/listaPartida.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/styles/listaPartida.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/styles/pregunta.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/styles/pregunta.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/styles/ranking.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/styles/ranking.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/styles/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/styles/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/6851ee3adbc73_download (1).jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/6859a4b1f354b_puchu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlscript/pregunta2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/pregunta2.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/cuestionNewView.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/listaPartidaView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/listaPartidaView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/partidaView.mustache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/preguntaView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/preguntaView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/rankingView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/rankingView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +113,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "anahi-pilar",
+    "git-widget-placeholder": "Merging premain",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
