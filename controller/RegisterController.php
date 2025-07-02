@@ -3,9 +3,11 @@
 class RegisterController{
     private $view;
 
-    public function __construct($model, $view){
+    public function __construct($model, $view,$emailSender){
         $this->model = $model;
         $this->view = $view;
+        $this->emailSender = $emailSender;
+
     }
 
     public function show()
@@ -24,11 +26,14 @@ class RegisterController{
             if ($_GET["error"] === "contrasena_no_coinciden") {
                 $mensaje = "Las contraseñas no coinciden.";
             }
+            if ($_GET["error"] === "email_no_enviado") {
+                $mensaje = "El email no se pudo enviar";
+            }
         }
 
         if (isset($_GET["success"])) {
             $tipo = "success";
-            $mensaje = "¡Usuario registrado exitosamente!";
+            $mensaje = "¡Usuario registrado exitosamente!Valide su cuenta";
         }
 
         // Paso los datos a la vista
@@ -85,15 +90,24 @@ class RegisterController{
             return;
         }
 
+        /*cambie ya no me devuelve tru sino un array para que despues use los datos necesarios para enviar el mensaje*/
         $resultado = $this->model->createUser($data);
 
-        if ($resultado !== true) {
+        if (!is_array($resultado)) {
             // Si hubo error en la inserción, podrías redirigir con mensaje de error
             $this->redirectTo("/register/show?error=error_bd");
             return;
         }
 
-        $this->redirectTo("/register/show?success=1");
+        //mandar el correo
+        $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);
+        $exito = $this->emailSender->send($resultado["email"], $body);
+
+        if ($exito) {
+           $this->redirectTo("/register/show?success");
+        } else{
+            $this->redirectTo("/register/show?error=email_no_enviado");
+        }
     }
 
     private function redirectTo($str)
@@ -101,4 +115,40 @@ class RegisterController{
         header("Location: " . $str);
         exit();
     }
+
+  /* Faltar Terminar y Validar */
+    public function validar()
+    {    $id = $_GET['idusuario'] ?? null;
+        $codigo = $_GET['idverificador'] ?? null;
+
+        if (!$id || !$codigo) {
+            echo "Enlace inválido";
+            return;
+        }
+        $usuarios = $this->model->buscarPorId($id);
+        $usuario = $usuarios[0];
+
+        if (!$usuario || $usuario['numero_random'] != $codigo) {
+            echo "Verificación incorrecta";
+            return;
+        }
+
+        // Actualizar a validado
+        $this->model->marcarComoValidado($id);
+
+        $this->redirectTo("/login/show?success=usuario_validado");
+
+    }
+
+    private function generarEmailBodyPara($id_usuario, $nombre_usuario, $numero_random)
+    {
+        return "<body>Hola $nombre_usuario, hacé click acá para validar tu cuenta: 
+            <a href='http://localhost:8080/register/validar?idusuario=$id_usuario&idverificador=$numero_random'>
+                Validar cuenta
+            </a></body>";
+    }
+
+
+
+
 }

@@ -10,19 +10,24 @@ class ProfileController{
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show($idUsuario = null)
     {
-        $username = $this->user['username'];
+        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
-        // Si no hay ID → es el perfil propio
         if ($idUsuario === null) {
-            $data = $this->user;
+            $data = $_SESSION["user"];
             $data['es_propio'] = true;
-        } else {
+        } else{
             $jugador = $this->model->buscarJugadorPorId($idUsuario);
+
+            if (empty($jugador) || empty($jugador[0])) {
+                //scrip de ususario perfil inexistente
+                header('location: /lobby/show');
+                exit();
+            }
+
             $data = array_merge($jugador[0], [
                 'es_propio' => false
             ]);

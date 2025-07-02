@@ -4,44 +4,43 @@ class ProfileGamerController{
 
     public $view;
     private $model;
-    private $user;
-
 
     public function __construct($model,$view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function show($nombreJugador = null){
+        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
 
         if ($nombreJugador == null) {
-            header('location: /lobby/show');
+            header('location: /ranking/show?error=null');
             exit();
         }
 
-        $username = $this->user['username'];
-
         $jugador = $this->model->traerLosdatosDelUsuarioYSuRanking($nombreJugador);
-        $data = [
-            "jugador" => $jugador[0]
-        ] ;
+
+        if (empty($jugador) || empty($jugador[0])) {
+            header('location: /ranking/show?error=invalido');
+            exit();
+        }
+
+        $data = ["jugador" => $jugador[0]] ;
 
         // genero qr
         $idUsuario = $data["jugador"]["id_usuario"];
-        // deberia cambiar segun la ruta en mi caso anda xq estoy usando la ruta8080
         $qr_url = "http://localhost:8080/profile/show/$idUsuario";
 
         $context = array_merge($data, [
             'username' => $username,
-            $qr_url =>$qr_url
+            'qr_url' =>$qr_url
         ]);
 
         $this->view->render("profileGamer", $context);
     }
 
-    public function generarQr($idUsuario)
-    {    $qr_url = "http://localhost:8080/profile/show/$idUsuario";
+    public function generarQr($idUsuario){
+        $qr_url = "http://localhost:8080/profile/show/$idUsuario";
         QRcode::png($qr_url, false, QR_ECLEVEL_L, 8);
     }
 }
