@@ -1,3 +1,4 @@
+
 <!-- Footer -->
 <footer class="w3-container w3-center w3-light-grey w3-xlarge bg-dark py-3 d-flex justify-content-between align-items-center">
     <div class="d-flex gap-5">
@@ -30,8 +31,78 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <script src="{{BASE_URL}}/public/js/ruleta.js"></script>
+<script src="{{BASE_URL}}/public/js/eliminar_pregunta.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{BASE_URL}}/public/js/mapa.js"></script>
+<script src="{{BASE_URL}}/public/js/autocompletarCiudad.js"></script>
+<script src="{{BASE_URL}}/public/js/mostrarMapaPerfil.js"></script>
+
+<script>
+    const respuestasData = {
+        labels: ['Usuario A', 'Usuario B', 'Usuario C'],
+        datasets: [{
+            label: '% Correctas',
+            data: [75, 60, 90],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+    };
+
+    const sexoData = {
+        labels: ['Masculino', 'Femenino', 'Prefiero no decirlo'],
+        datasets: [{
+            data: [50, 40, 10],
+            backgroundColor: ['#3498db', '#e91e63', '#95a5a6']
+        }]
+    };
+
+    const edadData = {
+        labels: ['Menores', 'Adultos', 'Jubilados'],
+        datasets: [{
+            data: [20, 60, 20],
+            backgroundColor: ['#f1c40f', '#2ecc71', '#8e44ad']
+        }]
+    };
+
+    new Chart(document.getElementById('graficoRespuestas'), { type: 'bar', data: respuestasData });
+    new Chart(document.getElementById('graficoSexo'), { type: 'pie', data: sexoData });
+    new Chart(document.getElementById('graficoEdad'), { type: 'doughnut', data: edadData });
+</script>
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        packages: ['geochart'],
+        mapsApiKey: ''
+    });
+
+    google.charts.setOnLoadCallback(drawGeoChart);
+
+    function drawGeoChart() {
+        const data = google.visualization.arrayToDataTable([
+            ['Country', 'Usuarios'],
+            ['Argentina', 120],
+            ['Brazil', 80],
+            ['Mexico', 60],
+            ['Chile', 40],
+            ['Spain', 30]
+        ]);
+
+        const options = {
+            colorAxis: { colors: ['#b2dfdb', '#00695c'] },
+            backgroundColor: '#ffffff',
+            datalessRegionColor: '#f0f0f0'
+        };
+
+        const chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
+        chart.draw(data, options);
+    }
+</script>
 
 </body>
 </html>

@@ -11,7 +11,7 @@ class RankingController{
 
     public function show(){
 
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
+        $username = ['username'];
 
         if (isset($_GET['error'])) {
             if ($_GET['error'] === 'null') {

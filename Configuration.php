@@ -17,7 +17,9 @@ require_once("controller/RuletaController.php");
 require_once("controller/RankingController.php");
 require_once("controller/ProfileGamerController.php");
 require_once("controller/ListaPartidaController.php");
-
+require_once("controller/ProponerController.php");
+require_once("controller/EditorController.php");
+require_once("controller/AdministradorController.php");
 
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
@@ -25,6 +27,9 @@ require_once("model/UserModel.php");
 require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
 require_once("model/ProfileGamerModel.php");
+require_once("model/ProponerModel.php");
+require_once ("model/AdministradorModel.php");
+
 
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
@@ -53,9 +58,18 @@ class Configuration
         return new LobbyController($this->getViewer());
     }
 
+    public function getEditorController()
+    {
+        return new EditorController(new PreguntaModel($this->getDatabase()),$this->getViewer());
+    }
+
     public function getProfileController(){
         return new ProfileController(new UserModel($this->getDatabase()), $this->getViewer()
         );
+    }
+
+    public function getAdministradorController(){
+        return new AdministradorController(new AdministradorModel($this->getDatabase()), $this->getViewer());
     }
 
     public function getRankingController(){
@@ -95,6 +109,12 @@ class Configuration
 
     public function getIndexController() {
         return new IndexController($this->getViewer());
+    }
+
+    public function getProponerController()
+    {
+        return new ProponerController(new ProponerModel($this->getDatabase()), $this->getViewer());
+
     }
 
     public function getRouter()

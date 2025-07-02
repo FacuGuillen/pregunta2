@@ -37,10 +37,15 @@ main {
 }
 
 table {
-    width: 100%;
     border-collapse: collapse;
+    width: 90%;
+    max-width: 600px;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    animation: fadeIn 0.8s ease-in-out;
+    margin-top: 2em;
+    text-align: center;
 }
 
 thead {
@@ -51,6 +56,13 @@ thead {
 
 table th, table td {
     padding: 1em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+td:last-child,
+th:last-child {
     text-align: center;
 }
 

@@ -20,29 +20,42 @@ class RegisterModel
         $email = $db->real_escape_string($data['email']);
         $contrasena = $db->real_escape_string($data['password']);
         $nombre_usuario = $db->real_escape_string($data['nameuser']);
-
-        /*guardar imagen*/
         $foto_perfil = $db->real_escape_string($data['photo']);
+        $tipo_usuario = isset($data['tipo_usuario']) ? intval($data['tipo_usuario']) : 1;  // Por si no viene, poner 1 por defecto
+        $residencia = $db->real_escape_string($data['tipo_residencia']);
 
         /*generar numero random*/
         $numeroRandom = rand(10000, 99999);
         $estado = false;
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil,numero_random,estado)
-            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$numeroRandom', '$estado')";
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil,numero_random,estado, tipo_usuario, tipo_residencia)
+            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$numeroRandom', '$estado','$tipo_usuario', '$residencia')";
 
         if (!$db->query($sql)) {
             return $db->error;
         }
-        $id = $db->insert_id;
 
-        return [
-            "id_usuario" => $id,
-            "nombre_usuario" => $nombre_usuario,
-            "email" => $email,
-            "numero_random" => $numeroRandom
-        ];
+        return true;
     }
+
+    public function insertarResidencia($data){
+        $db = $this->database->getConnection();
+
+        $ciudad = $db->real_escape_string($data['ciudad']);
+        $pais = $db->real_escape_string($data['pais']);
+        $latitud = $db->real_escape_string($data['latitud']);
+        $longitud = $db->real_escape_string($data['longitud']);
+
+        $sql = "INSERT INTO residencia (ciudad, pais, latitud, longitud)
+        values('$ciudad', '$pais', '$latitud', '$longitud')";
+
+        if (!$db->query($sql)) {
+            return $db->error;
+        }
+
+        return $db->insert_id; // ← Esto es lo que necesitás
+    }
+
     public function existeUsuario($usuario)
     {
         $sql = "SELECT * FROM usuarios WHERE nombre_usuario = '$usuario'";

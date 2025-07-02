@@ -1,17 +1,20 @@
 <?php
 class LobbyController{
     private $view;
-    public function __construct($view){
+    public function __construct($view)
+    {
         $this->view = $view;
+
     }
 
     public function show() {
-
-        $username = $_SESSION["user"]["nombre_usuario"] ?? null;
-
-        $this->view->render("lobby", [
-            "username" => $username
-        ]);
+        $this->view->render("lobby");
     }
 
+
+    private function redirectTo($str)
+    {
+        header("Location: " . $str);
+        exit();
+    }
 }

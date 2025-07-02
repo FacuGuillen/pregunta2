@@ -45,32 +45,60 @@ class RegisterController{
 
     public function addUser()
     {
-        if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
-            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
+        $mensaje = "";
+        $tipo = "";
 
-            $this->redirectTo("/register/show?error=campos_vacios");
+        // Validación de campos vacíos
+        if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
+            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])
+            || empty($_POST["latitud"]) || empty($_POST["longitud"])) {
+
+            $mensaje = "Todos los campos son obligatorios.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("/register/show?error=contrasena_no_coinciden");
+            $mensaje = "Las contraseñas no coinciden.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
 
         // Manejo de la imagen
         $nombreArchivo = null;
-
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $nombreArchivo = uniqid() . "_" . basename($_FILES['photo']['name']);
             $destino = "public/uploads/" . $nombreArchivo;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
-                $this->redirectTo("/register/show?error=error_foto");
+                $mensaje = "Error al subir la imagen.";
+                $tipo = "error";
+                $this->view->render("register", compact("mensaje", "tipo"));
                 return;
             }
         } else {
-            $this->redirectTo("/register/show?error=error_foto");
+            $mensaje = "Debe subir una imagen.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
+            return;
+        }
+
+        $residenciaData = [
+            'ciudad' => $_POST['ciudad'],
+            'pais' => $_POST['pais'],
+            'latitud' => $_POST['latitud'],
+            'longitud' => $_POST['longitud']
+        ];
+
+        $idResidencia = $this->model->insertarResidencia($residenciaData);
+
+        if (!$idResidencia) {
+            $mensaje = "Error al guardar la residencia.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
@@ -82,22 +110,30 @@ class RegisterController{
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
-            'photo' => $nombreArchivo  // Guardás solo el nombre o la ruta relativa
+            'photo' => $nombreArchivo,
+            'tipo_usuario' => 1,  // ← usuario tipo jugador por defecto
+            'tipo_residencia' => $idResidencia
         ];
 
         if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("/register/show?error=usuario_existente");
+            $mensaje = "El nombre de usuario ya existe.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
-        /*cambie ya no me devuelve tru sino un array para que despues use los datos necesarios para enviar el mensaje*/
         $resultado = $this->model->createUser($data);
-
-        if (!is_array($resultado)) {
-            // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("/register/show?error=error_bd");
+        if ($resultado !== true) {
+            $mensaje = "Error en la base de datos.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
+        // Registro exitoso
+        $mensaje = "¡Usuario registrado exitosamente!";
+        $tipo = "success";
+        $this->view->render("register", compact("mensaje", "tipo"));
+
 
         //mandar el correo
         $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);

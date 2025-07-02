@@ -25,7 +25,7 @@ class PreguntaModel {
         SELECT p.id_pregunta, p.pregunta, c.categoria, c.color
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
-        WHERE c.categoria = ?
+        WHERE c.categoria = ? AND  p.activo = 1
         /*que no se repita*/
         AND NOT exists(
             SELECT 1
@@ -42,12 +42,12 @@ class PreguntaModel {
         $stmt->close();
 
         if (!$pregunta) {
-           return ['status' => 'no-preguntas-disponibles'];
+            return ['status' => 'no-preguntas-disponibles'];
         }
 
         $cantidad = $this->cantidadDeVecesRespondidaPorPregunta($pregunta['id_pregunta']);
         if ($cantidad > 10) {
-               return ['status' => 'repetida-muchas-veces'];
+            return ['status' => 'repetida-muchas-veces'];
         }
 
         $resStmt = $conn->prepare("
@@ -121,50 +121,20 @@ class PreguntaModel {
     {   $db = $this->db->getConnection();
         $sql = "INSERT INTO pregunta_usuarios (id_usuario, id_pregunta) VALUES (?, ?)";
         $stmt = $db->prepare($sql);
-        if (!$stmt) {
-            die("Error en prepare: " . $db->error);
-            return false;
-        }
         $stmt->bind_param("ii", $idUsuario, $idPregunta);
-
-        if (!$stmt->execute()) {
-            die("Error en execute: " . $stmt->error);
-            return false;
-        }
-
-        $stmt->close();
-        return true;
-    }
-    public function guardarPreguntasUsuariosABorrar($idUsuario, $idPregunta)
-    { $db = $this->db->getConnection();
-        $sql = "INSERT INTO pregunta_usuarios_borrar (id_usuario, id_pregunta) VALUES (?, ?)";
-        $stmt = $db->prepare($sql);
-        if (!$stmt) {
-            die("Error en prepare: " . $db->error);
-            return false;
-        }
-        $stmt->bind_param("ii", $idUsuario, $idPregunta);
-
-        if (!$stmt->execute()) {
-            die("Error en execute: " . $stmt->error);
-            return false;
-        }
-
-        $stmt->close();
-        return true;
-
+        $stmt->execute();
     }
 
-   /*  public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
-     {  $db = $this->db->getConnection();
-        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
+    public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
+    {  $db = $this->db->getConnection();
+        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_pregunta, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();
 
-     }*/
+    }
 
-     /*-----------------------------------------------------------------------------*/
+    /*-----------------------------------------------------------------------------*/
 
 
     public function traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario){
@@ -255,15 +225,15 @@ class PreguntaModel {
     private function cuantasContestoEnTotal($idUsuario)
     {  $db = $this->db->getConnection();
         $total = 0;
-       $sql = "SELECT COUNT(*) FROM preguntas_usuarios_respuestas WHERE id_usuario = ?";
-       $stmt = $db->prepare($sql);
-       $stmt->bind_param("i", $idUsuario);
-       $stmt->execute();
+        $sql = "SELECT COUNT(*) FROM preguntas_usuarios_respuestas WHERE id_usuario = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $idUsuario);
+        $stmt->execute();
 
-       $stmt->bind_result($total);
-       $stmt->fetch();
-       $stmt->close();
-       return $total;
+        $stmt->bind_result($total);
+        $stmt->fetch();
+        $stmt->close();
+        return $total;
     }
 
     private function cuantasPreguntasRespondioBienElUsuario($idUsuario)
@@ -283,17 +253,180 @@ class PreguntaModel {
 
     private function cantidadDeVecesRespondidaPorPregunta($id_pregunta)
     {  $db = $this->db->getConnection();
-       $total = 0;
+        $total = 0;
 
-       $sql = "SELECT COUNT(*) FROM pregunta_usuarios pu WHERE pu.id_pregunta = ? ";
-       $stmt = $db->prepare($sql);
-       $stmt->bind_param("i", $id_pregunta);
-       $stmt->execute();
+        $sql = "SELECT COUNT(*) FROM pregunta_usuarios pu WHERE pu.id_pregunta = ? ";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
 
-       $stmt->bind_result($total);
-       $stmt->fetch();
-       $stmt->close();
-       return $total;
+        $stmt->bind_result($total);
+        $stmt->fetch();
+        $stmt->close();
+        return $total;
+    }
+
+    public function getAllQuestions() {
+        $sql = "SELECT * FROM pregunta";
+        $result = $this->db->getConnection()->query($sql);
+
+        if (!$result) {
+            die("Error en la consulta: " . $this->db->getConnection()->error);
+        }
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPreguntasPorIdCategoria($idCategoria) {
+        $stmt = $this->db->getConnection()->prepare("
+        SELECT id_pregunta, pregunta, activo
+        FROM pregunta
+        WHERE id_categoria = ?
+    ");
+        $stmt->bind_param("i", $idCategoria);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getPregunta($id_pregunta) {
+        $stmt = $this->db->getConnection()->prepare("
+        select * from pregunta where id_pregunta = ?");
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function getRespuestasPorPregunta($id_pregunta) {
+        $stmt = $this->db->getConnection()->prepare("
+        SELECT * FROM respuesta WHERE id_pregunta = ?
+    ");
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function actualizarPregunta($idPregunta, $texto) {
+        $stmt = $this->db->getConnection()->prepare("
+        UPDATE pregunta 
+        SET pregunta = ? 
+        WHERE id_pregunta = ?
+    ");
+        $stmt->bind_param("si", $texto, $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function actualizarRespuesta($idRespuesta, $texto, $esCorrecta) {
+        $stmt = $this->db->getConnection()->prepare("
+        UPDATE respuesta 
+        SET respuesta = ?, es_correcta = ? 
+        WHERE id_respuesta = ?
+    ");
+        $stmt->bind_param("sii", $texto, $esCorrecta, $idRespuesta);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function eliminarPregunta($idPregunta) {
+        $conn = $this->db->getConnection();
+
+        // Primero borrar las respuestas relacionadas
+        $stmt = $conn->prepare("DELETE FROM respuesta WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+
+        // Luego borrar la pregunta
+        $stmt2 = $conn->prepare("DELETE FROM pregunta WHERE id_pregunta = ?");
+        $stmt2->bind_param("i", $idPregunta);
+        $stmt2->execute();
+        $stmt2->close();
+
+        return true;
+    }
+
+
+    public function pausarPregunta($idPregunta) {
+        $conn = $this->db->getConnection();
+        $stmt = $conn->prepare("
+        UPDATE pregunta
+        SET activo = CASE WHEN activo = 1 THEN 0 ELSE 1 END
+        WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
+    //lautaro preguntas propuestas
+    // Devuelve todas las preguntas propuestas con categoría y usuario
+    public function getPreguntasPropuestas() {
+        $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
+            FROM preguntas_propuestas pp
+            JOIN categoria c ON pp.id_categoria = c.id_categoria
+            JOIN usuarios u ON pp.id_usuario = u.id_usuario
+            WHERE pp.estado = 'pendiente'";
+
+        $result = $this->db->getConnection()->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+// Devuelve respuestas asociadas a una pregunta propuesta
+    public function getRespuestasPropuestasPorPregunta($id_pregunta_propuesta) {
+        $sql = "SELECT * FROM respuestas_propuestas WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("i", $id_pregunta_propuesta);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+//preguntas propuestas
+    public function getPreguntaPropuestaById($id) {
+        $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
+            FROM preguntas_propuestas pp
+            JOIN categoria c ON pp.id_categoria = c.id_categoria
+            JOIN usuarios u ON pp.id_usuario = u.id_usuario
+            WHERE pp.id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+}
+
+
+// Cambia estado de propuesta
+    public function actualizarEstadoPropuesta($id, $estado) {
+        $sql = "UPDATE preguntas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $estado, $id);
+        $stmt->execute();
+    }
+
+    public function actualizarEstadoRespuestasPropuestas($id_pregunta_propuesta, $estado) {
+        $sql = "UPDATE respuestas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $estado, $id_pregunta_propuesta);
+        $stmt->execute();
+    }
+
+
+    public function insertarPreguntaFinal($pregunta, $idCategoria) {
+        $sql = "INSERT INTO pregunta (pregunta, id_categoria, activo) VALUES (?, ?, 1)";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("si", $pregunta, $idCategoria);
+        $stmt->execute();
+        return $stmt->insert_id;
+    }
+
+    public function insertarRespuestaFinal($idPregunta, $respuesta, $esCorrecta) {
+        $sql = "INSERT INTO respuesta (id_pregunta, respuesta, es_correcta) VALUES (?, ?, ?)";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bind_param("isi", $idPregunta, $respuesta, $esCorrecta);
+        $stmt->execute();
     }
 
 }
