@@ -58,9 +58,9 @@ class LoginController
             $error = "Error desconocido";
         }
 
-            $this->view->render("login", [
-                "error" => $error,
-            ]);
+        $this->view->render("login", [
+            "error" => $error,
+        ]);
     }
 
 

@@ -32,10 +32,17 @@ class RegisterModel
             VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$numeroRandom', '$estado','$tipo_usuario', '$residencia')";
 
         if (!$db->query($sql)) {
-            return $db->error;
+            return false;
         }
 
-        return true;
+        $idUsuario = $db->insert_id;
+
+        return [
+            "id_usuario" => $idUsuario,
+            "nombre_usuario" => $nombre_usuario,
+            "numero_random" => $numeroRandom,
+            "email" => $email
+        ];
     }
 
     public function insertarResidencia($data){

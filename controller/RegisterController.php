@@ -102,6 +102,13 @@ class RegisterController{
             return;
         }
 
+        if ($this->model->existeUsuario($_POST['nameuser'])) {
+            $mensaje = "El nombre de usuario ya existe.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
+            return;
+        }
+
         $data = [
             'name' => $_POST['name'],
             'lastname' => $_POST['lastname'],
@@ -115,25 +122,14 @@ class RegisterController{
             'tipo_residencia' => $idResidencia
         ];
 
-        if ($this->model->existeUsuario($data['nameuser'])) {
-            $mensaje = "El nombre de usuario ya existe.";
-            $tipo = "error";
-            $this->view->render("register", compact("mensaje", "tipo"));
-            return;
-        }
-
         $resultado = $this->model->createUser($data);
-        if ($resultado !== true) {
+
+        if ($resultado === false) {
             $mensaje = "Error en la base de datos.";
             $tipo = "error";
             $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
-        // Registro exitoso
-        $mensaje = "¡Usuario registrado exitosamente!";
-        $tipo = "success";
-        $this->view->render("register", compact("mensaje", "tipo"));
-
 
         //mandar el correo
         $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);
@@ -142,6 +138,7 @@ class RegisterController{
         if ($exito) {
            $this->redirectTo("/register/show?success");
         } else{
+            // si no manda el mail que pasa
             $this->redirectTo("/register/show?error=email_no_enviado");
         }
     }
@@ -152,7 +149,7 @@ class RegisterController{
         exit();
     }
 
-  /* Faltar Terminar y Validar */
+
     public function validar()
     {    $id = $_GET['idusuario'] ?? null;
         $codigo = $_GET['idverificador'] ?? null;

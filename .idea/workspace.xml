@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="" />
+    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/EmailSender.php" beforeDir="false" afterPath="$PROJECT_DIR$/core/EmailSender.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlscript/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/database.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
