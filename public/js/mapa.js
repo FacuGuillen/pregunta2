@@ -23,27 +23,33 @@ async function geocodificarCiudadYPais(ciudad, pais) {
 
     let map, marker;
 
-    function initMap(lat, lng) {
+function initMap(lat, lng) {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) {
+        console.warn('No existe el contenedor #map, no se inicializa el mapa Leaflet');
+        return;
+    }
+
     if (!map) {
-    map = L.map('map').setView([lat, lng], 10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        map = L.map('map').setView([lat, lng], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    marker = L.marker([lat, lng], { draggable: true }).addTo(map);
-    marker.on('dragend', function (e) {
-    const { lat, lng } = marker.getLatLng();
+        marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+        marker.on('dragend', function (e) {
+            const { lat, lng } = marker.getLatLng();
+            document.getElementById("latitud").value = lat;
+            document.getElementById("longitud").value = lng;
+        });
+    } else {
+        map.setView([lat, lng], 10);
+        marker.setLatLng([lat, lng]);
+    }
+
     document.getElementById("latitud").value = lat;
     document.getElementById("longitud").value = lng;
-});
-} else {
-    // Mover el mapa y el marcador si ya existen
-    map.setView([lat, lng], 10);
-    marker.setLatLng([lat, lng]);
 }
 
-    // Actualizá los inputs ocultos siempre
-    document.getElementById("latitud").value = lat;
-    document.getElementById("longitud").value = lng;
-}
+
 async function mostrarMapa() {
     document.getElementById("mapaContainer").style.display = "block";
 

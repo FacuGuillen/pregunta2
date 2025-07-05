@@ -5,7 +5,7 @@
     <div class="row g-3 align-items-end mb-4">
         <div class="col-md-4">
             <label class="form-label">Filtrar por período:</label>
-            <select class="form-select">
+            <select class="form-select" id="filtroPeriodo">
                 <option>Día</option>
                 <option>Semana</option>
                 <option>Mes</option>
@@ -13,7 +13,7 @@
             </select>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-primary w-100">Aplicar filtro</button>
+            <button class="btn btn-primary w-100" id="btnAplicarFiltro">Aplicar filtro</button>
         </div>
         <div class="col-md-4">
             <button class="btn btn-success w-100">Imprimir tablas</button>
@@ -36,7 +36,7 @@
                 <tr><td>Partidas jugadas</td><td>{{cantidad_partidas}}</td></tr>
                 <tr><td>Preguntas en el juego</td><td>{{cantidad_preguntas}}</td></tr>
                 <tr><td>Preguntas creadas</td><td>{{cantidad_preguntas_creadas_por_usuarios}}</td></tr>
-                <tr><td>Usuarios nuevos (últimos 7 días)</td><td>{{cantidad_usuarios_nuevos}}</td></tr>
+                <tr><td>Usuarios nuevos</td><td>{{cantidad_usuarios_nuevos}}</td></tr>
                 </tbody>
             </table>
         </div>
@@ -44,12 +44,17 @@
 
     <!-- Gráficos Chart.js -->
     <div class="row g-4 mb-4">
-        <div class="col-md-6">
-            <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
-                <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">✅ % de respuestas correctas por usuario</div>
-                <div class="card-body"><canvas id="graficoRespuestas"></canvas></div>
-            </div>
+        <div class="card p-3 mb-4">
+            <h5>🏆 Usuario con mayor % de respuestas correctas</h5>
+            {{#top_usuario}}
+                <p><strong>Usuario:</strong> {{nombre_usuario}}</p>
+                <p><strong>Porcentaje:</strong> {{porcentaje_correctas}}%</p>
+            {{/top_usuario}}
+            {{^top_usuario}}
+                <p>No hay datos disponibles.</p>
+            {{/top_usuario}}
         </div>
+
 
         <div class="col-md-6">
             <div class="card chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
@@ -74,6 +79,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    const datosUsuariosPorPais ={{{usuarios_por_pais_json}}} || [];
+    const sexoData ={{{usuarios_por_sexo_json}}} || [];
+    const edadData ={{{usuarios_por_edad_json}}} || [];
+    const topUsuarioData ={{{top_usuario_json}}} || null;
+</script>
 
 
 

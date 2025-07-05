@@ -1,0 +1,59 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow p-4" style="width: 100%; max-width: 500px; border-radius: 1rem;">
+        <!-- Encabezado -->
+        <h3 class="text-center mb-4 text-primary fw-bold">
+            Editar Perfil
+        </h3>
+
+        <form method="POST" action="/profile/update">
+            <!-- Imagen de perfil (solo visual) -->
+            <div class="text-center mb-3">
+                <img src="/public/uploads/{{foto_perfil}}" class="rounded-circle border border-3 border-danger shadow-sm"
+                     style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
+            </div>
+
+            <!-- Datos no editables -->
+            <div class="mb-2">
+                <label class="form-label fw-bold">Email</label>
+                <input type="text" class="form-control" value="{{email}}" readonly>
+            </div>
+            <div class="mb-2">
+                <label class="form-label fw-bold">Nombre completo</label>
+                <input type="text" class="form-control" value="{{nombre}}" readonly>
+            </div>
+            <div class="mb-2">
+                <label class="form-label fw-bold">Fecha de nacimiento</label>
+                <input type="text" class="form-control" value="{{fecha_nacimiento}}" readonly>
+            </div>
+
+            <!-- Campos editables -->
+            <div class="mb-2">
+                <label class="form-label fw-bold">Nombre de usuario</label>
+                <input type="text" name="nombre_usuario" class="form-control" value="{{nombre_usuario}}" required>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label fw-bold">Sexo</label>
+                <select name="sexo" class="form-control" required>
+                    <option value="Masculino" {{#isMasculino}}selected{{/isMasculino}}>Masculino</option>
+                    <option value="Femenino" {{#isFemenino}}selected{{/isFemenino}}>Femenino</option>
+                    <option value="Prefiero no cargarlo" {{#isNoCargar}}selected{{/isNoCargar}}>Prefiero no cargarlo</option>
+                </select>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label fw-bold">País</label>
+                <input type="text" name="pais" class="form-control" value="{{pais}}" required>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label fw-bold">Ciudad</label>
+                <input type="text" name="ciudad" class="form-control" value="{{ciudad}}" required>
+            </div>
+
+            <div class="d-grid mt-3">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>

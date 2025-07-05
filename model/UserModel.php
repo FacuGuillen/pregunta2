@@ -52,5 +52,4 @@ class UserModel{
                                       GROUP by p.id_partidas");
 
     }
-
 }

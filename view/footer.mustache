@@ -37,63 +37,30 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="{{BASE_URL}}/public/js/mapa.js"></script>
 <script src="{{BASE_URL}}/public/js/autocompletarCiudad.js"></script>
 <script src="{{BASE_URL}}/public/js/mostrarMapaPerfil.js"></script>
+<script src="{{BASE_URL}}/public/js/mapa.js"></script>
+
+
+<script src="{{BASE_URL}}/public/js/grafico.js"></script>
 
 <script>
-    const respuestasData = {
-        labels: ['Usuario A', 'Usuario B', 'Usuario C'],
-        datasets: [{
-            label: '% Correctas',
-            data: [75, 60, 90],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)'
-        }]
-    };
+    function drawGeoChart(datos) {
+        const dataArray = [['Country', 'Usuarios']];
+        if (Array.isArray(datos) && datos.length > 0) {
+            datos.forEach(item => dataArray.push(item));
+        }
 
-    const sexoData = {
-        labels: ['Masculino', 'Femenino', 'Prefiero no decirlo'],
-        datasets: [{
-            data: [50, 40, 10],
-            backgroundColor: ['#3498db', '#e91e63', '#95a5a6']
-        }]
-    };
-
-    const edadData = {
-        labels: ['Menores', 'Adultos', 'Jubilados'],
-        datasets: [{
-            data: [20, 60, 20],
-            backgroundColor: ['#f1c40f', '#2ecc71', '#8e44ad']
-        }]
-    };
-
-    new Chart(document.getElementById('graficoRespuestas'), { type: 'bar', data: respuestasData });
-    new Chart(document.getElementById('graficoSexo'), { type: 'pie', data: sexoData });
-    new Chart(document.getElementById('graficoEdad'), { type: 'doughnut', data: edadData });
-</script>
-
-<script type="text/javascript">
-    google.charts.load('current', {
-        packages: ['geochart'],
-        mapsApiKey: ''
-    });
-
-    google.charts.setOnLoadCallback(drawGeoChart);
-
-    function drawGeoChart() {
-        const data = google.visualization.arrayToDataTable([
-            ['Country', 'Usuarios'],
-            ['Argentina', 120],
-            ['Brazil', 80],
-            ['Mexico', 60],
-            ['Chile', 40],
-            ['Spain', 30]
-        ]);
+        const data = google.visualization.arrayToDataTable(dataArray);
 
         const options = {
+            region: '005',
+            displayMode: 'regions',
+            resolution: 'countries',
             colorAxis: { colors: ['#b2dfdb', '#00695c'] },
             backgroundColor: '#ffffff',
             datalessRegionColor: '#f0f0f0'
@@ -102,7 +69,16 @@
         const chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
         chart.draw(data, options);
     }
+
+    google.charts.load('current', {
+        packages: ['geochart']
+    });
+
+    google.charts.setOnLoadCallback(() => {
+        drawGeoChart(datosUsuariosPorPais);
+    });
 </script>
+
 
 </body>
 </html>
