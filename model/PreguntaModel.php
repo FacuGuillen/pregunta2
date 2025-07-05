@@ -26,7 +26,6 @@ class PreguntaModel {
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
         WHERE c.categoria = ? AND  p.activo = 1
-        /*que no se repita*/
         AND NOT exists(
             SELECT 1
             FROM pregunta_usuarios pu 

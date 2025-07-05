@@ -6,9 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/ListaPartidaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ListaPartidaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/ProfileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/profileView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/Conectarbd.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/cacho.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/generador_qr.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/codigo_qr/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlscript/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/database.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sqlscript/pregunta2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sqlscript/pregunta2.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,18 +54,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "premain",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;premain&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\Pregunta2\public\imgs" />
@@ -98,6 +104,7 @@
       <workItem from="1751241956045" duration="3749000" />
       <workItem from="1751396252673" duration="19166000" />
       <workItem from="1751462496911" duration="12921000" />
+      <workItem from="1751722832163" duration="988000" />
     </task>
     <servers />
   </component>
