@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apis/api.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/emailAjax.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/uploads/68699f6dcd620_charmander.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Configuration.php" beforeDir="false" afterPath="$PROJECT_DIR$/Configuration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/RegisterModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/RegisterModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/registerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/registerView.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ramaqr" />
+        <entry key="$PROJECT_DIR$" value="anahAjax" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -105,7 +99,9 @@
       <workItem from="1751241956045" duration="3749000" />
       <workItem from="1751396252673" duration="19166000" />
       <workItem from="1751462496911" duration="12921000" />
-      <workItem from="1751722832163" duration="17255000" />
+      <workItem from="1751722832163" duration="17430000" />
+      <workItem from="1751804258355" duration="142000" />
+      <workItem from="1751804415792" duration="5147000" />
     </task>
     <servers />
   </component>
