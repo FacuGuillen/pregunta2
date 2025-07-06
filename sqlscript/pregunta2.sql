@@ -283,6 +283,37 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `sexo`, `email`, `co
 	(2, 'Ana', 'García', 'Femenino', 'ana@example.com', 'clave456', 'anita', '1998-08-22', 'foto_ana.jpg', 1, 2, 2),
 	(3, 'Lautaro', 'Rossi', 'masculinmo', 'lautarorossi99@gmail.com', '$2y$10$egKhe3mdSjYGM3/uJ0mC/eYjDUVIrWXunV6yDWI0WKuCPjwsas/o.', 'poli', '2025-06-16', 'aaa', NULL, NULL, NULL);
 
+-- nuevas tablas y secuencias
+ALTER TABLE usuarios
+    ADD COLUMN fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+CREATE TABLE IF NOT EXISTS preguntas_propuestas (
+                                                    id_pregunta_propuesta INT AUTO_INCREMENT PRIMARY KEY,
+                                                    pregunta VARCHAR(250) NOT NULL,
+    estado ENUM('pendiente', 'aprobada', 'rechazada') DEFAULT 'pendiente',
+    id_usuario INT,
+    id_categoria INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE IF NOT EXISTS respuestas_propuestas (
+                                                     id_respuesta_propuesta INT AUTO_INCREMENT PRIMARY KEY,
+                                                     id_pregunta_propuesta INT,
+                                                     respuesta TEXT NOT NULL,
+                                                     es_correcta BOOLEAN DEFAULT FALSE,
+                                                     estado ENUM('pendiente', 'aprobada', 'rechazada') DEFAULT 'pendiente',
+    FOREIGN KEY (id_pregunta_propuesta) REFERENCES preguntas_propuestas(id_pregunta_propuesta)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE pregunta ADD COLUMN activo BOOLEAN DEFAULT TRUE;
+
+ALTER TABLE residencia
+    ADD COLUMN latitud DECIMAL(11,8),
+ADD COLUMN longitud DECIMAL(11,8);
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

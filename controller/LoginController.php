@@ -26,7 +26,7 @@ class LoginController
 
         $user = $this->model->getUserByUsername($username);
 
-        if ($user && password_verify($password, $user['contrasena'])) {
+        if ($user && password_verify($password, $user['contrasena'])&&$user['estado'] == 1) {
             $_SESSION["user"] = $user;
 
             if (Security::isAdmin()) {
@@ -39,6 +39,7 @@ class LoginController
                 $this->view->render("lobby", [
                     "username" => $username,
                 ]);
+                exit();
             } else {
                 // En caso de que no tenga rol definido
                 $this->view->render("login", [

@@ -6,6 +6,7 @@ require_once("core/Router.php");
 require_once("core/EmailSender.php");
 require_once ("configuration/constants.php");
 require_once ("codigo_qr/phpqrcode/qrlib.php");
+//require_once("core/api.php");
 
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");

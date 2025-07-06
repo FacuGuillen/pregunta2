@@ -30,8 +30,13 @@
 
         <div class="col-md-6">
             <label class="form-label">Mail</label>
-            <input type="email" name="email" class="form-control form-control-sm" />
+            <div class="input-group input-group-sm">
+                <input type="email" id="email" name="email" class="form-control" />
+                <button class="btn btn-outline-secondary" type="button" onclick="buscarUsuarioPorEmail()">Verificar</button>
+            </div>
+            <div class="form-text" id="resultado"></div>
         </div>
+
 
         <div class="col-md-6">
             <label class="form-label">Contraseña</label>
@@ -115,5 +120,4 @@
         width: 100% !important;
     }
 </style>
-
 
