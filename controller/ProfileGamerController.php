@@ -12,7 +12,7 @@ class ProfileGamerController{
 
     public function show($nombreJugador = null){
 
-        $username = ['username'];
+        $username = $_SESSION["user"]["username"] ?? null;
 
         if ($nombreJugador == null) {
             header('location: /ranking/show?error=null');

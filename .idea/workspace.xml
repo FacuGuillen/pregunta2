@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/JuegoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/JuegoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/header.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/header.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="anahAjax" />
+        <entry key="$PROJECT_DIR$" value="tiempo" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,18 +50,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;premain&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "premain",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\pregunta2\apis" />
@@ -101,7 +103,8 @@
       <workItem from="1751462496911" duration="12921000" />
       <workItem from="1751722832163" duration="17430000" />
       <workItem from="1751804258355" duration="142000" />
-      <workItem from="1751804415792" duration="5147000" />
+      <workItem from="1751804415792" duration="7241000" />
+      <workItem from="1751840408932" duration="3823000" />
     </task>
     <servers />
   </component>

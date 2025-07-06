@@ -45,7 +45,7 @@ class PreguntaModel {
         }
 
         $cantidad = $this->cantidadDeVecesRespondidaPorPregunta($pregunta['id_pregunta']);
-        if ($cantidad > 10) {
+        if ($cantidad > 3) {
             return ['status' => 'repetida-muchas-veces'];
         }
 
