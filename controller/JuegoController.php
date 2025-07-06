@@ -66,19 +66,16 @@ class JuegoController
         $this->view->render("pregunta", $pregunta);
     }
 
-    public function responder() {
+    public function responder()
+    {
         $id_respuesta = $_POST['respuesta'] ?? null;
-        $pregunta = $_SESSION['pregunta_actual'];
+        $pregunta = $_SESSION['pregunta_actual'] ?? null;
         $idUsuario = ['id_usuario'];
 
-        if (!isset($_POST['respuesta']) || !isset($_SESSION['pregunta_actual'])) {
-            // Redirecciona con error
+        if (!$pregunta) {
             header("Location: /juego/resultado");
             exit;
         }
-
-        $id_respuesta = $_POST['respuesta'];
-        $pregunta = $_SESSION['pregunta_actual'];
 
         if (!$id_respuesta) {
             // No respondió a tiempo
@@ -87,11 +84,14 @@ class JuegoController
             $es_correcta = $this->model->esCorrecta($id_respuesta);
         }
 
-       // $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
+        // Guardar la respuesta del usuario
+        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta['id_pregunta'], $es_correcta);
+
+        // Eliminar la pregunta actual para que cargue una nueva
         unset($_SESSION['pregunta_actual']);
+
         if ($es_correcta) {
             $_SESSION['puntaje']++;
-
             header("Location: /juego/jugar");
             exit();
         } else {
@@ -101,21 +101,38 @@ class JuegoController
     }
 
 
-    public function resultado() {
-        $username =['username'];
+    public function resultado()
+    {
+        $username = ['username'];
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $guardarPartida = $this->model->guardarPartida($puntaje);
         $idUsuario = ['id_usuario'];
         $idPartida = $guardarPartida;
 
-       // var_dump($idUsuario,$idPartida);
-        //exit();
         $this->model->guardarPartidaUsuario($idUsuario, $idPartida);
 
-        $this->view->render("resultado", ['puntaje' => $puntaje,
+        $this->view->render("resultado", [
+            'puntaje' => $puntaje,
             'username' => $username
         ]);
+
         unset($_SESSION['puntaje']);
     }
+
+    public function reportar()
+    {
+        $pregunta = $_SESSION['pregunta_actual'] ?? null;
+
+        if (!$pregunta) {
+            http_response_code(400);
+            echo json_encode(['status' => 'error', 'message' => 'Pregunta no encontrada']);
+            return;
+        }
+
+        $this->model->reportarPregunta($pregunta['id_pregunta']);
+
+        echo json_encode(['status' => 'ok', 'message' => 'Pregunta reportada con éxito']);
+    }
+
 }
