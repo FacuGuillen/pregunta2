@@ -1,7 +1,7 @@
 <main>
     <div id="timer-container">
         <div class="barra-fondo">
-            <div class="barra-progreso"></div>
+            <div class="barra-progreso" style="width: {{porcentaje_tiempo_restante}}%; background-color: {{color_barra_inicial}};"></div>
         </div>
     </div>
     <div class="contenedor-pregunta {{color}}">
@@ -38,70 +38,113 @@
 </main>
 
 <script>
-    let tiempo = 10;
-    const barraProgreso = document.querySelector('.barra-progreso');
     const form = document.getElementById('form-respuesta');
-    const duracionTotal = tiempo;
     const botones = document.querySelectorAll(".boton-respuesta");
     const botonContinuar = document.getElementById('boton-continuar');
-    let tiempoAgotado = false;
     const botonReportar = document.getElementById('boton-reportar');
     const modal = document.getElementById('modal-reportar');
     const confirmarReportar = document.getElementById('confirmar-reportar');
     const cancelarReportar = document.getElementById('cancelar-reportar');
-    const contenedorAcciones = document.querySelector('.contenedor-acciones'); // Nuevo
+    const contenedorAcciones = document.querySelector('.contenedor-acciones');
+    const barraProgreso = document.querySelector('.barra-progreso');
 
-    const countdown = setInterval(() => {
-        tiempo--;
+    const idPreguntaActual = '{{id_pregunta}}';
+    const tiempoRestanteBackend = {{tiempo_restante}};
+    const duracionTotalBackend = {{duracion_total}};
+    const respuestaSeleccionadaBackend = '{{respuesta_seleccionada}}';
+    const tiempoExpiradoBackend = {{tiempo_expirado}};
 
-        const porcentaje = (tiempo / duracionTotal) * 100;
-        barraProgreso.style.width = porcentaje + '%';
-
-        const color = calcularColor(tiempo, duracionTotal);
-        barraProgreso.style.backgroundColor = color;
-
-        if (tiempo <= 0) {
-            clearInterval(countdown);
-            tiempoAgotado = true;
-            document.getElementById('respuesta-default').value = '';
-            mostrarBotones();
-            deshabilitarRespuestas();
-            resaltarRespuestas();
-        }
-    }, 1000);
-
-    botones.forEach(boton => {
-        boton.addEventListener("click", () => {
-            clearInterval(countdown);
-            const idRespuesta = boton.value;
-            document.getElementById('respuesta-default').value = idRespuesta;
-
-            botonContinuar.textContent = 'Continuar';
-            mostrarBotones();
-            deshabilitarRespuestas();
-            resaltarRespuestas(boton);
-        });
-    });
-
-    if (tiempo <= 0) {
-        clearInterval(countdown);
-        tiempoAgotado = true;
-        document.getElementById('respuesta-default').value = '';
-        botonContinuar.textContent = 'Ver resultados';
-        mostrarBotones();
-        deshabilitarRespuestas();
-        resaltarRespuestas();
-    }
+    let tiempoActual = tiempoRestanteBackend;
+    let respuestaYaEnviada = false;
 
     function calcularColor(tiempoRestante, tiempoTotal) {
         const porcentaje = 1 - (tiempoRestante / tiempoTotal);
-
         const rojo = Math.round(76 + (244 - 76) * porcentaje);
         const verde = Math.round(175 - (175 - 67) * porcentaje);
         const azul = Math.round(80 - (80 - 54) * porcentaje);
-
         return `rgb(${rojo}, ${verde}, ${azul})`;
     }
+
+    if (barraProgreso) {
+        const porcentajeInicial = (tiempoActual / duracionTotalBackend) * 100;
+        barraProgreso.style.width = porcentajeInicial + '%';
+        barraProgreso.style.backgroundColor = calcularColor(tiempoActual, duracionTotalBackend);
+    }
+
+    let countdownVisual;
+    if (!tiempoExpiradoBackend && !respuestaSeleccionadaBackend) {
+        countdownVisual = setInterval(() => {
+            tiempoActual--;
+            if (barraProgreso) {
+                const porcentaje = (tiempoActual / duracionTotalBackend) * 100;
+                barraProgreso.style.width = porcentaje + '%';
+                barraProgreso.style.backgroundColor = calcularColor(tiempoActual, duracionTotalBackend);
+            }
+
+            if (tiempoActual <= 0) {
+                clearInterval(countdownVisual);
+                deshabilitarRespuestas();
+                resaltarRespuestas();
+                botonContinuar.textContent = 'Ver resultados';
+                mostrarBotones();
+            }
+        }, 1000);
+    } else {
+
+        if (tiempoExpiradoBackend) {
+            deshabilitarRespuestas();
+            resaltarRespuestas();
+            botonContinuar.textContent = 'Ver resultados';
+            mostrarBotones();
+        } else if (respuestaSeleccionadaBackend) {
+            const botonPreseleccionado = document.querySelector(`.boton-respuesta[value="${respuestaSeleccionadaBackend}"]`);
+            if (botonPreseleccionado) {
+                deshabilitarRespuestas();
+                resaltarRespuestas(botonPreseleccionado);
+                document.getElementById('respuesta-default').value = respuestaSeleccionadaBackend;
+                botonContinuar.textContent = 'Continuar';
+                mostrarBotones();
+            }
+        }
+    }
+
+
+    botones.forEach(boton => {
+        boton.addEventListener("click", () => {
+            if (respuestaYaEnviada) return;
+
+            clearInterval(countdownVisual);
+            const idRespuesta = boton.value;
+            document.getElementById('respuesta-default').value = idRespuesta;
+
+            fetch('/juego/registrarSeleccion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id_pregunta: idPreguntaActual,
+                    id_respuesta_seleccionada: idRespuesta
+                }),
+            })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'ok') {
+                            respuestaYaEnviada = true;
+                            botonContinuar.textContent = 'Continuar';
+                            mostrarBotones();
+                            deshabilitarRespuestas();
+                            resaltarRespuestas(boton);
+                        } else {
+                            alert('Error al registrar la selección: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error en la llamada AJAX:', error);
+                        alert('Hubo un problema de comunicación con el servidor.');
+                    });
+        });
+    });
 
     function mostrarBotones() {
         contenedorAcciones.style.visibility = 'visible';
@@ -115,18 +158,32 @@
 
     function resaltarRespuestas(botonSeleccionado = null) {
         botones.forEach(b => {
+            b.classList.remove('correcta', 'incorrecta', 'no-seleccionada', 'seleccionada-previa');
+        });
+
+        botones.forEach(b => {
             const esCorrecta = b.getAttribute('data-correcta') === '1';
+            const esBotonSeleccionado = botonSeleccionado && b === botonSeleccionado;
+            const esSeleccionadoBackend = b.value === respuestaSeleccionadaBackend;
 
             if (esCorrecta) {
                 b.classList.add('correcta');
-            } else if (botonSeleccionado && b === botonSeleccionado) {
+            } else if (esBotonSeleccionado) {
                 b.classList.add('incorrecta');
-            } else if (!esCorrecta && b !== botonSeleccionado) {
+            } else if (esSeleccionadoBackend) {
+                if (!esCorrecta) {
+                    b.classList.add('incorrecta');
+                }
+            } else {
                 b.classList.add('no-seleccionada');
             }
         });
-    }
 
+        const seleccionadaActiva = botonSeleccionado || document.querySelector(`.boton-respuesta[value="${respuestaSeleccionadaBackend}"]`);
+        if (seleccionadaActiva) {
+            seleccionadaActiva.classList.add('seleccionada-activa');
+        }
+    }
 
     botonReportar.addEventListener('click', () => {
         modal.style.display = 'block';
@@ -154,5 +211,4 @@
                     modal.style.display = 'none';
                 });
     });
-
 </script>
