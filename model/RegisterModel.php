@@ -79,11 +79,19 @@ class RegisterModel
         return $this->database->query("SELECT * FROM usuarios WHERE id_usuario = '$id'");
 
     }
-
     public function marcarComoValidado($id)
     {
         return $this->database->execute("UPDATE usuarios SET estado = '1' WHERE id_usuario = '$id'");
     }
+
+    /*ajax*/
+    public function getUserByEmail($email){
+        $stmt = $this->database->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+        }
 
 
 
