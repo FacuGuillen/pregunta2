@@ -31,7 +31,7 @@ if (isset($restricciones[$controller])) {
     $tipoUsuario = $_SESSION["user"]["tipo_usuario"] ?? null;
 
     if (!in_array($tipoUsuario, $restricciones[$controller])) {
-        header("Location: /login/show");
+        header("Location: /lobby/show");
         exit();
     }
 }
