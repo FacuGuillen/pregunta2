@@ -1,7 +1,17 @@
+html{
+    font-family: 'Lato';
+}
+
 .error {
     border: 2px solid red;
     background-color: #ffe6e6;
 }
+
+
+.div-ruleta{
+    margin-top: 150px !important;
+}
+
 
 .text-nav{
     color: #FFD700;
@@ -44,4 +54,8 @@ h1{
 .p-footer{
     color: rgba(255, 215, 0, 0.64);
     font-size: 15px;
+}
+
+.flecha{
+    margin-top: -25px !important;
 }

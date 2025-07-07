@@ -30,8 +30,56 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
 <script src="{{BASE_URL}}/public/js/ruleta.js"></script>
+<script src="{{BASE_URL}}/public/js/eliminar_pregunta.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{BASE_URL}}/public/js/autocompletarCiudad.js"></script>
+<script src="{{BASE_URL}}/public/js/mostrarMapaPerfil.js"></script>
+<script src="{{BASE_URL}}/public/js/mapa.js"></script>
+<script src="{{BASE_URL}}/public/js/emailAjax.js"></script>
+
+
+<script src="{{BASE_URL}}/public/js/grafico.js"></script>
+
+<script>
+    function drawGeoChart(datos) {
+        const dataArray = [['Country', 'Usuarios']];
+        if (Array.isArray(datos) && datos.length > 0) {
+            datos.forEach(item => dataArray.push(item));
+        }
+
+        const data = google.visualization.arrayToDataTable(dataArray);
+
+        const options = {
+            region: '005',
+            displayMode: 'regions',
+            resolution: 'countries',
+            colorAxis: { colors: ['#b2dfdb', '#00695c'] },
+            backgroundColor: '#ffffff',
+            datalessRegionColor: '#f0f0f0'
+        };
+
+        const chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
+        chart.draw(data, options);
+    }
+
+    google.charts.load('current', {
+        packages: ['geochart']
+    });
+
+    google.charts.setOnLoadCallback(() => {
+        drawGeoChart(datosUsuariosPorPais);
+    });
+</script>
+
+
 
 </body>
 </html>

@@ -3,8 +3,10 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
+require_once("core/EmailSender.php");
 require_once ("configuration/constants.php");
 require_once ("codigo_qr/phpqrcode/qrlib.php");
+//require_once("core/api.php");
 
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
@@ -16,7 +18,9 @@ require_once("controller/RuletaController.php");
 require_once("controller/RankingController.php");
 require_once("controller/ProfileGamerController.php");
 require_once("controller/ListaPartidaController.php");
-
+require_once("controller/ProponerController.php");
+require_once("controller/EditorController.php");
+require_once("controller/AdministradorController.php");
 
 require_once("model/RegisterModel.php");
 require_once("model/LoginModel.php");
@@ -24,6 +28,9 @@ require_once("model/UserModel.php");
 require_once("model/PreguntaModel.php");
 require_once("model/RankingModel.php");
 require_once("model/ProfileGamerModel.php");
+require_once("model/ProponerModel.php");
+require_once ("model/AdministradorModel.php");
+
 
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
@@ -52,9 +59,18 @@ class Configuration
         return new LobbyController($this->getViewer());
     }
 
+    public function getEditorController()
+    {
+        return new EditorController(new PreguntaModel($this->getDatabase()),$this->getViewer());
+    }
+
     public function getProfileController(){
         return new ProfileController(new UserModel($this->getDatabase()), $this->getViewer()
         );
+    }
+
+    public function getAdministradorController(){
+        return new AdministradorController(new AdministradorModel($this->getDatabase()), $this->getViewer());
     }
 
     public function getRankingController(){
@@ -84,7 +100,7 @@ class Configuration
     // Sesiones
     public function getRegisterController()
     {
-        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
+        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer(),new EmailSender());
     }
 
     public function getLoginController() {
@@ -94,6 +110,12 @@ class Configuration
 
     public function getIndexController() {
         return new IndexController($this->getViewer());
+    }
+
+    public function getProponerController()
+    {
+        return new ProponerController(new ProponerModel($this->getDatabase()), $this->getViewer());
+
     }
 
     public function getRouter()

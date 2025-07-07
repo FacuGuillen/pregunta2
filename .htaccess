@@ -7,6 +7,11 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
+
+    # ✅ Si la ruta empieza con apis/, no reescribir, dejarla pasar tal cual
+    RewriteCond %{REQUEST_URI} ^/apis/
+    RewriteRule ^ - [L]
+
     RewriteRule ^(public)($|/) - [L,NC]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

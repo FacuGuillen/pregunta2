@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `pregunta_usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- Volcando datos para la tabla pregunta2.pregunta_usuarios: ~0 rows (aproximadamente)
-
+-- estructura de tabla a borar cuando el usuario vio todas
 -- Volcando estructura para tabla pregunta2.ranking
 CREATE TABLE IF NOT EXISTS `ranking` (
   `id_ranking` int(11) NOT NULL AUTO_INCREMENT,
@@ -283,28 +283,36 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `sexo`, `email`, `co
 	(2, 'Ana', 'García', 'Femenino', 'ana@example.com', 'clave456', 'anita', '1998-08-22', 'foto_ana.jpg', 1, 2, 2),
 	(3, 'Lautaro', 'Rossi', 'masculinmo', 'lautarorossi99@gmail.com', '$2y$10$egKhe3mdSjYGM3/uJ0mC/eYjDUVIrWXunV6yDWI0WKuCPjwsas/o.', 'poli', '2025-06-16', 'aaa', NULL, NULL, NULL);
 
---tabla de preguntas,usuario y si respondio bien o respondio mal
-CREATE TABLE IF NOT EXISTS  `preguntas_usuarios_respuestas`(
-    `id_preguntas_usuarios_respuestas` int(11) NOT NULL AUTO_INCREMENT,
-    `id_usuario` int(11) DEFAULT NULL,
-    `id_preguntas` int(11) DEFAULT NULL,
-    `respuesta_correcta`  BOOLEAN,
-    PRIMARY KEY (`id_preguntas_usuarios_respuestas`),
-    CONSTRAINT `pregunta_usuarios_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-    CONSTRAINT `pregunta_usuarios_ibfk_2` FOREIGN KEY (`id_preguntas`) REFERENCES `pregunta` (`id_pregunta`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
--- tabla qr que se relaciona con usuario
-ALTER TABLE usuarios ADD UNIQUE (nombre_usuario);
+-- nuevas tablas y secuencias
+ALTER TABLE usuarios
+    ADD COLUMN fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP;
 
-CREATE TABLE qr_usuarios (
-                             id_qr_usuario int AUTO_INCREMENT PRIMARY KEY,
-                             nombre_usuario varchar(50),
-                             qr_path varchar(50),
-                             qr_url text,
-                             KEY nombre_usuario(nombre_usuario),
-                             CONSTRAINT qr_usuarios_1 FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
-);
+CREATE TABLE IF NOT EXISTS preguntas_propuestas (
+                                                    id_pregunta_propuesta INT AUTO_INCREMENT PRIMARY KEY,
+                                                    pregunta VARCHAR(250) NOT NULL,
+    estado ENUM('pendiente', 'aprobada', 'rechazada') DEFAULT 'pendiente',
+    id_usuario INT,
+    id_categoria INT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
 
+
+CREATE TABLE IF NOT EXISTS respuestas_propuestas (
+                                                     id_respuesta_propuesta INT AUTO_INCREMENT PRIMARY KEY,
+                                                     id_pregunta_propuesta INT,
+                                                     respuesta TEXT NOT NULL,
+                                                     es_correcta BOOLEAN DEFAULT FALSE,
+                                                     estado ENUM('pendiente', 'aprobada', 'rechazada') DEFAULT 'pendiente',
+    FOREIGN KEY (id_pregunta_propuesta) REFERENCES preguntas_propuestas(id_pregunta_propuesta)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+ALTER TABLE pregunta ADD COLUMN activo BOOLEAN DEFAULT TRUE;
+
+ALTER TABLE residencia
+    ADD COLUMN latitud DECIMAL(11,8),
+ADD COLUMN longitud DECIMAL(11,8);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

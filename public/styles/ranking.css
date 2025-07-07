@@ -1,76 +1,1 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-main {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content:flex-start;
-    padding: 1em;
-    min-height: 100vh;
-}
-
-table {
-    border-collapse: collapse;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-    animation: fadeIn 0.8s ease-in-out;
-    margin-top: 2em;
-}
-
-thead {
-    background-color: #FFD43B;
-}
-
-td{
-    padding: 0.5em;
-}
-
-tbody tr {
-    border-bottom: 1px solid gray;
-    transition: background-color 0.3s ease;
-}
-
-tbody tr:hover {
-    background-color: #FFF3B0;
-    cursor: pointer;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fotito-perfil {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    border: solid 1px gray;
-}
-
-.nombre-perfil{
-    display: flex;
-    align-items: center;
-    column-gap: 0.5em;
-}
-
-thead th {
-    padding: 1em;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1em;
-}
-
-td:last-child,
-th:last-child {
-    text-align: center;
-}
+html, body {    height: 100%;    margin: 0;    padding: 0;}main {    display: flex !important;    flex-direction: column;    align-items: center;    justify-content:flex-start;    padding: 1em;    min-height: 100vh;}.ranking-container {    width: 100%;    max-width: 800px;    padding: 2em;    border-radius: 16px;    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);    background-color: #fff;    margin-top: 2em;    animation: fadeIn 0.8s ease-in-out;}.ranking-container h2 {    text-align: center;    margin-bottom: 1em;    font-size: 2rem;    color: #222;    font-weight: 700;}.contenedor-tabla {    overflow-x: auto;}.ranking-table {    width: 100%;    border-collapse: collapse;    border-radius: 12px;    overflow: hidden;}.ranking-table thead {    background-color: #FFD43B;    color: #222;    font-weight: 600;}.ranking-table th, .ranking-table td {    padding: 1em;    text-align: left;}.ranking-table tbody tr {    border-bottom: 1px solid #eee;    transition: background-color 0.3s ease, transform 0.3s ease;    cursor: pointer;}.ranking-table tbody tr:hover {    background-color: rgba(207, 207, 207, 0.6);    transform: scale(1.004);}.jugador-info {    display: flex;    align-items: center;    gap: 0.8em;}.jugador-info img {    width: 42px;    height: 42px;    border-radius: 50%;    object-fit: cover;    border: 2px solid #CFCFCF99;}.jugador-info span {    font-size: 1rem;    font-weight: 500;    color: #333;}@keyframes fadeIn {from { opacity: 0; transform: translateY(20px); }to { opacity: 1; transform: translateY(0); }}.fotito-perfil {    width: 75px;    height: 75px;    border-radius: 50%;    object-fit: cover;    object-position: center;    display: block;    border: solid 1px gray;}.nombre-perfil{    display: flex;    align-items: center;    column-gap: 0.5em;}

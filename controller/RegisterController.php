@@ -3,9 +3,11 @@
 class RegisterController{
     private $view;
 
-    public function __construct($model, $view){
+    public function __construct($model, $view,$emailSender){
         $this->model = $model;
         $this->view = $view;
+        $this->emailSender = $emailSender;
+
     }
 
     public function show()
@@ -24,11 +26,14 @@ class RegisterController{
             if ($_GET["error"] === "contrasena_no_coinciden") {
                 $mensaje = "Las contraseñas no coinciden.";
             }
+            if ($_GET["error"] === "email_no_enviado") {
+                $mensaje = "El email no se pudo enviar";
+            }
         }
 
         if (isset($_GET["success"])) {
             $tipo = "success";
-            $mensaje = "¡Usuario registrado exitosamente!";
+            $mensaje = "¡Usuario registrado exitosamente!Valide su cuenta";
         }
 
         // Paso los datos a la vista
@@ -40,32 +45,67 @@ class RegisterController{
 
     public function addUser()
     {
-        if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
-            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])) {
+        $mensaje = "";
+        $tipo = "";
 
-            $this->redirectTo("register/show?error=campos_vacios");
+        // Validación de campos vacíos
+        if (empty($_POST["name"]) || empty($_POST["lastname"]) || empty($_POST["sex"]) ||
+            empty($_POST["email"]) || empty($_POST["password"]) || empty($_POST["confirm_password"]) || empty($_POST["nameuser"])
+            || empty($_POST["latitud"]) || empty($_POST["longitud"])) {
+
+            $mensaje = "Todos los campos son obligatorios.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
         if ($_POST["password"] != $_POST["confirm_password"]) {
-            $this->redirectTo("register/show?error=contrasena_no_coinciden");
+            $mensaje = "Las contraseñas no coinciden.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
 
         // Manejo de la imagen
         $nombreArchivo = null;
-
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $nombreArchivo = uniqid() . "_" . basename($_FILES['photo']['name']);
             $destino = "public/uploads/" . $nombreArchivo;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $destino)) {
-                $this->redirectTo("register/show?error=error_foto");
+                $mensaje = "Error al subir la imagen.";
+                $tipo = "error";
+                $this->view->render("register", compact("mensaje", "tipo"));
                 return;
             }
         } else {
-            $this->redirectTo("register/show?error=error_foto");
+            $mensaje = "Debe subir una imagen.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
+            return;
+        }
+
+        $residenciaData = [
+            'ciudad' => $_POST['ciudad'],
+            'pais' => $_POST['pais'],
+            'latitud' => $_POST['latitud'],
+            'longitud' => $_POST['longitud']
+        ];
+
+        $idResidencia = $this->model->insertarResidencia($residenciaData);
+
+        if (!$idResidencia) {
+            $mensaje = "Error al guardar la residencia.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
+            return;
+        }
+
+        if ($this->model->existeUsuario($_POST['nameuser'])) {
+            $mensaje = "El nombre de usuario ya existe.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
@@ -77,23 +117,30 @@ class RegisterController{
             'email' => $_POST['email'],
             'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nameuser' => $_POST['nameuser'],
-            'photo' => $nombreArchivo  // Guardás solo el nombre o la ruta relativa
+            'photo' => $nombreArchivo,
+            'tipo_usuario' => 1,  // ← usuario tipo jugador por defecto
+            'tipo_residencia' => $idResidencia
         ];
-
-        if ($this->model->existeUsuario($data['nameuser'])) {
-            $this->redirectTo("register/show?error=usuario_existente");
-            return;
-        }
 
         $resultado = $this->model->createUser($data);
 
-        if ($resultado !== true) {
-            // Si hubo error en la inserción, podrías redirigir con mensaje de error
-            $this->redirectTo("register/show?error=error_bd");
+        if ($resultado === false) {
+            $mensaje = "Error en la base de datos.";
+            $tipo = "error";
+            $this->view->render("register", compact("mensaje", "tipo"));
             return;
         }
 
-        $this->redirectTo("register/show?success=1");
+        //mandar el correo
+        $body = $this->generarEmailBodyPara($resultado["id_usuario"],$resultado["nombre_usuario"],$resultado["numero_random"]);
+        $exito = $this->emailSender->send($resultado["email"], $body);
+
+        if ($exito) {
+           $this->redirectTo("/register/show?success");
+        } else{
+            // si no manda el mail que pasa
+            $this->redirectTo("/register/show?error=email_no_enviado");
+        }
     }
 
     private function redirectTo($str)
@@ -101,4 +148,40 @@ class RegisterController{
         header("Location: " . $str);
         exit();
     }
+
+
+    public function validar()
+    {    $id = $_GET['idusuario'] ?? null;
+        $codigo = $_GET['idverificador'] ?? null;
+
+        if (!$id || !$codigo) {
+            echo "Enlace inválido";
+            return;
+        }
+        $usuarios = $this->model->buscarPorId($id);
+        $usuario = $usuarios[0];
+
+        if (!$usuario || $usuario['numero_random'] != $codigo) {
+            echo "Verificación incorrecta";
+            return;
+        }
+
+        // Actualizar a validado
+        $this->model->marcarComoValidado($id);
+
+        $this->redirectTo("/login/show?success=usuario_validado");
+
+    }
+
+    private function generarEmailBodyPara($id_usuario, $nombre_usuario, $numero_random)
+    {
+        return "<body>Hola $nombre_usuario, hacé click acá para validar tu cuenta: 
+            <a href='http://localhost:8080/register/validar?idusuario=$id_usuario&idverificador=$numero_random'>
+                Validar cuenta
+            </a></body>";
+    }
+
+
+
+
 }

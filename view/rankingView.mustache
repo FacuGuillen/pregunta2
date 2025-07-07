@@ -1,22 +1,28 @@
 <main>
-        <table>
-            <thead>
-            <tr>
-                <th>Usuario</th>
-                <th>Mejor Puntaje</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#usuarios}}
-                <tr onclick="window.location='/profileGamer/show/{{nombre_usuario}}'">
-                    <td class="nombre-perfil">
-                        <img class="fotito-perfil rounded-circle" src="{{BASE_URL}}/public/uploads/{{foto_perfil}}" alt="perfil">
-                        {{nombre_usuario}}
-                    </td>
-                    <td>{{puntaje_maximo}}</td>
+    <section class="ranking-container">
+        <h2>Ranking</h2>
+        <div class="contenedor-tabla">
+            <table class="ranking-table">
+                <thead>
+                <tr>
+                    <th>Jugador</th>
+                    <th>Puntaje</th>
                 </tr>
-            {{/usuarios}}
-            </tbody>
-        </table>
-
+                </thead>
+                <tbody>
+                {{#usuarios}}
+                    <tr onclick="window.location='/profileGamer/show/{{nombre_usuario}}'">
+                        <td>
+                            <div class="jugador-info">
+                                <img src="{{BASE_URL}}/public/uploads/{{foto_perfil}}" alt="Foto perfil">
+                                <span>{{nombre_usuario}}</span>
+                            </div>
+                        </td>
+                        <td>{{puntaje_maximo}}</td>
+                    </tr>
+                {{/usuarios}}
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>

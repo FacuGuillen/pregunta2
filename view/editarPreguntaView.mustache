@@ -1,0 +1,30 @@
+<h1>Editar Pregunta</h1>
+
+<form action="/editor/actualizarPregunta" method="POST">
+
+    <!-- ID pregunta oculto -->
+    <input type="hidden" name="id_pregunta" value="{{pregunta.id_pregunta}}">
+
+    <div class="form-group mb-3">
+        <label for="textoPregunta">Pregunta:</label>
+        <textarea name="pregunta" id="textoPregunta" class="form-control" required>{{pregunta.pregunta}}</textarea>
+    </div>
+
+    <h3>Respuestas</h3>
+
+    {{#respuestas}}
+        <div class="form-group mb-2">
+            <input type="hidden" name="id_respuesta[]" value="{{id_respuesta}}">
+
+            <div class="d-flex align-items-center gap-2">
+                <input type="text" name="respuesta[]" class="form-control" value="{{respuesta}}" required>
+
+                <input type="radio" name="respuesta_correcta" value="{{id_respuesta}}" {{#es_correcta}}checked{{/es_correcta}}>
+                <small>Correcta</small>
+            </div>
+        </div>
+    {{/respuestas}}
+
+    <button type="submit" class="btn btn-primary mt-3">Guardar Cambios</button>
+
+</form>
