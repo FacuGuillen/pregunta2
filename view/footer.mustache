@@ -1,27 +1,37 @@
-
 <!-- Footer -->
-<footer class="w3-container w3-center w3-light-grey w3-xlarge bg-dark py-3 d-flex justify-content-between align-items-center">
-    <div class="d-flex gap-5">
-        <p class="p-footer mb-0">Lautaro Rossi</p>
-        <p class="p-footer mb-0">-</p>
-        <p class="p-footer mb-0">Facundo Guillen</p>
-    </div>
+<footer class="w3-light-grey w3-xlarge bg-dark py-3 text-white">
+    <div class="container">
+        <div class="row text-center text-md-start align-items-center">
 
-    <div class="d-flex gap-5">
-        <i class="fa fa-facebook-official w3-hover-opacity fb"></i>
-        <i class="fa fa-instagram w3-hover-opacity ig"></i>
-        <i class="fa fa-snapchat w3-hover-opacity sp"></i>
-        <i class="fa fa-pinterest-p w3-hover-opacity pt"></i>
-        <i class="fa fa-twitter w3-hover-opacity tw"></i>
-        <i class="fa fa-linkedin w3-hover-opacity lk"></i>
-    </div>
+            <!-- Columna izquierda (oculta en pantallas pequeñas) -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0 d-none d-md-flex flex-row justify-content-center gap-2">
+                <p class="p-footer mb-0">Lautaro Rossi</p>
+                <p class="p-footer mb-0">-</p>
+                <p class="p-footer mb-0">Facundo Guillen</p>
+            </div>
 
-    <div class="d-flex gap-5">
-        <p class="p-footer mb-0">Pilar Rodriguez</p>
-        <p class="p-footer mb-0">-</p>
-        <p class="p-footer mb-0">Anahi Quelca</p>
+            <!-- Redes sociales (siempre visibles) -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0 d-flex justify-content-center gap-3">
+                <i class="fa fa-facebook-official w3-hover-opacity fb"></i>
+                <i class="fa fa-instagram w3-hover-opacity ig"></i>
+                <i class="fa fa-snapchat w3-hover-opacity sp"></i>
+                <i class="fa fa-pinterest-p w3-hover-opacity pt"></i>
+                <i class="fa fa-twitter w3-hover-opacity tw"></i>
+                <i class="fa fa-linkedin w3-hover-opacity lk"></i>
+            </div>
+
+            <!-- Columna derecha (oculta en pantallas pequeñas) -->
+            <div class="col-12 col-md-4 d-none d-md-flex flex-row justify-content-center gap-2">
+                <p class="p-footer mb-0">Pilar Rodriguez</p>
+                <p class="p-footer mb-0">-</p>
+                <p class="p-footer mb-0">Anahi Quelca</p>
+            </div>
+
+        </div>
     </div>
 </footer>
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
@@ -37,30 +47,64 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{BASE_URL}}/public/js/mapa.js"></script>
 <script src="{{BASE_URL}}/public/js/autocompletarCiudad.js"></script>
 <script src="{{BASE_URL}}/public/js/mostrarMapaPerfil.js"></script>
-<script src="{{BASE_URL}}/public/js/mapa.js"></script>
-
-
-<script src="{{BASE_URL}}/public/js/grafico.js"></script>
+<script src="{{BASE_URL}}/public/js/emailAjax.js"></script>
 
 <script>
-    function drawGeoChart(datos) {
-        const dataArray = [['Country', 'Usuarios']];
-        if (Array.isArray(datos) && datos.length > 0) {
-            datos.forEach(item => dataArray.push(item));
-        }
+    const respuestasData = {
+        labels: ['Usuario A', 'Usuario B', 'Usuario C'],
+        datasets: [{
+            label: '% Correctas',
+            data: [75, 60, 90],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+    };
 
-        const data = google.visualization.arrayToDataTable(dataArray);
+    const sexoData = {
+        labels: ['Masculino', 'Femenino', 'Prefiero no decirlo'],
+        datasets: [{
+            data: [50, 40, 10],
+            backgroundColor: ['#3498db', '#e91e63', '#95a5a6']
+        }]
+    };
+
+    const edadData = {
+        labels: ['Menores', 'Adultos', 'Jubilados'],
+        datasets: [{
+            data: [20, 60, 20],
+            backgroundColor: ['#f1c40f', '#2ecc71', '#8e44ad']
+        }]
+    };
+
+    new Chart(document.getElementById('graficoRespuestas'), { type: 'bar', data: respuestasData });
+    new Chart(document.getElementById('graficoSexo'), { type: 'pie', data: sexoData });
+    new Chart(document.getElementById('graficoEdad'), { type: 'doughnut', data: edadData });
+</script>
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        packages: ['geochart'],
+        mapsApiKey: ''
+    });
+
+    google.charts.setOnLoadCallback(drawGeoChart);
+
+    function drawGeoChart() {
+        const data = google.visualization.arrayToDataTable([
+            ['Country', 'Usuarios'],
+            ['Argentina', 120],
+            ['Brazil', 80],
+            ['Mexico', 60],
+            ['Chile', 40],
+            ['Spain', 30]
+        ]);
 
         const options = {
-            region: '005',
-            displayMode: 'regions',
-            resolution: 'countries',
             colorAxis: { colors: ['#b2dfdb', '#00695c'] },
             backgroundColor: '#ffffff',
             datalessRegionColor: '#f0f0f0'
@@ -69,16 +113,7 @@
         const chart = new google.visualization.GeoChart(document.getElementById('geo_chart_div'));
         chart.draw(data, options);
     }
-
-    google.charts.load('current', {
-        packages: ['geochart']
-    });
-
-    google.charts.setOnLoadCallback(() => {
-        drawGeoChart(datosUsuariosPorPais);
-    });
 </script>
-
 
 </body>
 </html>

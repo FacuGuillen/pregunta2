@@ -1,0 +1,116 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    min-height: 90vh;
+    row-gap: 1em;
+}
+
+.card {
+    border: none;
+    border-radius: 1.5rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 2.5rem !important;
+    max-width: 450px !important;
+    width: 100%;
+}
+
+.perfil-titulo {
+    font-size: 2rem;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.perfil-titulo img {
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+}
+
+.text-center.mb-3 img {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.text-center.mb-3 img:hover {
+    transform: scale(1.05);
+}
+
+.perfil-datos .list-group-item {
+    border: none;
+    padding: 0.75rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.05rem;
+    color: #444;
+    border-bottom: 1px solid #eee;
+}
+
+.perfil-datos .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.perfil-datos .list-group-item strong {
+    flex-basis: 30%;
+}
+
+#mapPerfil {
+    margin-bottom: 1.5rem;
+    border-radius: 1rem !important;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-accion {
+    display: flex;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+.btn-editar, .btn-salir {
+    flex-grow: 1;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.btn-editar {
+    background-color: #28a745;
+    color: #ffffff;
+    border: 2px solid #28a745;
+}
+
+.btn-editar:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-salir {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: 2px solid #dc3545;
+}
+
+.btn-salir:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}

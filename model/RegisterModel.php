@@ -24,14 +24,25 @@ class RegisterModel
         $tipo_usuario = isset($data['tipo_usuario']) ? intval($data['tipo_usuario']) : 1;  // Por si no viene, poner 1 por defecto
         $residencia = $db->real_escape_string($data['tipo_residencia']);
 
-        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil, tipo_usuario, tipo_residencia)
-        VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$tipo_usuario', '$residencia')";
+        /*generar numero random*/
+        $numeroRandom = rand(10000, 99999);
+        $estado = false;
+
+        $sql = "INSERT INTO usuarios (nombre, apellido, sexo, fecha_nacimiento, email, contrasena, nombre_usuario, foto_perfil,numero_random,estado, tipo_usuario, tipo_residencia)
+            VALUES ('$nombre', '$apellido', '$sexo', '$fecha_nacimiento', '$email', '$contrasena', '$nombre_usuario', '$foto_perfil', '$numeroRandom', '$estado','$tipo_usuario', '$residencia')";
 
         if (!$db->query($sql)) {
-            return $db->error;
+            return false;
         }
 
-        return true;
+        $idUsuario = $db->insert_id;
+
+        return [
+            "id_usuario" => $idUsuario,
+            "nombre_usuario" => $nombre_usuario,
+            "numero_random" => $numeroRandom,
+            "email" => $email
+        ];
     }
 
     public function insertarResidencia($data){
@@ -61,6 +72,26 @@ class RegisterModel
         // Si es array, verificamos si tiene elementos (usuario encontrado)
         return !empty($resultado);
     }
+
+    /*validacion mail*/
+    public function buscarPorId($id)
+    {
+        return $this->database->query("SELECT * FROM usuarios WHERE id_usuario = '$id'");
+
+    }
+    public function marcarComoValidado($id)
+    {
+        return $this->database->execute("UPDATE usuarios SET estado = '1' WHERE id_usuario = '$id'");
+    }
+
+    /*ajax*/
+    public function getUserByEmail($email){
+        $stmt = $this->database->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+        }
 
 
 

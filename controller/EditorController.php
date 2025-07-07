@@ -125,15 +125,36 @@ class EditorController{
         ]);
     }
 
-
-    public function verReportadas(){
+//preguntas reportadas!
+    public function verReportadas() {
         $username = $_SESSION["user"]["nameuser"] ?? null;
-        //$pregunta = $this->model->getPreguntasReportadas();
+        $pregunta = $this->model->getPreguntasReportadas();
         $this->view->render("preguntasReportadas", [
             "username" => $username,
-            //"preguntas" => $pregunta,
+            "preguntasReportadas" => $pregunta
         ]);
+    }
 
+    public function aprobarReportada() {
+        $idPregunta = $_POST['id_pregunta'] ?? null;
+
+        if ($idPregunta) {
+            $this->model->aprobarPregunta((int)$idPregunta);
+        }
+
+        header("Location: /editor/verReportadas");
+        exit;
+    }
+
+    public function rechazarReportada() {
+        $idPregunta = $_POST['id_pregunta'] ?? null;
+
+        if ($idPregunta) {
+            $this->model->eliminarPregunta((int)$idPregunta);
+        }
+
++        header("Location: /editor/verReportadas");
+        exit;
     }
 
 

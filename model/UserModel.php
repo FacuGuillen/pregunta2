@@ -52,4 +52,11 @@ class UserModel{
                                       GROUP by p.id_partidas");
 
     }
+
+
+    public function buscarJugadorPorId($idUsuario){
+        return $this->database->query("SELECT * FROM usuarios WHERE id_usuario = '$idUsuario'");
+
+    }
+
 }

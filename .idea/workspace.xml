@@ -4,37 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="" />
+    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-<<<<<<< HEAD
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php-8.4.5-nts-Win32-vs17-x64\php.exe" />
-=======
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="ramaqr" />
+        <entry key="$PROJECT_DIR$" value="tiempo" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\laragon\bin\php\php-8.2.19-nts-Win32-vs16-x64\php.exe" />
->>>>>>> editorfl
+  <component name="PhpDebugGeneral" listening_started="true" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/mustache/src" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/mustache/bin" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/mustache/test" />
+    </include_path>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -47,12 +50,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "facu-merge",
+    "git-widget-placeholder": "premain",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -60,22 +62,9 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-=======
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lautaro-editor&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  }
-}</component>
->>>>>>> editorfl
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\pregunta2\apis" />
       <recent name="C:\xampp\htdocs\Pregunta2\public\imgs" />
     </key>
   </component>
@@ -99,16 +88,6 @@
       <workItem from="1748314764830" duration="60000" />
       <workItem from="1749246133211" duration="5019000" />
       <workItem from="1749652019270" duration="7943000" />
-<<<<<<< HEAD
-      <workItem from="1749662993133" duration="1075000" />
-      <workItem from="1749780350738" duration="925000" />
-      <workItem from="1750635064563" duration="659000" />
-      <workItem from="1750642482044" duration="1678000" />
-      <workItem from="1750698138191" duration="878000" />
-      <workItem from="1750699022809" duration="6984000" />
-      <workItem from="1750720119913" duration="6535000" />
-      <workItem from="1750732482117" duration="2075000" />
-=======
       <workItem from="1749662993133" duration="639000" />
       <workItem from="1749898917435" duration="9695000" />
       <workItem from="1750092290631" duration="98000" />
@@ -118,10 +97,14 @@
       <workItem from="1750457806549" duration="6513000" />
       <workItem from="1750506846998" duration="11185000" />
       <workItem from="1750549849205" duration="1739000" />
-      <workItem from="1750644599966" duration="649000" />
-      <workItem from="1750646296980" duration="519000" />
-      <workItem from="1750694871886" duration="2493000" />
->>>>>>> editorfl
+      <workItem from="1751235118790" duration="5111000" />
+      <workItem from="1751241956045" duration="3749000" />
+      <workItem from="1751396252673" duration="19166000" />
+      <workItem from="1751462496911" duration="12921000" />
+      <workItem from="1751722832163" duration="17430000" />
+      <workItem from="1751804258355" duration="142000" />
+      <workItem from="1751804415792" duration="7241000" />
+      <workItem from="1751840408932" duration="3823000" />
     </task>
     <servers />
   </component>

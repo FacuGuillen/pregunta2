@@ -3,10 +3,10 @@ require_once("core/Database.php");
 require_once("core/FilePresenter.php");
 require_once("core/MustachePresenter.php");
 require_once("core/Router.php");
-
-
+require_once("core/EmailSender.php");
 require_once ("configuration/constants.php");
 require_once ("codigo_qr/phpqrcode/qrlib.php");
+//require_once("core/api.php");
 
 require_once("controller/RegisterController.php");
 require_once("controller/LoginController.php");
@@ -100,7 +100,7 @@ class Configuration
     // Sesiones
     public function getRegisterController()
     {
-        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer());
+        return new RegisterController(new RegisterModel($this->getDatabase()),$this->getViewer(),new EmailSender());
     }
 
     public function getLoginController() {

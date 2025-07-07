@@ -30,7 +30,6 @@ class PreguntaModel {
         FROM pregunta p
         JOIN categoria c ON p.id_categoria = c.id_categoria
         WHERE c.categoria = ? AND  p.activo = 1
-        /*que no se repita*/
         AND NOT exists(
             SELECT 1
             FROM pregunta_usuarios pu 
@@ -50,16 +49,16 @@ class PreguntaModel {
         }
 
         $cantidad = $this->cantidadDeVecesRespondidaPorPregunta($pregunta['id_pregunta']);
-        if ($cantidad > 10) {
+        if ($cantidad > 3) {
             return ['status' => 'repetida-muchas-veces'];
         }
 
         $resStmt = $conn->prepare("
-        SELECT id_respuesta, respuesta 
-        FROM respuesta 
-        WHERE id_pregunta = ?
-        ORDER BY RAND()
-    ");
+            SELECT id_respuesta, respuesta, es_correcta 
+            FROM respuesta 
+            WHERE id_pregunta = ?
+            ORDER BY RAND()
+        ");
         $resStmt->bind_param("i", $pregunta['id_pregunta']);
         $resStmt->execute();
         $respuestas = $resStmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -135,7 +134,7 @@ class PreguntaModel {
 
     public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
     {  $db = $this->db->getConnection();
-        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_pregunta, respuesta_correcta) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
         $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();
@@ -178,10 +177,10 @@ class PreguntaModel {
 
         // Consulta de respuestas (acá también podrías usar prepared si querés)
         $resStmt = $conn->prepare("
-        SELECT id_respuesta, respuesta 
-        FROM respuesta 
-        WHERE id_pregunta = ?
-        ORDER BY RAND()
+            SELECT id_respuesta, respuesta, es_correcta 
+            FROM respuesta 
+            WHERE id_pregunta = ?
+            ORDER BY RAND()
         ");
         $resStmt->bind_param("i", $id_pregunta);
         $resStmt->execute();
@@ -436,5 +435,35 @@ class PreguntaModel {
         $stmt->bind_param("isi", $idPregunta, $respuesta, $esCorrecta);
         $stmt->execute();
     }
+
+    public function reportarPregunta($id_pregunta) {
+        $conn = $this->db->getConnection();
+        $stmt = $conn->prepare("UPDATE pregunta SET n_reporte = n_reporte + 1 WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $id_pregunta);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function getPreguntasReportadas() {
+        $sql = "
+        SELECT p.*, c.categoria
+        FROM pregunta p
+        JOIN categoria c ON p.id_categoria = c.id_categoria
+        WHERE p.n_reporte > 0
+        ORDER BY p.n_reporte DESC
+    ";
+        $result = $this->db->getConnection()->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    public function aprobarPregunta($idPregunta) {
+        $conn = $this->db->getConnection();
+        $stmt = $conn->prepare("UPDATE pregunta SET n_reporte = 0 WHERE id_pregunta = ?");
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    }
+
 
 }

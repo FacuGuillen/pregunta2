@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once("core/Security.php");
 require_once("Configuration.php");
@@ -22,7 +23,6 @@ $restricciones = [
 
 
 if (isset($restricciones[$controller])) {
-    // Validar login
     if (!isset($_SESSION["user"])) {
         header("Location: /login/show");
         exit();

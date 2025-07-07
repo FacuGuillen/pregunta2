@@ -1,41 +1,37 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 100%; max-width: 420px; border-radius: 1rem;">
-        <!-- Encabezado -->
-        <h3 class="text-center mb-4 text-primary fw-bold d-flex justify-content-center align-items-center gap-2">
-            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
-            Mi Perfil
-            <img src="https://cdn6.aptoide.com/imgs/1/a/3/1a354d9524ca67a64e36f511d210a621_icon.png" alt="Pokebola" width="30">
-        </h3>
-
-        <!-- Imagen de perfil -->
-        <div class="text-center mb-3">
-            <img src="/public/uploads/{{foto_perfil}}" class="rounded-circle border border-3 border-danger shadow-sm"
-                 style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
-        </div>
-
-        <!-- Datos del usuario -->
-        <ul class="list-group list-group-flush mb-3">
-            <li class="list-group-item"><strong> Usuario:</strong> {{nombre_usuario}}</li>
-            <li class="list-group-item"><strong> Email:</strong> {{email}}</li>
-            <li class="list-group-item"><strong> Nombre:</strong> {{nombre}}</li>
-            <li class="list-group-item"><strong> Nacimiento:</strong> {{fecha_nacimiento}}</li>
-            <li class="list-group-item"><strong> Sexo:</strong> {{sexo}}</li>
-            <li class="list-group-item"><strong> País:</strong> {{pais}}</li>
-            <li class="list-group-item"><strong> Ciudad:</strong> {{ciudad}}</li>
-        </ul>
-
-        <!-- Mapa -->
-        <div id="mapPerfil" style="height: 300px; border-radius: 1rem;" class="mb-3"></div>
-
-        <!-- Botón Editar -->
-        <div class="d-grid">
-            <a href="/profile/editUser" class="btn btn-outline-primary btn-sm">Editar perfil</a>
+<main>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="card shadow p-4" style="width: 100%; max-width: 550px; border-radius: 1rem;">
+            <h2 class="perfil-titulo">
+                {{#es_propio}}Perfil de Usuario{{/es_propio}}
+                {{^es_propio}}Perfil del Jugador{{/es_propio}}
+            </h2>
+            <div class="text-center mb-3">
+                <img src="/public/uploads/{{foto_perfil}}" class="rounded-circle border border-3 shadow-sm"
+                     style="width: 120px; height: 120px; object-fit: cover;" alt="Foto de perfil">
+            </div>
+            <div class="perfil-datos">
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item"><strong> Usuario:</strong> {{nombre_usuario}}</li>
+                    <li class="list-group-item"><strong> Email:</strong> {{email}}</li>
+                    <li class="list-group-item"><strong> Nombre:</strong> {{nombre}}</li>
+                    <li class="list-group-item"><strong> Nacimiento:</strong> {{fecha_nacimiento}}</li>
+                    <li class="list-group-item"><strong> Sexo:</strong> {{sexo}}</li>
+                    <li class="list-group-item"><strong> País:</strong> {{pais}}</li>
+                    <li class="list-group-item"><strong> Ciudad:</strong> {{ciudad}}</li>
+                </ul>
+            </div>
+            <div id="mapPerfil" style="height: 300px; border-radius: 1rem;"></div>
+            {{#es_propio}}
+                <div class="perfil-accion">
+                    <a href="#" class="btn-editar">Editar Perfil</a>
+                    <a class="btn-salir" href="/login/logout">Cerrar Sesión</a>
+                </div>
+            {{/es_propio}}
         </div>
     </div>
-</div>
+</main>
 
 <script>
     const userLat = Number({{latitud}}) || -34.6037;
     const userLon = Number({{longitud}}) || -58.3816;
 </script>
-
