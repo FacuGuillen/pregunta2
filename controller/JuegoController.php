@@ -26,6 +26,8 @@ class JuegoController
         if (isset($_SESSION['pregunta_actual']) && isset($_SESSION['pregunta_inicio_tiempo'])) {
             $pregunta = $_SESSION['pregunta_actual'];
             $tiempoInicio = $_SESSION['pregunta_inicio_tiempo'];
+
+            //verifica si el tiempo expiro
             $tiempoTranscurrido = time() - $tiempoInicio;
             $tiempoRestante = self::DURACION_PREGUNTA - $tiempoTranscurrido;
 
@@ -43,7 +45,8 @@ class JuegoController
             } else {
                 $respuestaSeleccionada = $_SESSION['respuesta_seleccionada_para_pregunta_' . $pregunta['id_pregunta']] ?? null;
             }
-        } else {
+        } // si no hay pregunta en session
+        else {
             $respuesta = $this->model->getPreguntaPorCategoria($categoria, $idUsuario);
 
             if (!isset($respuesta) || (isset($respuesta) && $respuesta['status'] !== 'ok')) {
@@ -64,6 +67,7 @@ class JuegoController
                     $pregunta = $this->model->traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria, $idUsuario);
                 }
 
+                // ultima verificacion
                 if (isset($respuesta['status']) && $respuesta['status'] === 'ok') {
                     $pregunta = $respuesta['pregunta'];
                 } else if (!isset($pregunta) || !isset($pregunta['id_pregunta'])) {
@@ -71,7 +75,7 @@ class JuegoController
                     $this->view->render("resultado", ['puntaje' => $_SESSION['puntaje'] ?? 0]);
                     return;
                 }
-
+                // guarda nueva pregunta en session
                 $_SESSION['pregunta_actual'] = $pregunta;
                 $_SESSION['pregunta_inicio_tiempo'] = time();
                 $this->model->guardarPreguntasQueYaVioElUsuario($idUsuario, $pregunta['id_pregunta']);
@@ -85,7 +89,7 @@ class JuegoController
             }
         }
 
-        // Prepare data for rendering the view
+        // Prepara los datos para usarlos en el mustache
         $pregunta['username'] = $_SESSION["user"]['nombre_usuario'] ?? null;
         $pregunta['tiempo_restante'] = self::DURACION_PREGUNTA - (time() - $_SESSION['pregunta_inicio_tiempo']);
         if ($pregunta['tiempo_restante'] < 0) {
@@ -116,6 +120,7 @@ class JuegoController
             return;
         }
 
+        //se guarde la respuesta e session
         $_SESSION['respuesta_seleccionada_para_pregunta_' . $idPregunta] = $idRespuestaSeleccionada;
 
         echo json_encode(['status' => 'ok', 'message' => 'Selección registrada.']);
@@ -139,7 +144,7 @@ class JuegoController
         }
 
         $es_correcta = 0;
-
+        //verifica que la respuesta fue enviada a tiempo
         $tiempoExpirado = false;
         if ($tiempoInicio !== null) {
             $tiempoTranscurrido = time() - $tiempoInicio;
@@ -157,6 +162,7 @@ class JuegoController
             $respuesta_final_a_evaluar = $id_respuesta_enviada ?? $id_respuesta_previamente_seleccionada;
         }
 
+        // evalua si es correcta
         if ($respuesta_final_a_evaluar !== null) {
             $es_correcta = $this->model->esCorrecta($respuesta_final_a_evaluar);
         } else {
@@ -165,10 +171,12 @@ class JuegoController
 
         $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta['id_pregunta'], $es_correcta);
 
+        // limpia
         unset($_SESSION['pregunta_actual']);
         unset($_SESSION['pregunta_inicio_tiempo']);
         unset($_SESSION['respuesta_seleccionada_para_pregunta_' . $pregunta['id_pregunta']]);
 
+        // redireccion
         if ($es_correcta) {
             $_SESSION['puntaje'] = ($_SESSION['puntaje'] ?? 0) + 1;
             header("Location: /juego/jugar");
