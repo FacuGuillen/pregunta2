@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller/ProfileGamerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controller/ProfileGamerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/PreguntaModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/PreguntaModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/footer.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/footer.mustache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/profileGamerView.mustache" beforeDir="false" afterPath="$PROJECT_DIR$/view/profileGamerView.mustache" afterDir="false" />
-    </list>
+    <list default="true" id="8a628fbe-ef44-4898-9b21-052f7e7c700e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +48,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "premain",
+    "git-widget-placeholder": "merge-pilu-admin",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
