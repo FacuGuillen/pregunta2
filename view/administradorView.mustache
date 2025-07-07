@@ -1,4 +1,27 @@
-<div class="container py-5">
+<style>
+    @media print {
+        body * {
+            visibility: hidden !important;
+        }
+
+        #seccion-imprimible, #seccion-imprimible * {
+            visibility: visible !important;
+        }
+
+        #seccion-imprimible {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        /* Opcional: ocultar márgenes o bordes blancos innecesarios */
+        @page {
+            margin: 20mm;
+        }
+    }
+</style>
+<div class="container py-5" id="seccion-imprimible">
     <h1 class="mb-5 text-center fw-bold">📊 Panel de Administración</h1>
 
     <!-- Filtros -->
@@ -6,8 +29,6 @@
         <div class="col-md-4">
             <label class="form-label">Filtrar por período:</label>
             <select class="form-select" id="filtroPeriodo">
-                <option>Día</option>
-                <option>Semana</option>
                 <option>Mes</option>
                 <option>Año</option>
             </select>
@@ -16,15 +37,15 @@
             <button class="btn btn-primary w-100" id="btnAplicarFiltro">Aplicar filtro</button>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-success w-100">Imprimir tablas</button>
+            <button class="btn btn-success w-100" id="btnImprimir">Imprimir tablas</button>
         </div>
     </div>
 
     <!-- Resumen General -->
-    <div class="card mb-5 chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;">
+    <div class="card mb-5 chart-card" style="box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #ddd; border-radius: 10px;" id="tablaResumen">
         <div class="card-header" style="background-color: #f8f9fa; font-weight: 500;">📌 Resumen general</div>
         <div class="card-body p-0">
-            <table class="table table-hover table-striped mb-0">
+            <table class="table table-hover table-striped mb-0 ">
                 <thead class="table-light">
                 <tr>
                     <th>Métrica</th>
@@ -79,7 +100,6 @@
         </div>
     </div>
 </div>
-
 <script>
     const datosUsuariosPorPais ={{{usuarios_por_pais_json}}} || [];
     const sexoData ={{{usuarios_por_sexo_json}}} || [];
@@ -87,5 +107,60 @@
     const topUsuarioData ={{{top_usuario_json}}} || null;
 </script>
 
+<script>
+    document.getElementById("btnAplicarFiltro").addEventListener("click", () => {
+        const filtro = document.getElementById("filtroPeriodo").value.toLowerCase();
+        window.location.href = `/administrador/show?filtro=${filtro}`;
+    });
+</script>
+
+<script>
+    document.getElementById("btnImprimir").addEventListener("click", async () => {
+        const filtro = document.getElementById("filtroPeriodo").value;
+
+        const imgSexo = document.getElementById("graficoSexo").toDataURL("image/png");
+        const imgEdad = document.getElementById("graficoEdad").toDataURL("image/png");
+
+        // Captura del SVG del mapa
+        const svgElement = document.querySelector("#geo_chart_div svg");
+        let imgMapa = "";
+
+        if (svgElement) {
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            imgMapa = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+        } else {
+            alert("El mapa aún no está disponible para imprimir.");
+            return;
+        }
+
+        // ✅ Captura de la tabla de resumen como HTML
+        const tablaResumenHTML = document.getElementById("tablaResumen").innerHTML;
+
+        // Crear formulario
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/administrador/generarReporte";
+        form.target = "_blank";
+
+        form.appendChild(inputHidden("filtro", filtro));
+        form.appendChild(inputHidden("imgSexo", imgSexo));
+        form.appendChild(inputHidden("imgEdad", imgEdad));
+        form.appendChild(inputHidden("imgMapa", imgMapa));
+        form.appendChild(inputHidden("tablaResumen", tablaResumenHTML));
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+        function inputHidden(name, value) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = value;
+            return input;
+        }
+    });
+
+</script>
 
 
