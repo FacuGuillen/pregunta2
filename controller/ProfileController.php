@@ -4,9 +4,12 @@ class ProfileController {
     private $model;
     private $view;
 
+
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
+
+
     }
 
     private function nombreCompletoPais($codigo) {
@@ -56,6 +59,7 @@ class ProfileController {
             "ciudad" => $userLocacion['ciudad'] ?? null,
             "latitud" => $userLocacion['latitud'] ?? null,
             "longitud" => $userLocacion['longitud'] ?? null,
+
         ]);
     }
 }

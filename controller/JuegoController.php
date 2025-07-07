@@ -5,18 +5,16 @@ class JuegoController
     private $view;
     private $model;
 
-    private $user;
 
     public function __construct($model, $view){
         $this->model = $model;
         $this->view = $view;
-        $this->user = Security::getUser();
     }
 
     public function jugar($categoria = null)
     {
 
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = ['id_usuario'];
 
         if (!$categoria) {
             header("Location: /ruleta/show");
@@ -67,51 +65,48 @@ class JuegoController
     }
 
 
-    public function responder()
-    {
-        $idUsuario = $this->user['id_usuario'];
+
+    // Procesa la respuesta del usuario
+    public function responder() {
+        $idUsuario = ['id_usuario'];
 
         if (!isset($_POST['respuesta']) || !isset($_SESSION['pregunta_actual'])) {
+            // Redirecciona con error
             header("Location: /juego/resultado");
             exit;
         }
 
         $id_respuesta = $_POST['respuesta'];
-        $id_pregunta = $_SESSION['pregunta_actual'];
+        $pregunta = $_SESSION['pregunta_actual'];
 
         $es_correcta = $this->model->esCorrecta($id_respuesta);
 
-        // Guarda la respuesta del usuario
-        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $id_pregunta, $es_correcta);
+        // Guarda pregunta respondida
+        $this->model->guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta);
 
         if ($es_correcta) {
             $_SESSION['puntaje'] = ($_SESSION['puntaje'] ?? 0) + 1;
-            $this->view->render("respuestaFeedback", [
-                "correcta" => true
-            ]);
+            header("Location: /juego/jugar");
+            exit;
         } else {
-            // Buscar la respuesta correcta
-            $respuesta_correcta = $this->model->traerRespuestaCorrectaDePregunta($id_pregunta);
-            $this->view->render("respuestaFeedback", [
-                "correcta" => false,
-                "respuesta_correcta" => $respuesta_correcta
-            ]);
+            header("Location: /juego/resultado");
+            exit;
         }
     }
 
-
     // Muestra el resultado final
     public function resultado() {
-        $username = $this->user['username'];
+        $username =['username'];
         $puntaje = $_SESSION['puntaje'] ?? 0;
 
         $guardarPartida = $this->model->guardarPartida($puntaje);
-        $idUsuario = $this->user['id_usuario'];
+        $idUsuario = ['id_usuario'];
         $idPartida = $guardarPartida;
         $guardarPartidaDeUsuario = $this->model->guardarPartidaUsuario($idUsuario, $idPartida);
 
         $this->view->render("resultado", ['puntaje' => $puntaje,
-            'username' => $username
+            'username' => $username,
+
         ]);
         unset($_SESSION['puntaje']);
     }

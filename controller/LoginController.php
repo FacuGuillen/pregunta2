@@ -55,8 +55,9 @@ class LoginController
 
 
     public function logout() {
-        session_destroy(); // Destruir todos los datos de la sesión
-        $this->view->render("lobby", []);
+        session_destroy();
+        header("Location: /lobby/show");
+        exit();
     }
 
 }

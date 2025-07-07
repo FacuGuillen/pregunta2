@@ -1,9 +1,12 @@
 <main>
+    {{#isJugador}}
     <div class="lobby-container">
         <a href="/proponer/crearPregunta" class="btn btn-primary">Proponer pregunta</a>
         Proponer Pregunta
         </a>
     </div>
+    {{/isJugador}}
+
     <div class="contenedor-principal">
         <div class="contenedor-gifs">
             <img src="{{BASE_URL}}/public/imgs/signo.gif" alt="Trivia" class="quiz-image ">

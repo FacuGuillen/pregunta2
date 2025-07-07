@@ -1,6 +1,5 @@
 <?php
-class PreguntaModel
-{
+class PreguntaModel {
     private $db;
 
     public function __construct($db)
@@ -95,8 +94,7 @@ class PreguntaModel
         return $idPartida;
     }
 
-    public function guardarPartidaUsuario($idUsuario, $idPartida)
-    {
+    public function guardarPartidaUsuario($idUsuario, $idPartida){
         $db = $this->db->getConnection();
 
         $stmt = $db->prepare("INSERT INTO partidas_usuarios (id_usuario, id_partidas) VALUES (?, ?)");
@@ -135,12 +133,11 @@ class PreguntaModel
         $stmt->execute();
     }
 
-    public function guardarPreguntasQueElUsuarioContesto($idUsuario, $pregunta, $es_correcta)
-    {
-        $db = $this->db->getConnection();
-        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_preguntas, respuesta_correcta) VALUES (?, ?, ?)";
+    public function guardarPreguntasQueElUsuarioContesto($idUsuario,$pregunta,$es_correcta)
+    {  $db = $this->db->getConnection();
+        $sql = "INSERT INTO preguntas_usuarios_respuestas (id_usuario, id_pregunta, respuesta_correcta) VALUES (?, ?, ?)";
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("iii", $idUsuario, $pregunta, $es_correcta);
+        $stmt->bind_param("iii", $idUsuario,$pregunta,$es_correcta);
         $stmt->execute();
 
     }
@@ -148,8 +145,7 @@ class PreguntaModel
     /*-----------------------------------------------------------------------------*/
 
 
-    public function traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria, $idUsuario)
-    {
+    public function traerPreguntaClasificadaSegunLaDificultadUsuarioYCategoria($categoria,$idUsuario){
         $conn = $this->db->getConnection();
         $dificultadUsuario = $this->traerEltipoDificultadDelUsuario($idUsuario);
         $stmt = $conn->prepare(" 
@@ -170,7 +166,7 @@ class PreguntaModel
         ORDER BY RAND()
         LIMIT 1");
 
-        $stmt->bind_param("ssi", $categoria, $dificultadUsuario, $idUsuario);
+        $stmt->bind_param("ssi", $categoria,$dificultadUsuario,$idUsuario);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $pregunta = $resultado->fetch_assoc();
@@ -198,8 +194,7 @@ class PreguntaModel
     }
 
     public function nuevaCategoriaDisponible($idUsuario)
-    {
-        $db = $this->db->getConnection();
+    {   $db = $this->db->getConnection();
         $categoria = null;
         $sql = "SELECT c.categoria 
                 FROM categoria c join pregunta p on c.id_categoria=p.id_categoria 
@@ -225,20 +220,18 @@ class PreguntaModel
         $totalRespondidasBien = $this->cuantasPreguntasRespondioBienElUsuario($idUsuario);
 
         $nivelUsuario = 'normal';
-        if ($totalRespondidas > 0) {
-            $porcentaje = $totalRespondidasBien / $totalRespondidas;
-            if ($porcentaje > 0.7) {
+        if ($totalRespondidas > 0){
+            $porcentaje = $totalRespondidasBien / $totalRespondidas ;
+            if ($porcentaje > 0.7){
                 $nivelUsuario = 'dificil';
-            } else if ($porcentaje < 0.3) {
+            }else if ($porcentaje < 0.3){
                 $nivelUsuario = 'facil';
             }
         }
         return $nivelUsuario;
     }
-
     private function cuantasContestoEnTotal($idUsuario)
-    {
-        $db = $this->db->getConnection();
+    {  $db = $this->db->getConnection();
         $total = 0;
         $sql = "SELECT COUNT(*) FROM preguntas_usuarios_respuestas WHERE id_usuario = ?";
         $stmt = $db->prepare($sql);
@@ -252,8 +245,7 @@ class PreguntaModel
     }
 
     private function cuantasPreguntasRespondioBienElUsuario($idUsuario)
-    {
-        $db = $this->db->getConnection();
+    {   $db = $this->db->getConnection();
         $total = 0;
 
         $sql = "SELECT COUNT(*) FROM preguntas_usuarios_respuestas WHERE id_usuario = ? AND respuesta_correcta = 1";
@@ -268,8 +260,7 @@ class PreguntaModel
     }
 
     private function cantidadDeVecesRespondidaPorPregunta($id_pregunta)
-    {
-        $db = $this->db->getConnection();
+    {  $db = $this->db->getConnection();
         $total = 0;
 
         $sql = "SELECT COUNT(*) FROM pregunta_usuarios pu WHERE pu.id_pregunta = ? ";
@@ -283,8 +274,7 @@ class PreguntaModel
         return $total;
     }
 
-    public function getAllQuestions()
-    {
+    public function getAllQuestions() {
         $sql = "SELECT * FROM pregunta";
         $result = $this->db->getConnection()->query($sql);
 
@@ -295,8 +285,7 @@ class PreguntaModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPreguntasPorIdCategoria($idCategoria)
-    {
+    public function getPreguntasPorIdCategoria($idCategoria) {
         $stmt = $this->db->getConnection()->prepare("
         SELECT id_pregunta, pregunta, activo
         FROM pregunta
@@ -308,8 +297,7 @@ class PreguntaModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getPregunta($id_pregunta)
-    {
+    public function getPregunta($id_pregunta) {
         $stmt = $this->db->getConnection()->prepare("
         select * from pregunta where id_pregunta = ?");
         $stmt->bind_param("i", $id_pregunta);
@@ -318,8 +306,7 @@ class PreguntaModel
         return $result->fetch_assoc();
     }
 
-    public function getRespuestasPorPregunta($id_pregunta)
-    {
+    public function getRespuestasPorPregunta($id_pregunta) {
         $stmt = $this->db->getConnection()->prepare("
         SELECT * FROM respuesta WHERE id_pregunta = ?
     ");
@@ -329,8 +316,7 @@ class PreguntaModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function actualizarPregunta($idPregunta, $texto)
-    {
+    public function actualizarPregunta($idPregunta, $texto) {
         $stmt = $this->db->getConnection()->prepare("
         UPDATE pregunta 
         SET pregunta = ? 
@@ -341,8 +327,7 @@ class PreguntaModel
         $stmt->close();
     }
 
-    public function actualizarRespuesta($idRespuesta, $texto, $esCorrecta)
-    {
+    public function actualizarRespuesta($idRespuesta, $texto, $esCorrecta) {
         $stmt = $this->db->getConnection()->prepare("
         UPDATE respuesta 
         SET respuesta = ?, es_correcta = ? 
@@ -353,8 +338,7 @@ class PreguntaModel
         $stmt->close();
     }
 
-    public function eliminarPregunta($idPregunta)
-    {
+    public function eliminarPregunta($idPregunta) {
         $conn = $this->db->getConnection();
 
         // Primero borrar las respuestas relacionadas
@@ -373,8 +357,7 @@ class PreguntaModel
     }
 
 
-    public function pausarPregunta($idPregunta)
-    {
+    public function pausarPregunta($idPregunta) {
         $conn = $this->db->getConnection();
         $stmt = $conn->prepare("
         UPDATE pregunta
@@ -388,8 +371,7 @@ class PreguntaModel
 
     //lautaro preguntas propuestas
     // Devuelve todas las preguntas propuestas con categoría y usuario
-    public function getPreguntasPropuestas()
-    {
+    public function getPreguntasPropuestas() {
         $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
             FROM preguntas_propuestas pp
             JOIN categoria c ON pp.id_categoria = c.id_categoria
@@ -401,8 +383,7 @@ class PreguntaModel
     }
 
 // Devuelve respuestas asociadas a una pregunta propuesta
-    public function getRespuestasPropuestasPorPregunta($id_pregunta_propuesta)
-    {
+    public function getRespuestasPropuestasPorPregunta($id_pregunta_propuesta) {
         $sql = "SELECT * FROM respuestas_propuestas WHERE id_pregunta_propuesta = ?";
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->bind_param("i", $id_pregunta_propuesta);
@@ -412,8 +393,7 @@ class PreguntaModel
     }
 
 //preguntas propuestas
-    public function getPreguntaPropuestaById($id)
-    {
+    public function getPreguntaPropuestaById($id) {
         $sql = "SELECT pp.*, c.categoria, u.nombre_usuario 
             FROM preguntas_propuestas pp
             JOIN categoria c ON pp.id_categoria = c.id_categoria
@@ -423,20 +403,18 @@ class PreguntaModel
         $stmt->bind_param("i", $id);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
-    }
+}
 
 
 // Cambia estado de propuesta
-    public function actualizarEstadoPropuesta($id, $estado)
-    {
+    public function actualizarEstadoPropuesta($id, $estado) {
         $sql = "UPDATE preguntas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->bind_param("si", $estado, $id);
         $stmt->execute();
     }
 
-    public function actualizarEstadoRespuestasPropuestas($id_pregunta_propuesta, $estado)
-    {
+    public function actualizarEstadoRespuestasPropuestas($id_pregunta_propuesta, $estado) {
         $sql = "UPDATE respuestas_propuestas SET estado = ? WHERE id_pregunta_propuesta = ?";
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->bind_param("si", $estado, $id_pregunta_propuesta);
@@ -444,8 +422,7 @@ class PreguntaModel
     }
 
 
-    public function insertarPreguntaFinal($pregunta, $idCategoria)
-    {
+    public function insertarPreguntaFinal($pregunta, $idCategoria) {
         $sql = "INSERT INTO pregunta (pregunta, id_categoria, activo) VALUES (?, ?, 1)";
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->bind_param("si", $pregunta, $idCategoria);
@@ -453,30 +430,11 @@ class PreguntaModel
         return $stmt->insert_id;
     }
 
-    public function insertarRespuestaFinal($idPregunta, $respuesta, $esCorrecta)
-    {
+    public function insertarRespuestaFinal($idPregunta, $respuesta, $esCorrecta) {
         $sql = "INSERT INTO respuesta (id_pregunta, respuesta, es_correcta) VALUES (?, ?, ?)";
         $stmt = $this->db->getConnection()->prepare($sql);
         $stmt->bind_param("isi", $idPregunta, $respuesta, $esCorrecta);
         $stmt->execute();
-    }
-
-
-    public function traerRespuestaCorrectaDePregunta($id_pregunta)
-    {
-        $db = $this->db->getConnection();
-
-        $sql = "SELECT respuesta FROM respuesta WHERE id_pregunta = ? AND es_correcta = 1 LIMIT 1";
-        $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $id_pregunta);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result && $row = $result->fetch_assoc()) {
-            return $row['respuesta'];
-        }
-
-        return "desconocida";
     }
 
 }

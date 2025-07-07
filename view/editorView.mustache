@@ -42,7 +42,7 @@
 <h2>Listado de Preguntas</h2>
 
 <ul class="list-group">
-    {{#preguntasNormales}}
+    {{#preguntas}}
         <li class="list-group-item d-flex justify-content-between align-items-center">
             <span>{{pregunta}}</span>
 
@@ -68,28 +68,11 @@
                 </form>
             </div>
         </li>
-    {{/preguntasNormales}}
+    {{/preguntas}}
 
     {{^preguntas}}
         <li class="list-group-item">No hay preguntas para mostrar.</li>
     {{/preguntas}}
 </ul>
-<h2 class="mt-5">Preguntas Propuestas por Usuarios</h2>
 
-<ul class="list-group">
-    {{#preguntasPropuestas}}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <span>{{pregunta}} ({{categoria}}) - {{nombre_usuario}}</span>
-
-            <form action="/editor/verPropuesta" method="POST" class="mb-0">
-                <input type="hidden" name="id_pregunta_propuesta" value="{{id_pregunta_propuesta}}">
-                <button type="submit" class="btn btn-sm btn-info">Ver</button>
-            </form>
-        </li>
-    {{/preguntasPropuestas}}
-
-    {{^preguntasPropuestas}}
-        <li class="list-group-item">No hay preguntas propuestas para mostrar.</li>
-    {{/preguntasPropuestas}}
-</ul>
 

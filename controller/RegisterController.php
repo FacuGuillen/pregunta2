@@ -34,7 +34,7 @@ class RegisterController{
         // Paso los datos a la vista
         $this->view->render("register", [
             "mensaje" => $mensaje,
-            "tipo" => $tipo
+            "tipo" => $tipo,
         ]);
     }
 
